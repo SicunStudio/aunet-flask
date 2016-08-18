@@ -204,7 +204,7 @@ a:hover{opacity: 0.7}
 	height:100px;
 	width:200px;
 	margin-left: 10px;
-	margin-top: 10px;
+	margin-top: 0px;
 }
 #hot_news .right .content_1{
 	text-align: center;
@@ -277,7 +277,7 @@ a:hover{opacity: 0.7}
 	display: inline-block;
 	margin: 10px 4px;
 	position: relative;
-	bottom:60px;
+	bottom:65px;
 }
 #hot_news .left .preview img{
 	height:20px;
@@ -290,20 +290,25 @@ a:hover{opacity: 0.7}
 }
 #hot_news .right{
 	background: #f4f4f4;
-	margin-top: 50px;
+	margin-top: 30px;
 	width:98%;
 	text-align: center;
 	box-shadow: 2px 2px 1px #666666;
 }
 #hot_news .right .title{
-	height:30px;
-	width:100%;
+	height:50px;
+	width:180px;
+	margin-top: 15px;
+}
+#hot_news .right .mlimg{
+	width: 100%;
+	text-align: center;
 }
 #hot_news .right .img{
 	height:100px;
 	width:225px;
-	margin-left: 10px;
-	margin-top: 10px;
+	text-align: center;
+	margin-top: 0px;
 }
 #hot_news .right .content_1{
 	text-align: center;
@@ -334,7 +339,7 @@ a:hover{opacity: 0.7}
 }
 @media screen and (max-width: 519px){
 #hot_news{
-	background: url(../image/background_top.gif) center center no-repeat;
+	background: url(../../static/Home/background_top.gif) center center no-repeat;
 	width:100%;
 	padding: 5px 1%
 }
@@ -389,8 +394,9 @@ a:hover{opacity: 0.7}
 	box-shadow: 2px 2px 1px #666666;
 }
 #hot_news .right .title{
-	height:30px;
-	width:100%;
+	height:50px;
+	width:180px;
+	margin-top: 15px;	
 }
 #hot_news .right .img{
 	height:100px;
@@ -479,9 +485,9 @@ a:hover{opacity: 0.7}
 #star_ .star_2_2 img,#star_ .star_2_1 img{
 	margin:5px 10px;
 	position: relative;
-	top:4px;
-	width:20px;
-	height:20px;
+	top:13px;
+	width:30px;
+	height:30px;
 	border-radius: 50% 50% 50% 50%; 
 }
 #star_ .star_1 img[alt="社团之星"]{	border:#e96d75 5px solid;}
@@ -543,14 +549,16 @@ a:hover{opacity: 0.7}
 }
 #star_ .star_2{
 	position: relative;
-	bottom:160px;
+	bottom:80px;
+	width:90%;
+	left:4%;
 }
 #star_ .star_2_2 img,#star_ .star_2_1 img{
 	margin:5px 10px;
 	position: relative;
-	top:4px;
-	width:20px;
-	height:20px;
+	top:14px;
+	width:30px;
+	height:30px;
 	border-radius: 50% 50% 50% 50%; 
 }
 #star_ .star_1 img[alt="社团之星"]{	border:#e96d75 5px solid;}
@@ -619,9 +627,9 @@ a:hover{opacity: 0.7}
 #star_ .star_2_2 img,#star_ .star_2_1 img{
 	margin:5px 10px;
 	position: relative;
-	top:7px;
-	width:30px;
-	height:30px;
+	top:16px;
+	width:40px;
+	height:40px;
 	border-radius: 50% 50% 50% 50%; 
 }
 #star_ .star_1 img[alt="社团之星"]{	border:#e96d75 5px solid;}
