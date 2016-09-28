@@ -4,19 +4,21 @@ body{font-family:  Microsoft YaHei;
 	margin:0 0;
 	background: #eaeaea;}
 a{text-decoration: none;
-color:#000;}
+color:#000;
+cursor: pointer;}
 a:hover{opacity: 0.7}
 #top_menu{
 	padding: 0 0;
 	margin:0 0;
 	background: #f4f4f4;
 	width:100%;
+	height:100%;
 	padding:0 0;
 }
 #top_menu .top_menu_title{
 	float:left;
 	position: relative;
-	top:5px;
+	top:15px;
 }
 #top_menu .top_menu_title div:first-child{
 	font-size: 1.5em;
@@ -26,9 +28,9 @@ a:hover{opacity: 0.7}
 	font-size: 0.5em;
 }
 #top_menu .logo{
-	width:50px;
-	height:50px;
-	margin:5px 10px;
+	width:60px;
+	height:60px;
+	margin:10px 10px;
 	margin-left: 60px;
 	float: left;
 	border-radius: 50% 50% 50% 50%;
@@ -38,17 +40,17 @@ a:hover{opacity: 0.7}
 	position: relative;
 	left:25%;
 	list-style: none;
-	margin:0 0;
+	margin:0px 0;
 	padding:0 0 ;}
 #top_menu li{
-	padding:20px 20px;
+	padding:30px 20px;
 	margin:0 0;
 	border:0;
 	display: inline-block;
 }
 #top_menu button{
 	position: absolute;
-	top:15px;
+	top:25px;
 	margin:0 0;
 	font-size: 16px;
 	right:50px;
@@ -153,14 +155,8 @@ a:hover{opacity: 0.7}
 	padding:5px 0;
 	font-size: 2em;
 }
-#hot_news .right .content_2_1{
+#hot_news .right .content_2_x{
 	background: #f1a05e;
-}
-#hot_news .right .content_2_2{
-	background: #217fdf;
-}
-#hot_news .right .content_2_3{
-	background: #0ac7b3;
 }
 #hot_news .right .content_2{
 	text-align: center;
@@ -192,6 +188,7 @@ a:hover{opacity: 0.7}
 	margin-left: 15%;
 	box-shadow: 2px 2px 1px #666666;
 	text-align: center;
+	vertical-align: middle;
 }
 #star_ .star_1 div:nth-child(2n+1){
 	width: 100px;

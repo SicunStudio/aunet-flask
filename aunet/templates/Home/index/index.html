@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_pc.css" media="only screen and (min-device-width:1366px)">
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css" media="only screen and (max-device-width:1365px)">
+		<title>华中科技大学社团网</title>
+	</head>
+	<body onload="LoopNews();">
+		<div id="top_menu">
+			<img src="" alt="" class="logo">
+			<span class="top_menu_title">
+				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
+				<div>华中科技大学学生社团联合会</div>
+			</span>
+			<ul id="top_menu_menu">
+				<a href=""><li id="on">首&nbsp;页</li></a>
+				<a href="../news/news.html"><li>新&nbsp;闻</li></a>
+				<a href=""><li>社&nbsp;团</li></a>
+				<a href=""><li>社&nbsp;联</li></a>
+				<a href=""><li>管&nbsp;理</li></a>
+				<a href=""><li>其&nbsp;他</li></a>
+			</ul>
+			<div class="menu" onclick="_menu()">
+				<div class="icon"></div>
+				<div class="icon"></div>
+				<div class="icon"></div>
+			</div>
+			<a href=""><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
+		</div>
+
+
+		<div id="hot_news">
+			<div class="left">
+				<div class="picture">
+					<a href=""><img src="" id="show_"></a>
+					<div class="background"></div>
+					<div class="title" id="picture_title"></div>	
+				</div>
+				<div class="preview">
+				{%for News in LatestFiveNews%}
+					<div class="preview_x"><a><img class="news" id="" onclick="_getimg(this)" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+				{%endfor%}
+				</div>
+			</div>
+			<div class="right">
+				<img src="../../../static/Home/mlst.png" class="title">
+				<div class="mlimg"><img src="{{CharmAssociation.charm_Img_Url}}" class="img"></div>
+				<div class="content">
+					<div class="content_1"><i>{{CharmAssociation.charm_Name}}</i></div>
+					<div class="content_2">
+						{%for tag in CharmAssociation.charm_Tag%}
+						<span class="content_2_x">{{tag.tag}}</span>
+						{%endfor%}
+					</div>
+					<div class="content_3">{{CharmAssociation.charm_Intro}}</div>
+				</div>
+			</div>
+		</div>
+		
+	
+		<div id="star_">
+			<div class="star_1">
+				<div><p>社团之星 </p><img src="{{StarAssociation1.star_Img_Url}}" alt="{{StarAssociation1.star_Role}}"></div>
+				<div>{{ StarAssociation1.star_Intro }}</div>
+				<div><p>社联之星</p><img src="{{StarAssociation2.star_Img_Url}}" alt="{{StarAssociation2.star_Role}}"></div>
+				<div>{{StarAssociation2.star_Intro}}</div>
+				<div><p>指导老师</p><img src="{{StarAssociation3.star_Img_Url}}" alt="{{StarAssociation3.star_Role}}"></div>
+				<div>{{StarAssociation3.star_Intro}}</div>
+			</div>
+			<div class="star_2">
+				<div class="star_2_1">
+					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
+					<div>{{LatestNotice.notice_Detail}}</div>
+					<a href="">更 &nbsp;&nbsp; 多</a>
+				</div>
+				<div class="star_2_2">
+					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新通知</div>
+					<div>{{LatestAdvanceNotice.an_Detail}}</div>
+					<a href="">更 &nbsp;&nbsp; 多</a>
+				</div>
+			</div>
+		</div>
+		
+
+		<div id="news_">
+			<div class="news_1">
+				<div class="news_1_1">
+					<div class="title">品 牌 活 动</div><div class="hr"><a href="">更 多></a></div>
+					<div><img src="{{NewsPinPai.news_Img_Url}}" alt=""></div>
+					<div class="text">{{NewsPinPai.news_Outline}}</div>
+				</div>
+				<div class="news_1_2">
+					<div class="title">魅 力 华 科</div><div class="hr"><a href="">更 多></a></div>
+					<div><img src="{{NewsCharmHust.news_Img_Url}}" alt=""></div>
+				</div>
+			</div>
+			<div class="news_2">
+				<div class="title">新 闻 预 览</div>
+				<div class="hr"><a href="">更 多></a></div>
+	
+				{%for NewsYuLans in NewsYuLan%}
+				<div class="news_2_x">
+					<img src="{{NewsYuLans.news_Img_Url}}" alt="">
+					<div>
+						<div class="news_title">{{NewsYuLans.news_Title}}</div>
+						<div class="article">
+						{{NewsYuLans.news_Outline}}
+						</div>
+					</div>
+					<div>
+						<span class="time">{{NewsYuLans.news_Year}}.{{NewsYuLans.news_Month}}.{{NewsYuLans.news_Day}}</span>
+						<span class="detail"><a href="{{NewsYuLans.news_Detail}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href="{{NewsYuLans.news_Comments}}"><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><hr><br>
+			{%endfor%}	
+
+			</div>
+			<br><br>
+			<div class="news_3">
+				<a href="">
+					<div class="menu">
+						<img src="" alt="">
+						<div>资料下载</div>
+					</div>
+				</a>
+				<a href="">
+					<div class="menu">
+						<img src="" alt="">
+						<div>设计委任</div>
+					</div>	
+				</a>
+				
+				<a href="">
+					<div class="menu">
+						<img src="" alt="">
+						<div>资源申请</div>
+					</div>
+				</a>
+				
+				<a href="">
+					<div class="menu">
+						<img src="" alt="">
+						<div>评分系统</div>
+					</div>
+				</a>
+				
+				<a href="">
+					<div class="menu">
+						<img src="" alt="">
+						<div>社团卡</div>
+					</div>
+				</a>
+				
+				<a href="">
+					<div class="menu">
+						<img src="" alt="">
+						<div>菜单</div>
+					</div>
+				</a>
+				
+			</div>
+		</div>
+		
+
+		<div id="bottom_menu">
+			<span>友情链接</span>
+			<span>
+				<ul>
+					<li><a href="">华中科技大学</a></li>
+					<li><a href="">学工在线</a></li>
+					<li><a href="">校团委</a></li>
+					<li><a href="">醉晚亭</a></li>
+				</ul>
+			</span>
+<!-- 			<span><img src="" alt=""></span>
+			<span><img src="" alt=""></span> -->
+		</div>
+
+		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
+	</body>
+
+	<script src="../../../static/Home/index_API-FUN.js"></script>
+
+</html>

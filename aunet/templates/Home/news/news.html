@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_pc.css" media="only screen and (min-device-width:1366px)">
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css" media="only screen and (max-device-width:1365px)">
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/news.css">
+		<title>华中科技大学社团网__新闻</title>
+	</head>
+	<body onload="GetAllOn()">
+		<div id="top_menu">
+			<img src="" alt="" class="logo">
+			<span class="top_menu_title">
+				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
+				<div>华中科技大学学生社团联合会</div>
+			</span>
+			<ul id="top_menu_menu">
+				<a href="../index/index.html"><li>首&nbsp;页</li></a>
+				<a href=""><li id="on">新&nbsp;闻</li></a>
+				<a href=""><li>社&nbsp;团</li></a>
+				<a href=""><li>社&nbsp;联</li></a>
+				<a href=""><li>管&nbsp;理</li></a>
+				<a href=""><li>其&nbsp;他</li></a>
+			</ul>
+			<div class="menu" onclick="_menu()">
+				<div class="icon"></div>
+				<div class="icon"></div>
+				<div class="icon"></div>
+			</div>
+			<a href=""><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>		
+		</div>
+
+		<div id="search_">
+<!-- 			<div>
+				<form action="">
+					搜索：
+					<input type="search">
+					<input type="submit" value="">
+				</form>
+			</div>	 -->
+			<div class="search_option">
+				<ul name="Category">
+					<caption>类型：</caption>
+					<li class="on" onclick="GetSearchPart(this)" name="all">全部</li>
+					<li onclick="GetSearchPart(this)" name="news">新闻</li>
+					<li onclick="GetSearchPart(this)" name="notice">通知</li>
+					<li onclick="GetSearchPart(this)" name="preview">预告</li>
+				</ul>
+				<ul name="Time">
+					<caption>时间：</caption>
+					<li class="on" onclick="GetSearchPart(this)" name="all">全部</li>
+					<li onclick="GetSearchPart(this)" name="week">一周</li>
+					<li onclick="GetSearchPart(this)" name="month">三月</li>
+					<li onclick="GetSearchPart(this)" name="year">一年</li>
+				</ul>
+				<ul name="Sort">
+					<caption>排序：</caption>
+					<li class="on" onclick="GetSearchPart(this)" name="all">综合</li>
+					<li onclick="GetSearchPart(this)" name="hot">热门</li>
+					<li onclick="GetSearchPart(this)" name="latest">最新</li>
+					<li onclick="GetSearchPart(this)" name="oldest">最旧</li>
+				</ul>
+			</div>
+		</div>
+
+
+
+		<div id="news_">
+			<div class="news_2">
+				
+
+
+
+
+				
+
+				<!-- 一条新闻的样式，多条时从此处复制，图片固定大小 -->
+				<!-- 一页最多10条新闻，用10个块，也可以只用一个模板用js来添加内容 -->
+				<!-- part 1 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 2 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 3 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 4 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 5 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 6 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 7 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 8 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 9 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title"></div>
+						<div class="article">
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- part 10 -->
+				<div class="news_2_x">
+					<img src="" alt="">
+					<div>
+						<div class="news_title">xxxxxxxxxxxx</div>
+						<div class="article">
+						xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+						</div>
+					</div>
+					<div>
+						<span class="time"></span>
+						<span class="detail"><a href="">&nbsp;&nbsp;<img src="../../../	static/Home/xq.png" alt="">详情</a></span>
+						<span class="comment"><a href=""><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
+					</div>
+				</div>
+				<br><br><br><hr><br>
+				<!-- 此处结束 -->
+
+
+				<div class="goto">
+					<span><a onclick="PageUp(this)">上一页</a></span>
+					<span><input type="number" value="1">/<input type="number" value="1" disabled=""><a onclick="GetAllOn()">跳转</a></span>
+					<span><a onclick="PageDown(this)">下一页</a></span>
+				</div>
+
+
+
+
+
+			</div>
+		</div>
+		
+
+
+
+		<div id="bottom_menu">
+			<span>友情链接</span>
+			<span>
+				<ul>
+					<li><a href="">华中科技大学</a></li>
+					<li><a href="">学工在线</a></li>
+					<li><a href="">校团委</a></li>
+					<li><a href="">醉晚亭</a></li>
+				</ul>
+			</span>
+<!-- 			<span><img src="" alt=""></span>
+			<span><img src="" alt=""></span> -->
+		</div>
+
+		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
+	</body>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js
+"></script>
+	<script src="../../../static/Home/index_API-FUN.js"></script>
+
+</html>
