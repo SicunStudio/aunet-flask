@@ -2,9 +2,9 @@
 # 导入各扩展
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
 from flask_mail import Mail
 from flask_restful import Api,Resource
+from flask_login import LoginManager
 import pymysql
 
 
@@ -19,13 +19,17 @@ api=Api(app)
 
 lm=LoginManager()
 lm.init_app(app)
-lm.login_view='login'
+lm.login_view='admin.login'
 
 mail=Mail(app)
 
 #注册蓝图
 from .Admin import admin
 app.register_blueprint(admin,url_prefix='/admin')
+
+from .Home import home
+app.register_blueprint(home)
+
 
 from . import models,views
 
