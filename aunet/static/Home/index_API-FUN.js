@@ -47,8 +47,9 @@ function _menu(){
 	}
 }
 
-function DisplayNews(page)
+function DisplayNews(news)
 {
+	var page = JSON.parse(news);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page.news_Length);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page.news_Current_Page);
 	var news = document.getElementsByClassName("news_2_x");
@@ -86,7 +87,7 @@ function GetNews(posts)
 		
 		request.open("POST","news/news2Json",true);
 		request.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		var tt = JSON.stringify(posts);
+		var info = JSON.stringify(posts);
 		alert(tt);
 		
 		request.onreadystatechange = function(){
@@ -96,7 +97,7 @@ function GetNews(posts)
 						DisplayNews(page);
 					}
 			}
-		request.send(tt);//提交一个json对象
+		request.send(info);//提交一个json对象
 
 	}
 	else
