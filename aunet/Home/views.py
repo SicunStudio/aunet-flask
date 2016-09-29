@@ -11,8 +11,9 @@ from .models import News,Notice,AdvanceNotice,StarAssociation,CharmAssociation,A
 def getData():
 	# data1=session['DataType']
 	# data1=session['Data2']
+	# data1=session['Data']
 	data1="1"
-	data2=session['Data1']
+	data2=session['Data']
 	#data3=g.Data
 	data3="3"
 	return render_template("Home/ceshi.html",data1=data1,data2=data2,data3=data3)
@@ -91,17 +92,18 @@ def news2Json(news,length,page):
 @home.route('/news/news2Json',methods=["POST","GET"])
 def newJson():
 	if request.method == 'POST':
-		g.Data=request.get_data()
-		g.Data1=request.data
-		session['Data1']=str(request.data)#request.data
+# 		g.Data=request.get_data()
+# 		g.Data1=request.data
+# #	session['Data1']=request.get_json()#request.data
 		session['Data']=request.get_data()
-		session['DataType']=type(request.get_data())
-		# session['Data2']=request.get_json()
+
+# 		session['DataType']=type(request.get_data())
+# 		# session['Data2']=request.get_json()
 		
-		#return request.get_data()
+		return request.get_data()
 		 #getJson=request.get_json()
 		
-		return str(request.get_data())
+		# return request.get_json()
 		# return getJson.gotoPage
 		getDict=json.loads(getJson)
 		now = datetime.now()
@@ -147,7 +149,7 @@ def newJson():
 			return NewsJson
 		else:
 			return None
-	return None
+	return jsonify({"a":"1"})
 
 
 
