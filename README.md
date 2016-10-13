@@ -10,3 +10,7 @@ Maertial物资系统，Tpl跳转页面及异常页面.更细划分可参照社�
 ##各模块使用蓝图结合
 ##上传文件路径aunet/templates/Uploads
 ##公共view,model,form可以写在aunet/models,aunet/views,aunet/forms
+
+
+
+
