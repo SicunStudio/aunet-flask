@@ -107,13 +107,14 @@ function GetNews(posts)
 	
 	$.ajax({
         type: "POST",
-        url: "news2Json",
+        url: "news/news2Json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(posts),
         dataType: "json",
         success: function (message) {
             if (message > 0) {
                 alert("请求已提交！");
+                alert(JSON.parse(message));
                 DisplayNews(message);
             }
         },
