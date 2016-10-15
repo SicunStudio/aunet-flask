@@ -5,7 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_restful import Api,Resource
 from flask_login import LoginManager
+from flask_principal import Principal
 import pymysql
+
 
 # from .Api.common.common import errors
 
@@ -19,7 +21,7 @@ db=SQLAlchemy(app)
 # api=Api(app,errors=errors)
 api=Api(app)
 
-
+principals=Principal(app)
 
 lm=LoginManager()
 lm.init_app(app)

@@ -5,7 +5,7 @@ from .. import api
 from .resources.users import Users,User1,UserNodes,UserRole,UserSpecNodes,Node1,NodeSpec,Role1,RoleSpec
 from .resources.news import SilderShow1,SliderShowSpec,CharmAssociation1,CharmAssociationSpec,News1,NewsSpec
 from .resources.news import NewsSpecDetail,Notice1,NoticeSpec,NoticeSpecDetail,AdvanceNotice1,AdvanceNoticeSpec,AdvanceNoticeSpecDetail
-	
+from .resources.search import SearchAdvanceNotice,SearchNotice,SearchNews
 
 
 
@@ -36,3 +36,10 @@ api.add_resource(NoticeSpecDetail,"/dashboard/News/News/Notice/<string:id>/Detai
 api.add_resource(AdvanceNotice1,"/dashboard/News/News/AdvanceNotice")
 api.add_resource(AdvanceNoticeSpec,"/dashboard/News/News/AdvanceNotice/<string:id>")
 api.add_resource(AdvanceNoticeSpecDetail,"/dashboard/News/News/AdvanceNotice/<string:id>/Detail")
+
+
+#Search 模块
+
+api.add_resource(SearchNews,"/dashboard/Search/News")
+api.add_resource(SearchNotice,"/dashboard/Search/Notice")
+api.add_resource(SearchAdvanceNotice,"/dashboard/Search/AdvanceNotice")

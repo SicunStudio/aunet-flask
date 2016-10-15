@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from flask import jsonify
 import json
 
+
 from . import home
 from .models import News,Notice,AdvanceNotice,StarAssociation,CharmAssociation,AssociationTag
 
@@ -45,7 +46,7 @@ def show_News(year,month,day):
 @home.route('/news',methods=["POST","GET"])
 def indexNews():
 	# LatestNews=getSpecialNumberNews(10)
-	return render_template("Home/news/news.html")
+	return render_template("Home/news/index.html")
 
 def getLatestNews():
 	LatestFiveNews=News.query.order_by(News.news_Post_Time.desc()).limit(5).all()
@@ -60,7 +61,7 @@ def getStarAssociation(star_Role):
 	return star_association
 
 def getLatestNotice(number):
-	LatestNotice=Notice.query.order_by(Notice.notice_id.desc()).limit(number).all()
+	LatestNotice=Notice.query.order_by(Notice.notice_Id.desc()).limit(number).all()
 	return LatestNotice
 def getLatestAdvanceNotice(number):
 	LatestAdvanceNotice=AdvanceNotice.query.order_by(AdvanceNotice.an_Id).limit(number).all()
@@ -79,7 +80,7 @@ def news2Json(news,length,page):
 	newsJson['news_Img_Url']=list()
 	newsJson['news_Post_Time']=list()
 	newsJson['news_Length']=length
-	newsJson['news_Current_Page']=page
+	newsJson['news_Current_Page']=str(page)
 	i=0
 	for new in news:
 		newsJson['news_Title'].append(dict({i:new.news_Title}))
@@ -96,24 +97,26 @@ def newJson():
 # 		g.Data1=request.data
 # #	session['Data1']=request.get_json()#request.data
 		# session['Data1']=request.get_data()
-		session['Data4']=request.get_data()
+								# session['Data4']=request.get_json
 		# session['Data2']=request.data
 # 
 # 		session['DataType']=type(request.get_data())
 # 		# session['Data2']=request.get_json()
-		data=request.get_data()
-		data=data.decode('utf-8')
+								# data=request.get_data()
+								# data=data.decode('utf-8')
 		
 		 #getJson=request.get_json()
 		
 		# return request.get_json()
 		# return getJson.gotoPage
-		getDict=json.loads(data)
+		
+		getDict=request.get_json()						# getDict=json.loads(data)
 		now = datetime.now()
 		Category=getDict['Category']
 		Time=getDict['Time']
 		Sort=getDict['Sort']
 		gotoPage=getDict['gotoPage']
+		gotoPage=int(gotoPage)
 		# Category=request.values.get['Category']
 		# Time=request.values.get['Time']
 		# Sort=request.values.get['Sort']
@@ -151,7 +154,7 @@ def newJson():
 			NewsJson=news2Json(news,len(news),gotoPage)
 			return jsonify(NewsJson)
 		else:
-			return "<html><body>fhf</body></html>"
+			return "<html><body>bad</body></html>"
 	return None
 
 

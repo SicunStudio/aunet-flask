@@ -14,9 +14,9 @@ parser.add_argument('page',type=int,help="page")#若请求中无此参数，默�
 parser.add_argument('per_page',type=int,help="per_page")
 
 SilderShow_parser=reqparse.RequestParser()
-SilderShow_parser.add_argument('title',type=str,required=True,location="json",help="title")
-SilderShow_parser.add_argument('imgUrl',type=str,required=True,location="json",help="imgUrl")
-SilderShow_parser.add_argument("outline",type=str,required=True,location="json",help="outline")
+SilderShow_parser.add_argument('title',type=str,required=True,location="json",help="title is needed")
+SilderShow_parser.add_argument('imgUrl',type=str,required=True,location="json",help="imgUrl is needed")
+SilderShow_parser.add_argument("outline",type=str,required=True,location="json",help="outline is needed")
 
 
 SilderShowSpec_parser=reqparse.RequestParser()
@@ -26,10 +26,10 @@ SilderShowSpec_parser.add_argument("outline",type=str,location="json",help="outl
 SilderShowSpec_parser.add_argument("status",type=int,location='json',help="status")
 
 CharmAssociation_parser=reqparse.RequestParser()
-CharmAssociation_parser.add_argument('name',type=str,location="json",required=True,help="name"),
-CharmAssociation_parser.add_argument('imgUrl',type=str,location="json",required=True,help="imgUrl"),
-CharmAssociation_parser.add_argument("intro",type=str,location="json",required=True,help="intro"),
-CharmAssociation_parser.add_argument("tags",type=str,location="json",required=True,help="tags",action='append')
+CharmAssociation_parser.add_argument('name',type=str,location="json",required=True,help="name is needed"),
+CharmAssociation_parser.add_argument('imgUrl',type=str,location="json",required=True,help="imgUrl is needed"),
+CharmAssociation_parser.add_argument("intro",type=str,location="json",required=True,help="intro is needed"),
+CharmAssociation_parser.add_argument("tags",type=str,location="json",required=True,help="tags is needed",action='append')
 
 CharmAssociationSpec_parser=reqparse.RequestParser()
 CharmAssociationSpec_parser.add_argument('name',type=str,location="json",help="name"),
@@ -38,12 +38,12 @@ CharmAssociationSpec_parser.add_argument("intro",type=str,location="json",help="
 CharmAssociationSpec_parser.add_argument("tags",type=str,location="json",help="tags",action='append')
 
 News_parser=reqparse.RequestParser()
-News_parser.add_argument("category",type=str,location="json",required=True,help="category")
-News_parser.add_argument("detail",type=str,location="json",required=True,help="detail")
-News_parser.add_argument("title",type=str,location="json",required=True,help="title")
-News_parser.add_argument("outline",type=str,location="json",required=True,help="outline")
-News_parser.add_argument('imgUrl',type=str,location="json",required=True,help="imgUrl",action='append')
-News_parser.add_argument("imgUrlFirst",type=str,location="json",required=True,help="imgUrlFirst")
+News_parser.add_argument("category",type=str,location="json",required=True,help="category is needed")
+News_parser.add_argument("detail",type=str,location="json",required=True,help="detail is needed")
+News_parser.add_argument("title",type=str,location="json",required=True,help="title is needed")
+News_parser.add_argument("outline",type=str,location="json",required=True,help="outline is needed")
+News_parser.add_argument('imgUrl',type=str,location="json",required=True,help="imgUrl is needed",action='append')
+News_parser.add_argument("imgUrlFirst",type=str,location="json",required=True,help="imgUrlFirst is needed")
 
 NewsSpec_parser=reqparse.RequestParser()
 NewsSpec_parser.add_argument("category",type=str,location="json",help="category")
@@ -56,11 +56,11 @@ NewsSpec_parser.add_argument("edit",type=int,location="json",help="edit status")
 
 
 Notice_parser=reqparse.RequestParser()
-Notice_parser.add_argument("detail",type=str,location="json",required=True,help="detail")
-Notice_parser.add_argument("title",type=str,location="json",required=True,help="title")
-Notice_parser.add_argument("outline",type=str,location="json",required=True,help="outline")
-Notice_parser.add_argument('imgUrl',type=str,location="json",required=True,help="imgUrl",action='append')
-Notice_parser.add_argument("imgUrlFirst",type=str,location="json",required=True,help="imgUrlFirst")
+Notice_parser.add_argument("detail",type=str,location="json",required=True,help="detail is needed")
+Notice_parser.add_argument("title",type=str,location="json",required=True,help="title is needed")
+Notice_parser.add_argument("outline",type=str,location="json",required=True,help="outline is needed")
+Notice_parser.add_argument('imgUrl',type=str,location="json",required=True,help="imgUrl is needed",action='append')
+Notice_parser.add_argument("imgUrlFirst",type=str,location="json",required=True,help="imgUrlFirst is needed")
 
 News_fields={
     "id":fields.Integer(attribute="news_Id"),

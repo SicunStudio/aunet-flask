@@ -107,7 +107,7 @@ function GetNews(posts)
 	
 	$.ajax({
         type: "POST",
-        url: "news/news2Json",
+        url: "news2Json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(posts),
         dataType: "json",
