@@ -48,13 +48,13 @@ function _menu(){
 
 function DisplayNews(news)
 {
-	var page = JSON.parse(news);
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page.news_Length);
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page.news_Current_Page);
 	var news = document.getElementsByClassName("news_2_x");
-	var loop;
-	for(loop = 0;loop < 10;loop++)
+	for(var loop = 0;loop < 10;loop++)
 		news[loop].setAttribute("style","display:none");
+	var page = JSON.parse(news);
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page.news_Length + "");
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page.news_Current_Page + "");
+	var loop;
 	for(loop = 0;loop < page.news_Length;loop++)
 	{
 		news[loop].setAttribute("style","display:block");
@@ -114,10 +114,13 @@ function GetNews(posts)
         success: function (message) {
             if (message > 0) {
                 alert("请求已提交！");
+                DisplayNews(message);
             }
         },
         error: function (message) {
             alert("提交数据失败！");
+
+                DisplayNews(message);
         }
     });
     alert(JSON.stringify(posts));
