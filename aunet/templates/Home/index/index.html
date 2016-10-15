@@ -4,11 +4,10 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_pc.css" media="only screen and (min-device-width:1366px)">
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css" media="only screen and (max-device-width:1365px)">
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css">
 		<title>华中科技大学社团网</title>
 	</head>
-	<body onload="LoopNews();">
+	<body>
 		<div id="top_menu">
 			<img src="" alt="" class="logo">
 			<span class="top_menu_title">
@@ -41,7 +40,7 @@
 				</div>
 				<div class="preview">
 				{%for News in LatestFiveNews%}
-					<div class="preview_x"><a><img class="news" id="" onclick="_getimg(this)" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
 				{%endfor%}
 				</div>
 			</div>
@@ -64,7 +63,7 @@
 		<div id="star_">
 			<div class="star_1">
 				<div><p>社团之星 </p><img src="{{StarAssociation1.star_Img_Url}}" alt="{{StarAssociation1.star_Role}}"></div>
-				<div>{{ StarAssociation1.star_Intro }}</div>
+				<div>{{StarAssociation1.star_Intro}}</div>
 				<div><p>社联之星</p><img src="{{StarAssociation2.star_Img_Url}}" alt="{{StarAssociation2.star_Role}}"></div>
 				<div>{{StarAssociation2.star_Intro}}</div>
 				<div><p>指导老师</p><img src="{{StarAssociation3.star_Img_Url}}" alt="{{StarAssociation3.star_Role}}"></div>
@@ -116,7 +115,7 @@
 						<span class="comment"><a href="{{NewsYuLans.news_Comments}}"><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
 					</div>
 				</div>
-				<br><br><hr><br>
+				<br><br><br><br><hr><br>
 			{%endfor%}	
 
 			</div>
@@ -177,13 +176,12 @@
 					<li><a href="">醉晚亭</a></li>
 				</ul>
 			</span>
-<!-- 			<span><img src="" alt=""></span>
-			<span><img src="" alt=""></span> -->
 		</div>
 
 		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
 	</body>
-
-	<script src="../../../static/Home/index_API-FUN.js"></script>
+	
+	<script src="../../../static/Home/index_API.js"></script>
+	<script src="../../../static/Home/home.js"></script>
 
 </html>

@@ -1,15 +1,14 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>	
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_pc.css" media="only screen and (min-device-width:1366px)">
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css" media="only screen and (max-device-width:1365px)">
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css">
 		<link rel="stylesheet" type="text/css" href="../../../static/Home/news.css">
 		<title>华中科技大学社团网__新闻</title>
 	</head>
-	<body onload="GetAllOn()">
+	<body>
 		<div id="top_menu">
 			<img src="" alt="" class="logo">
 			<span class="top_menu_title">
@@ -43,7 +42,7 @@
 			<div class="search_option">
 				<ul name="Category">
 					<caption>类型：</caption>
-					<li class="on" onclick="GetSearchPart(this)" name="all">全部</li>
+					<li class="on" onclick="GetSearchPart(this);" name="all">全部</li>
 					<li onclick="GetSearchPart(this)" name="news">新闻</li>
 					<li onclick="GetSearchPart(this)" name="notice">通知</li>
 					<li onclick="GetSearchPart(this)" name="preview">预告</li>
@@ -76,8 +75,6 @@
 
 				
 
-				<!-- 一条新闻的样式，多条时从此处复制，图片固定大小 -->
-				<!-- 一页最多10条新闻，用10个块，也可以只用一个模板用js来添加内容 -->
 				<!-- part 1 -->
 				<div class="news_2_x">
 					<img src="" alt="">
@@ -264,8 +261,7 @@
 
 		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
 	</body>
-	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js
-"></script>
-	<script src="../../../static/Home/index_API-FUN.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="../../../static/Home/index_API.js"></script>
 
 </html>
