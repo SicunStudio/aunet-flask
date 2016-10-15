@@ -4,4 +4,5 @@ window.onload=function()
 	for(var loop = 0 ; loop < 5 ; loop++)
 		news[loop].addEventListener("click",GetImg);
 	document.getElementsByTagName("body")[0].addEventListener("onload",LoopNews);
+	document.getElementsByClassName("menu")[0].addEventListener("click",_menu);
 }
