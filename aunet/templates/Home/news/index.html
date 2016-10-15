@@ -42,24 +42,24 @@
 			<div class="search_option">
 				<ul name="Category">
 					<caption>类型：</caption>
-					<li class="on" onclick="GetSearchPart(this);" name="all">全部</li>
-					<li onclick="GetSearchPart(this)" name="news">新闻</li>
-					<li onclick="GetSearchPart(this)" name="notice">通知</li>
-					<li onclick="GetSearchPart(this)" name="preview">预告</li>
+					<li class="on" name="all">全部</li>
+					<li name="news">新闻</li>
+					<li name="notice">通知</li>
+					<li name="preview">预告</li>
 				</ul>
 				<ul name="Time">
 					<caption>时间：</caption>
-					<li class="on" onclick="GetSearchPart(this)" name="all">全部</li>
-					<li onclick="GetSearchPart(this)" name="week">一周</li>
-					<li onclick="GetSearchPart(this)" name="month">三月</li>
-					<li onclick="GetSearchPart(this)" name="year">一年</li>
+					<li class="on" name="all">全部</li>
+					<li name="week">一周</li>
+					<li name="month">三月</li>
+					<li name="year">一年</li>
 				</ul>
 				<ul name="Sort">
 					<caption>排序：</caption>
-					<li class="on" onclick="GetSearchPart(this)" name="all">综合</li>
-					<li onclick="GetSearchPart(this)" name="hot">热门</li>
-					<li onclick="GetSearchPart(this)" name="latest">最新</li>
-					<li onclick="GetSearchPart(this)" name="oldest">最旧</li>
+					<li class="on" name="all">综合</li>
+					<li name="hot">热门</li>
+					<li name="latest">最新</li>
+					<li name="oldest">最旧</li>
 				</ul>
 			</div>
 		</div>
@@ -230,9 +230,9 @@
 
 
 				<div class="goto">
-					<span><a onclick="PageUp(this)">上一页</a></span>
-					<span><input type="number" value="1">/<input type="number" value="1" disabled=""><a onclick="GetAllOn()">跳转</a></span>
-					<span><a onclick="PageDown(this)">下一页</a></span>
+					<span><a>上一页</a></span>
+					<span><input type="number" value="1">/<input type="number" value="3" disabled=""><a >跳转</a></span>
+					<span><a>下一页</a></span>
 				</div>
 
 
@@ -263,5 +263,5 @@
 	</body>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="../../../static/Home/index_API.js"></script>
-
+	<script src="../../../static/Home/news.js"></script>
 </html>
