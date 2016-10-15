@@ -8,14 +8,13 @@ document.getElementsByTagName("year")[0].innerHTML = myDate.getFullYear();
 及其是否被选中flag
 替换大图标题
 *********/
-function _getimg(m)
+function GetImg()
 {
-	document.getElementById("show_").src = m.src;//地址
-	news = document.getElementsByClassName("news");
+	var news = document.getElementsByClassName("news");
 	for(var loop = 0;loop < 5;loop++)
 		news[loop].id = "";
-	m.id = "on";//被选中
-	document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+	this.id = "on";//被选中
+	document.getElementById("picture_title").innerHTML = this.alt;//替换标题
 }
 /*******
 循环预览图片
@@ -25,7 +24,7 @@ function LoopNews()
 	var news = document.getElementsByClassName("news");
 	var loop = 0;
 	var s = setInterval(function(){
-		_getimg(news[loop]);
+		GetImg(news[loop]);
 		loop++;
 		if(loop >= 5) loop = 0;	
 	},5000	)
@@ -47,8 +46,9 @@ function _menu(){
 	}
 }
 
-function DisplayNews(page)
+function DisplayNews(news)
 {
+	var page = JSON.parse(news);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page.news_Length);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page.news_Current_Page);
 	var news = document.getElementsByClassName("news_2_x");
@@ -79,32 +79,47 @@ ajax提交请求并获取数据
 ******/
 function GetNews(posts)
 {
-	var request = GetHttpObject();
-	// /alert(post['Sort'])
-	if(request)
-	{
+	// var request = GetHttpObject();
+	// // /alert(post['Sort'])
+	// if(request)
+	// {
 		
-		request.open("POST","news/news2Json",true);
-		request.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		var tt = JSON.stringify(posts);
-		alert(tt);
+	// 	request.open("POST","news/news2Json",true);
+	// 	request.setRequestHeader("Content-Type","application/x-javascript;charset=UTF-8");//
+	// 	var info = JSON.stringify(posts);
 		
-		request.onreadystatechange = function(){
-			if(request.readyState == 4)
-					{
-						var page=request.responseText;//返回一个json对象
-						DisplayNews(page);
-					}
-			}
-		request.send(tt);//提交一个json对象
+	// 	alert(info);
 
-	}
-	else
-	{
-		alert("error");
-	}
+	// 	request.onreadystatechange = function(){
+	// 		if(request.readyState == 4)
+	// 				{
+	// 					var page=request.responseText;//返回一个json对象
+	// 					DisplayNews(page);
+	// 				}
+	// 		}
+	// 	request.send(info);//提交一个json对象
+
+	// }
+	// else
+	// {
+	// 	alert("error");
+	// }
 	
-	
+	$.ajax({
+        type: "POST",
+        url: "news/news2Json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(posts),
+        dataType: "json",
+        success: function (message) {
+            if (message > 0) {
+                alert("请求已提交！");
+            }
+        },
+        error: function (message) {
+            $("#request-process-patent").html("提交数据失败！");
+        }
+    });
 // $.ajax{
 // 	type:'POST',
 // 	dataType:'json',
