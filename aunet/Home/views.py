@@ -11,8 +11,9 @@ from .models import News,Notice,AdvanceNotice,StarAssociation,CharmAssociation,A
 def getData():
 	# data1=session['DataType']
 	# data1=session['Data2']
+	# data1=session['Data']
 	data1="1"
-	data2=session['Data1']
+	data2=session['Data']
 	#data3=g.Data
 	data3="3"
 	return render_template("Home/ceshi.html",data1=data1,data2=data2,data3=data3)
@@ -86,24 +87,28 @@ def news2Json(news,length,page):
 		newsJson['news_Img_Url'].append(dict({i:new.news_Img_Url}))
 		newsJson['news_Post_Time'].append(dict({i:new.news_Post_Time.strftime('%Y-%m-%d %H:%M:%S')}))
 		i=i+1
-	return json.dumps(newsJson)   		
+	return newsJson   		
 	
 @home.route('/news/news2Json',methods=["POST","GET"])
 def newJson():
 	if request.method == 'POST':
-		g.Data=request.get_data()
-		g.Data1=request.data
-		session['Data1']=str(request.data)#request.data
-		session['Data']=request.get_data()
-		session['DataType']=type(request.get_data())
-		# session['Data2']=request.get_json()
+# 		g.Data=request.get_data()
+# 		g.Data1=request.data
+# #	session['Data1']=request.get_json()#request.data
+		# session['Data1']=request.get_data()
+		session['Data4']=request.get_data()
+		# session['Data2']=request.data
+# 
+# 		session['DataType']=type(request.get_data())
+# 		# session['Data2']=request.get_json()
+		data=request.get_data()
+		data=data.decode('utf-8')
 		
-		#return request.get_data()
 		 #getJson=request.get_json()
 		
-		return str(request.get_data())
+		# return request.get_json()
 		# return getJson.gotoPage
-		getDict=json.loads(getJson)
+		getDict=json.loads(data)
 		now = datetime.now()
 		Category=getDict['Category']
 		Time=getDict['Time']
@@ -144,9 +149,9 @@ def newJson():
 			news=None
 		if news!=None:
 			NewsJson=news2Json(news,len(news),gotoPage)
-			return NewsJson
+			return jsonify(NewsJson)
 		else:
-			return None
+			return "<html><body>fhf</body></html>"
 	return None
 
 

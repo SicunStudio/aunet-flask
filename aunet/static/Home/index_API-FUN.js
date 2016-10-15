@@ -85,10 +85,10 @@ function GetNews(posts)
 	{
 		
 		request.open("POST","news/news2Json",true);
-		request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-		var tt = JSON.stringify(post);
+		request.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+		var tt = JSON.stringify(posts);
 		alert(tt);
-		request.send(tt);//提交一个json对象
+		
 		request.onreadystatechange = function(){
 			if(request.readyState == 4)
 					{
@@ -96,6 +96,7 @@ function GetNews(posts)
 						DisplayNews(page);
 					}
 			}
+		request.send(tt);//提交一个json对象
 
 	}
 	else

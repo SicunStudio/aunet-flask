@@ -36,10 +36,30 @@ class News(db.Model):
 class Comments(db.Model):
 	__tablename__="comments"
 	com_Id=db.Column(db.Integer,primary_key=True)
+
+
+class SilderShow(db.Model):
+	id=db.Column(db.Integer,primary_key=True)
+	title=db.Column(db.String(60))
+	img_Url=db.Column(db.String(20))
+	outline=db.Column(db.Text)
+	status=db.Column(db.Integer)
+	post_Time=db.Column(db.DateTime)
+
+	def __init__(self,title,img_Url,outline):
+		self.title=title
+		self.img_Url=img_Url
+		self.outline=outline
+		self.status=1
+		self.post_Time=datetime.now()
+
+	def __str__(self):
+		return self.title
+	__repr__=__str__
 	
 class Notice(db.Model):
 	__tablename__="notice"
-	notice_id=db.Column(db.Integer,primary_key=True)
+	notice_Id=db.Column(db.Integer,primary_key=True)
 	notice_Year=db.Column(db.Integer)
 	notice_Month=db.Column(db.Integer)
 	notice_Day=db.Column(db.Integer)
@@ -119,11 +139,18 @@ class CharmAssociation(db.Model):
 	charm_Name=db.Column(db.String(20))
 	charm_Img_Url=db.Column(db.String(20))
 	charm_Intro=db.Column(db.Text) 
-	
 
-	def __init__(self,charm_Name,charm_Img_Url):
+	@property
+	def tags(self):
+		tag=[]
+		for t in self.charm_Tag:
+			tag.append(t.tag)
+		return tag
+
+	def __init__(self,charm_Name,charm_Img_Url,charm_Intro):
 		self.charm_Name=charm_Name
 		self.charm_Img_Url=charm_Img_Url
+		self.charm_Intro=charm_Intro
 		
 
 class AssociationTag(db.Model):

@@ -7,6 +7,8 @@ SECRET_KEY = 'May AU forever'
 
 #sqlalchemy配置
 SQLALCHEMY_DATABASE_URI='mysql+pymysql://root:abc201314@localhost/aunet_flask'#mysql的配置
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
 SQLALCHEMY_POOL_RECYCLE=15
 SQLALCHEMY_POOL_SIZE=15
 SQLALCHEMY_TRACK_MODIFICATIONS=True
