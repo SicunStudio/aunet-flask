@@ -107,7 +107,7 @@ function GetNews(posts)
 	
 	$.ajax({
         type: "POST",
-        url: "news2Json",
+        url: "news/news2Json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(posts),
         dataType: "json",
@@ -117,9 +117,11 @@ function GetNews(posts)
             }
         },
         error: function (message) {
-            $("#request-process-patent").html("提交数据失败！");
+            alert("提交数据失败！");
         }
     });
+    alert(JSON.stringify(posts));
+
 // $.ajax{
 // 	type:'POST',
 // 	dataType:'json',
@@ -145,16 +147,16 @@ function GetNews(posts)
 新闻部分的条件搜索栏
 更改其class值
 ******/
-function GetSearchPart(e)
+function GetSearchPart()
 {
-	var parent = e.parentNode;
-	var loop = 0;
-	for(loop;loop < 4;loop++)
+	var parent = this.parentNode;
+	// alert("yep");
+	for(var loop = 0 ; loop < 4;loop++)
 	{
 		//alert(parent.getElementsByTagName("li")[loop].getAttribute("name"));
 		parent.getElementsByTagName("li")[loop].setAttribute("class","");
 	}
-	e.setAttribute("class","on");
+	this.setAttribute("class","on");
 	GetAllOn();
 }
 
@@ -186,7 +188,7 @@ function GetAllOn()
 }
 
 /*****前后页跳转及错误处理：开始*****/
-function PageUp(e)
+function PageUp()
 {
 	var pageUp = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	if(parseInt(pageUp.getAttribute("value")) <= 1)
@@ -195,12 +197,12 @@ function PageUp(e)
 	}
 	else 
 	{
-		pageUp.setAttribute("value",parseInt(pageUp.getAttribute("value"))-1);
+		pageUp.setAttribute("value",(parseInt(pageUp.getAttribute("value"))-1)+"");
 		//alert(pageUp.getAttribute("value"));
 		GetAllOn();
 	}
 }
-function PageDown(e)
+function PageDown()
 {
 	var pageUp = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	if(parseInt(pageUp.getAttribute("value")) >= parseInt(document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].getAttribute("value")))
@@ -209,7 +211,7 @@ function PageDown(e)
 	}
 	else 
 	{
-		pageUp.setAttribute("value",parseInt(pageUp.getAttribute("value"))+1);
+		pageUp.setAttribute("value",(parseInt(pageUp.getAttribute("value"))+1)+"");
 		//alert(pageUp.getAttribute("value"));
 		GetAllOn();
 	}
