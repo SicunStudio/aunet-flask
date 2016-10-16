@@ -1,6 +1,25 @@
 body{
 	overflow-x: hidden;
 }
+.goto input{
+	width:25px;
+	text-align: center;
+	padding: 2px 5px;
+	margin: 0 5px;
+	border-radius: 2px 2px 2px 2px;
+	border: 0;
+}
+.goto a{
+	width:25px;
+	text-align: center;
+	padding: 2px 5px;
+	margin: 2px 5px;
+	font-size: 0.5em;
+	background: #bebebe;
+	border-radius: 5px 5px 5px 5px; 
+	cursor: pointer;
+}
+
 @media screen and (min-width: 760px){
 #news_{
 	background: #f4f4f4;
@@ -9,13 +28,14 @@ body{
 	text-align: center;
 	padding: 10px 0px;
 }
-/*#search_ {
-	text-align:center;
-}*/
+#search_ {
+	clear: left;
+}
 #search_ input[type="search"]{
 	width:50%;
 	margin: 20px 0;
 	padding: 2px 5px;
+	display: none;
 }
 #search_ input[type="submit"]{
 	background: #4caf50 url(../../static/Home/search.png);
@@ -28,16 +48,16 @@ body{
 	border-radius: 5px 5px 5px 5px; 
 	cursor: pointer;
 	outline: none;
+	display: none;
 }
 #search_ li{
 	position: relative;
 	list-style: none;
-	margin:0 0;
+	margin:10px 5px;
 	line-height: 30px;
 	padding:0 0 ;}
 #search_ li{
 	padding:0 15px;
-	margin:0 5px;
 	border:0;
 	display: inline-block;
 } 
@@ -48,8 +68,8 @@ body{
 }
 #search_ .search_option{
 	position: relative;
-	left:84px;
-	bottom: 00px;
+	left:100px;
+	bottom: 0;
 	cursor: pointer;
 }
 }
@@ -60,6 +80,9 @@ body{
 	margin: 5px 5%;
 	text-align: center;
 	padding: 10px 0px;
+}
+#search_ {
+	clear: left;
 }
 /*#search_ {
 	text-align:center;
@@ -77,16 +100,17 @@ form{
 	border-radius: 5px 5px 5px 5px; 
 	cursor: pointer;
 	outline: none;
+	display: none;
 }
 #search_ li{
 	position: relative;
 	list-style: none;
-	margin:0 -10px;
+	margin:5px 0px;
 	line-height: 25px;
 	padding:0 0 ;}
 #search_ li{
 	padding:0 5px;
-	margin:0 5px;
+	margin:5px 0px;
 	border:0;
 	display: inline-block;
 } 
@@ -97,8 +121,8 @@ form{
 }
 #search_ .search_option{
 	position: relative;
-	right:30px;
-	bottom: 20px;
+	bottom: 0px;
+	left:50px;
 	cursor: pointer;
 }
 }
