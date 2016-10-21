@@ -36,8 +36,7 @@ app.register_blueprint(admin,url_prefix='/admin')
 from .Home import home
 app.register_blueprint(home)
 
-from .Api import dashboard
-app.register_blueprint(dashboard,url_prefix='/dashboard')
+
 
 
 
