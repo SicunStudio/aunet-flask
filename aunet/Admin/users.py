@@ -33,10 +33,10 @@ Node_fields={
 }
 
 User_parser=reqparse.RequestParser()			# User zhong method post de parser
-User_parser.add_argument('userName',type=str,required =True,location="json",help="userName")
-User_parser.add_argument('passWord',type=str,required =True,location="json",help="passWord")
-User_parser.add_argument('email',type=str,location="json",help="email")
-User_parser.add_argument('roleName',type=str,required =True,location="json",help="roleName")
+User_parser.add_argument('userName',type=str,required =True,location="json",help="userName is needed")
+User_parser.add_argument('passWord',type=str,required =True,location="json",help="passWord is needed")
+User_parser.add_argument('email',type=str,location="json",help="email is needed",required=True)
+User_parser.add_argument('roleName',type=str,required =True,location="json",help="roleName is needed")
 
 User1_parser=reqparse.RequestParser()			#User1 zhong method post de parser
 # User1_parser.add_argument('userId',type=int,required=True,location="json",help="userId")
@@ -56,8 +56,8 @@ NodeSpec_parser=reqparse.RequestParser()
 NodeSpec_parser.add_argument('status',type=int,help="status type is int")
 
 Role_parser=reqparse.RequestParser()
-Role_parser.add_argument('roleName',type=str,location="json",required=True,help="roleName")
-Role_parser.add_argument("remark",type=str,location="json",required=True,help="remark")
+Role_parser.add_argument('roleName',type=str,location="json",required=True,help="roleName is needed")
+Role_parser.add_argument("remark",type=str,location="json",required=True,help="remark is needed")
 
 RoleSpec_parser=reqparse.RequestParser()
 RoleSpec_parser.add_argument('roleName',type=str,location="json")
@@ -69,6 +69,9 @@ def abort_if_not_exist(data,message):
 	if data==None:
 		abort(404,message="{} Not Found".format(message))
 
+def abort_if_exist(data,message):
+	if data!=None:
+		abort(400,message="{} has existed ,please try another".format(message))
 # def abort_if_node_not_exist(id):
 # 	node=Node.query.filter(Node.id==id).first()
 # 	if node==None:
@@ -107,7 +110,8 @@ class Users(Resource):
 		passWord=args['passWord']
 		email=args['email']
 		roleName=args['roleName']
-
+		user1=User.query.filter(User.userName==userName).first()
+		abort_if_exist(user1,"userName")
 		user=User(userName,passWord,email,roleName)
 		db.session.add(user)
 		db.session.commit()
@@ -149,6 +153,8 @@ class User1(Resource):			#不用User是避免与User表冲突
 		userName=args['userName']
 		loginIp=args['loginIp']
 		loginTime=args['loginTime']
+		user1=User.query.filter(User.userName==userName).first()
+		abort_if_exist(user1,"userName")
 		if lock!=None:
 			user.lock=lock
 		if email!=None:
@@ -272,6 +278,8 @@ class Role1(Resource):
 		agrs=Role_parser.parse_args()
 		roleName=args['roleName']
 		remark=args['remark']
+		role1=Role.query.filter(Role.roleName==roleName).first()
+		abort_if_exist(role1,"roleName")
 		role=Role(roleName,remark)
 		db.session.add(role)
 		db.session.commit(role)
