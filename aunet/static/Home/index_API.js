@@ -106,7 +106,7 @@ function DisplayNews(news)
 	{
 		news[loop].setAttribute("style","display:block");
 		/******一下的json访问可能存在问题******/
-		news[loop].getElementsByClassName("news_title")[0].innerHTML = page.["news_Title"][loop][loop+""];
+		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["news_Title"][loop][loop+""];
 		news[loop].getElementsByClassName("article")[0].innerHTML = page["news_Outline"][loop][loop+""];
 		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["news_Img_Url"][loop][loop+""]);
 		news[loop].getElementsByClassName("time")[0].innerHTML = page["news_Post_Time"][loop][loop+""];
