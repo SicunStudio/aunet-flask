@@ -34,14 +34,25 @@
 		<div id="hot_news">
 			<div class="left">
 				<div class="picture">
-					<a href=""><img src="" id="show_"></a>
+					<div class="img">
+						<a href=""><img src="" id="show_"></a>
+						<a href=""><img src="" id="show_"></a>
+						<a href=""><img src="" id="show_"></a>
+						<a href=""><img src="" id="show_"></a>
+						<a href=""><img src="" id="show_"></a>
+					</div>
 					<div class="background"></div>
 					<div class="title" id="picture_title"></div>	
 				</div>
 				<div class="preview">
-				{%for News in LatestFiveNews%}
+				<!-- {%for News in LatestFiveNews%} -->
 					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
-				{%endfor%}
+					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+
+				<!-- {%endfor%} -->
 				</div>
 			</div>
 			<div class="right">
@@ -61,14 +72,14 @@
 		
 	
 		<div id="star_">
-			<div class="star_1">
+			<!-- <div class="star_1">
 				<div><p>社团之星 </p><img src="{{StarAssociation1.star_Img_Url}}" alt="{{StarAssociation1.star_Role}}"></div>
 				<div>{{StarAssociation1.star_Intro}}</div>
 				<div><p>社联之星</p><img src="{{StarAssociation2.star_Img_Url}}" alt="{{StarAssociation2.star_Role}}"></div>
 				<div>{{StarAssociation2.star_Intro}}</div>
 				<div><p>指导老师</p><img src="{{StarAssociation3.star_Img_Url}}" alt="{{StarAssociation3.star_Role}}"></div>
 				<div>{{StarAssociation3.star_Intro}}</div>
-			</div>
+			</div> -->
 			<div class="star_2">
 				<div class="star_2_1">
 					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
