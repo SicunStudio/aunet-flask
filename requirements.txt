@@ -20,3 +20,5 @@ flask-user
 flask-security
 flask-babel
 flask-locale
+BS4
+PIL

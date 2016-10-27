@@ -9,9 +9,9 @@ from .news import News_fields
 News_parser=reqparse.RequestParser()
 News_parser.add_argument("category",type=str,required=True,help="category is needed")#若请求中无此参数，默认为None
 News_parser.add_argument('sort',type=str,required=True,help="sort is needed")
-News_parser.add_argument('time1',type=str,required=True,help="time1 is needed")
-News_parser.add_argument('time2',type=str,required=True,help="time2 is needed")
-News_parser.add_argument('tags',type=str,required=True,help="tags is needed")
+News_parser.add_argument('start',type=str,required=True,help="time1 is needed")
+News_parser.add_argument('end',type=str,required=True,help="time2 is needed")
+News_parser.add_argument('tags',type=str,required=True,action="append",help="tags is needed")
 
 class SearchNews(Resource):
 	@marshal_with(News_fields)
