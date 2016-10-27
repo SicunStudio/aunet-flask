@@ -1,9 +1,18 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask_principal import Permission
 from .. import lm,db
 
 from datetime import datetime
+from collections import namedtuple
+from functools import partial
 
+
+EditUserNeed=partial(namedtuple("user",['method','value']),'edit')
+class EditUserPermission(Permission):
+    def __init__(self,user_id):
+        need=EditUserNeed(id)
+        super(EditUserPermission,self).__init__(need)
 
 
 role_node = db.Table('role_node',  # 角色权限关联表  
@@ -56,8 +65,7 @@ class User(db.Model,UserMixin):
 		self.email=email
 		r=Role.query.filter(Role.roleName==roleName).first()
 		self.role.append(r)
-		self.remark=r.remark
-		self.status=1
+		self.status=True
 
     	#self.role=Role.query.filter(Role.roleName==roleName).first()
 
@@ -72,12 +80,12 @@ class User(db.Model,UserMixin):
 class LoginLog(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	userName= db.Column(db.String(64))
-	loginTime=db.Column(db.String(25))
+	loginTime=db.Column(db.DateTime)
 	loginIp=db.Column(db.String(20))
 
-	def __init__(self,userName,loginTime,loginIp):
+	def __init__(self,userName,loginIp):
 		self.userName=userName
-		self.loginTime=loginTime
+		self.loginTime=datetime.utcnow()
 		self.loginIP=loginIp
 	def __str__(self):
 		return self.userName
@@ -91,14 +99,13 @@ class Role(db.Model):
 	remark=db.Column(db.String(20))
 	nodes=db.relationship("Node",secondary=role_node,backref=db.backref('roles',lazy="dynamic"))
 
-	def addNode(self,nodeId):
-		n=Node.query.filter(Node.id==nodeId).first()
+	def addNode(self,nodeName):
+		n=Node.query.filter(Node.nodeName==nodeName).first()
 		self.nodes.append(n)
 		
 
-	def __init__(self,roleName,remark):
+	def __init__(self,roleName):
 		self.roleName=roleName
-		self.remark=remark
 		self.status=1
 
 	def __str__(self):
@@ -116,9 +123,8 @@ class Node(db.Model):
 	level=db.Column(db.Integer)
 
 
-	def __init__(self,nodeName,remark,level):
+	def __init__(self,nodeName,level):
 		self.nodeName=nodeName
-		self.remark=remark
 		self.status=1
 		self.level=level
 

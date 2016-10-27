@@ -1,5 +1,6 @@
 from .. import db
 from datetime import datetime
+from flask_login import current_user
 
 
 news_category=db.Table("news_category",
@@ -25,17 +26,18 @@ class News(db.Model):
 	detail=db.Column(db.Text)
 	title=db.Column(db.String(60))
 	outline=db.Column(db.Text)
-	img_url=db.Column(db.String(20))
-	edit=db.Column(db.Boolean)
+	img_url=db.Column(db.String(40))
+	editable=db.Column(db.Boolean)
+	author=db.Column(db.String(20))
 	category=db.relationship("Category",secondary=news_category,backref=db.backref('news',lazy="dynamic"))
 	tags=db.relationship("Tag",secondary=news_tag,backref=db.backref('news',lazy="dynamic"))
 
-	def addCategory(self,categoryId):
-		category=Category.query.filter(Category.id==categoryId).first()
+	def addCategory(self,categoryName):
+		category=Category.query.filter(Category.name==categoryName).first()
 		self.category.append(category)
 
-	def addTag(self,tagId):
-		tag=Tag.query.filter(Tag.id==tagId).first()
+	def addTag(self,tagName):
+		tag=Tag.query.filter(Tag.name==tagName).first()
 		self.tags.append(tag)
 	@property
 	def cate(self):
@@ -44,16 +46,21 @@ class News(db.Model):
 
 
 	def __init__(self,news_Detail,news_Title,news_Outline,news_Img_Url):
-		time=datetime.now()
-		self.post_ime=time
+		time=datetime.utcnow()
+		self.post_time=time
 		self.year=time.year
 		self.month=time.month
 		self.day=time.day
 		self.detail=news_Detail
 		self.title=news_Title
 		self.outline=news_Outline
-		self.img_url=news_Img_Url
-		self.edit=True
+		# self.img_url=news_Img_Url
+		self.img_url="ddd"
+		self.editable=True
+		if current_user.is_anonymous==True:
+			self.author="匿名"
+		else:
+			self.author=current_user.userName
 
 	def __str__(self):
 		return "Title:%s"%self.news_Title
@@ -65,9 +72,9 @@ class Category(db.Model):
 	name=db.Column(db.String(20),unique=True)
 	remark=db.Column(db.String(20))
 
-	def __init__(self,name,remark):
+	def __init__(self,name):
 		self.name=name
-		self.remark=remark
+
 
 	def __str__(self):
 		return "category_name:%s"%self.name
@@ -77,11 +84,10 @@ class Tag(db.Model):
 	__tablename__="tag"
 	id=db.Column(db.Integer,primary_key=True)
 	name=db.Column(db.String(20),unique=True)
-	remark=db.Column(db.String(20))
-
-	def __init__(self,name,remark):
+	#remark=db.Column(db.String(20))
+	def __init__(self,name):
 		self.name=name
-		self.remark=remark
+
 
 	def __str__(self):
 		return "tag_name:%s"%self.name
@@ -93,17 +99,17 @@ class SilderShow(db.Model):
 	title=db.Column(db.String(60))
 	img_url=db.Column(db.String(20))
 	outline=db.Column(db.Text)
-	status=db.Column(db.Integer)
 	post_time=db.Column(db.DateTime)
 	link=db.Column(db.String(30))
+	editable=db.Column(db.Boolean)
 
 	def __init__(self,title,img_Url,outline,link):
 		self.title=title
 		self.img_Url=img_Url
 		self.outline=outline
 		self.link=link
-		self.status=1
-		self.post_Time=datetime.now()
+		self.editable=1
+		self.post_Time=datetime.utcnow()
 
 	def __str__(self):
 		return self.title
