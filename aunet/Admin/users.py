@@ -49,7 +49,7 @@ RoleSpec_parser.add_argument('status',type=bool,location="json")
 
 def abort_if_not_exist(data,message):
 	if data==None:
-		abort(404,message="{} jj Found".format(message))
+		abort(404,message="{}  Found".format(message))
 
 def abort_if_exist(data,message):
 	if data!=None:
@@ -241,8 +241,8 @@ class Roles(Resource):
 	def get(self):
 		roles=Role.query.all()
 		datas=list()
-		data=dict()
 		for role in roles:
+			data=dict()
 			data['roleName']=role.roleName
 			data['status']=role.status
 			data['nodes']=list()
@@ -272,7 +272,7 @@ class Roles(Resource):
 			abort_if_not_exist(node,"node")
 			role.nodes.append(node)
 		db.session.add(role)
-		db.session.commit(role)
+		db.session.commit()
 
 class RoleSpec(Resource):
 	def get(self,id):
@@ -292,9 +292,9 @@ class RoleSpec(Resource):
 		return data
 
 	def put(self,id):
-		# permission=Permission(ActionNeed('修改角色'))
-		# if permission.can()is not True:
-		# 	abort_if_unauthorized("修改角色")
+		permission=Permission(ActionNeed('修改角色'))
+		if permission.can()is not True:
+			abort_if_unauthorized("修改角色")
 		id=int(id)
 		role=Role.query.filter(Role.id==id).first()
 		abort_if_not_exist(role,"role")

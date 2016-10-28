@@ -55,7 +55,7 @@ class News(db.Model):
 		self.title=news_Title
 		self.outline=news_Outline
 		# self.img_url=news_Img_Url
-		self.img_url="ddd"
+		self.img_url=news_Img_Url
 		self.editable=True
 		if current_user.is_anonymous==True:
 			self.author="匿名"
@@ -105,11 +105,11 @@ class SilderShow(db.Model):
 
 	def __init__(self,title,img_Url,outline,link):
 		self.title=title
-		self.img_Url=img_Url
+		self.img_url=img_Url
 		self.outline=outline
 		self.link=link
 		self.editable=1
-		self.post_Time=datetime.utcnow()
+		self.post_time=datetime.utcnow()
 
 	def __str__(self):
 		return self.title
