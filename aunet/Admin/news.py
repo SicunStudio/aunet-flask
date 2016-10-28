@@ -1,6 +1,6 @@
 from flask_restful import reqparse, abort,Resource,fields,marshal_with
 from flask_principal import Permission,ActionNeed
-from aunet import db
+from aunet import db,app
 
 from aunet.Home.models import News ,SilderShow,Category,Tag
 
@@ -9,8 +9,8 @@ import time
 from bs4 import BeautifulSoup
 from io import BytesIO
 from urllib import request
-import random,os
-import json
+import random,os,base64,json
+from PIL import Image
 
 
 SilderShow_parser=reqparse.RequestParser()
@@ -24,7 +24,7 @@ SilderShowSpec_parser=reqparse.RequestParser()
 SilderShowSpec_parser.add_argument('title',type=str,location="json",help="title")
 SilderShowSpec_parser.add_argument('imgUrl',type=str,location="json",help="imgUrl")
 SilderShowSpec_parser.add_argument("outline",type=str,location="json",help="outline")
-SilderShowSpec_parser.add_argument("status",type=int,location='json',help="status")
+SilderShowSpec_parser.add_argument("editable",type=int,location='json',help="status")
 SilderShowSpec_parser.add_argument("link",type=str,location="json",help="the link that jump")
 
 News_parser=reqparse.RequestParser()
@@ -38,7 +38,7 @@ NewsSpec_parser.add_argument("category",type=str,location="json",help="category"
 NewsSpec_parser.add_argument("detail",type=str,location="json",help="detail")
 NewsSpec_parser.add_argument("title",type=str,location="json",help="title")
 NewsSpec_parser.add_argument("editable",type=int,location="json",help="edit status")
-NewsSpec_parser.add_argument("tags",type=int ,location="json",action='append',help="tags id is needed")
+NewsSpec_parser.add_argument("tags",type=str ,location="json",action='append',help="tags id is needed")
 NewsSpec_parser.add_argument('detail',type=str,location="json")
 
 parser=reqparse.RequestParser()
@@ -58,14 +58,15 @@ class TagItem(fields.Raw):
         return tags
 class PostTimeItem(fields.Raw):
     def format(self,postTime):
-        t=datetime.fromtimestamp(postTime)
+        # t=datetime.fromtimestamp(postTime)
+        a=postTime.strftime('%Y-%m-%d %H:%M:%S')
         return time.mktime(time.strptime(a,'%Y-%m-%d %H:%M:%S'))
 
 News_fields={
     "id":fields.Integer(attribute="id"),
     "category":CategoryItem,
     "tags":TagItem,
-    "postTime":PostTimeItem,
+    "postTime":PostTimeItem(attribute="post_time"),
     "title":fields.String(attribute="title"),
     "outline":fields.String(attribute="outline"),
     "editable":fields.Integer(attribute="editable"),
@@ -114,7 +115,6 @@ class SilderShow1(Resource):
 class SliderShowSpec(Resource):
     @marshal_with(SilderShow_fields)
     def get(self,id):
-        id=int(id)
         silder_show=SilderShow.query.filter(SilderShow.id==id).first()
         abort_if_not_exist(silder_show,"silder_show")
         return silder_show
@@ -123,7 +123,6 @@ class SliderShowSpec(Resource):
         permission=Permission(ActionNeed('修改新闻'))
         if permission.can()is not True:
             abort_if_unauthorized("修改新闻")
-        id=int(id)
         silder_show=SilderShow.query.filter(SilderShow.id==id).first()
         abort_if_not_exist(silder_show,"silder_show")
         args=SilderShowSpec_parser.parse_args()
@@ -149,7 +148,6 @@ class SliderShowSpec(Resource):
         permission=Permission(ActionNeed('删除新闻'))
         if permission.can()is not True:
             abort_if_unauthorized("删除新闻")
-        id=int(id)
         silder_show=SilderShow.query.filter(SilderShow.id==id).first()
         abort_if_not_exist(silder_show,"silder_show")
         db.session.delete(silder_show)
@@ -163,24 +161,25 @@ class News1(Resource):
 
     def post(self):
 
-        # permission=Permission(ActionNeed('添加新闻'))
-        # if permission.can()is not True:
-        #     abort_if_unauthorized("添加新闻")
+        permission=Permission(ActionNeed('添加新闻'))
+        if permission.can()is not True:
+            abort_if_unauthorized("添加新闻")
         args=News_parser.parse_args()
         category=args['category']
         detail=args['detail']
         title=args['title']
         tags=args['tags']
         soup=BeautifulSoup(detail,"html.parser")
-        i=0
+        k=0
         for img  in soup.find_all('img'):
             imgurl=img.get('src')
             r=request.urlopen(imgurl)
             data=r.read()
             imgBuf=BytesIO(data)
             i=Image.open(imgBuf)
-            filename=str(int(random.uniform(1,1000)+time.time()))+"jpg"
+            filename=str(int(random.uniform(1,1000)+time.time()))+".png"
             path=os.path.join(app.config['BASEDIR'],'aunet/static/Uploads/News',filename)
+            # return path;
             i.save(path,quality="96")
             f=open(path,"rb")
             data=f.read()      
@@ -189,19 +188,20 @@ class News1(Resource):
             data=data[2:-1]
             data="data:image/jpg;base64,"+data
             img['src']=data
-            if i!=0:
+            # return img
+            k=k+1
+            if k>1:
                 os.remove(path)
             else:
                 imgUrlFirst="static/Uploads/News"+filename
-            i=i+1
-        if i==0:
+        if k==0:
             imgUrlFirst="static/uploads/News/1.jpg"
+        # return imgUrlFirst
         outline=soup.get_text()[:100]
-        news=News(str(soup),title,outline,imgUrlFirst)
+        news=News(soup.prettify(),title,outline,imgUrlFirst)
         db.session.add(news)
         db.session.commit()
         news.addCategory(category)
-        return tags
         for tag in tags:
             t=Tag.query.filter_by(name=tag).first()
             abort_if_not_exist(t,"tag")
@@ -214,7 +214,6 @@ class News1(Resource):
 class NewsSpec(Resource):
     @marshal_with(News_fields)
     def get(self,id):
-        id=int(id)
         news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
         return news
@@ -223,8 +222,7 @@ class NewsSpec(Resource):
         permission=Permission(ActionNeed('修改新闻'))
         if permission.can()is not True:
             abort_if_unauthorized("修改新闻")
-        id=int(id)
-        news=News.query.filter(News.news_Id==id).first()
+        news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
         args=NewsSpec_parser.parse_args()
         category=args['category']
@@ -237,16 +235,17 @@ class NewsSpec(Resource):
             news.addCategory(category)
         if detail!=None:
             news.detail=detail
+            k=0
             soup=BeautifulSoup(detail,"html.parser")
-            i=0
             for img  in soup.find_all('img'):
                 imgurl=img.get('src')
                 r=request.urlopen(imgurl)
                 data=r.read()
                 imgBuf=BytesIO(data)
                 i=Image.open(imgBuf)
-                filename=str(int(random.uniform(1,1000)+time.time()))+"jpg"
+                filename=str(int(random.uniform(1,1000)+time.time()))+".png"
                 path=os.path.join(app.config['BASEDIR'],'aunet/static/Uploads/News',filename)
+                # return path;
                 i.save(path,quality="96")
                 f=open(path,"rb")
                 data=f.read()      
@@ -255,13 +254,13 @@ class NewsSpec(Resource):
                 data=data[2:-1]
                 data="data:image/jpg;base64,"+data
                 img['src']=data
-                i=i+1
-                if i>1:
+                # return img
+                k=k+1
+                if k>1:
                     os.remove(path)
                 else:
                     imgUrlFirst="static/Uploads/News"+filename
-                i=i+1
-            if i==0:
+            if k==0:
                 imgUrlFirst="static/uploads/News/1.jpg"
             outline=soup.get_text()[:100]
             news.outline=outline
@@ -269,7 +268,7 @@ class NewsSpec(Resource):
         if title!=None:
             news.title=title
 
-        if edit!=None:
+        if editable!=None:
             news.editable=editable
         if tags!=None:
             news.tags=[]
@@ -289,11 +288,11 @@ class NewsSpec(Resource):
         db.session.commit()
 class NewsSpecDetail(Resource):
     def get(self,id):
-        id=int(id)
+        # id=int(id)
         news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
         data=dict()
-        data['detail']=news.news_Detail
+        data['detail']=news.detail
         return data
 
 
@@ -325,7 +324,7 @@ class Categorys(Resource):
 
 class Category1(Resource):
     def get(self,id):
-        id=int(id)
+    
         category=Category.query.filter_by(id=id).first()
         abort_if_not_exist(category,"category")
         data=dict()
@@ -337,12 +336,13 @@ class Category1(Resource):
         permission=Permission(ActionNeed('修改新闻属性'))
         if permission.can()is not True:
             abort_if_unauthorized("修改新闻属性")
-        id=int(id)
         category=Category.query.filter(Category.id==id).first()
         abort_if_not_exist(category,"category")
         args=parser_spec.parse_args()
         name=args['name']
         if name!=None:
+            c=Category.query.filter(Category.name==name).first()
+            abort_if_exist(c,"category")
             category.name=name
         db.session.add(category)
         db.session.commit()
@@ -384,7 +384,6 @@ class Tags(Resource):
 class Tag1(Resource):
 
     def get(self,id):
-        id=int(id)
         tag=Tag.query.filter_by(id=id).first()
         abort_if_not_exist(tag,"tag")
         data=dict()
@@ -396,12 +395,13 @@ class Tag1(Resource):
         permission=Permission(ActionNeed('修改新闻标签'))
         if permission.can()is not True:
             abort_if_unauthorized("修改新闻标签")
-        id=int(id)
         tag=Tag.query.filter(Tag.id==id).first()
         abort_if_not_exist(tag,"tag")
         args=parser_spec.parse_args()
         name=args['name']
         if name!=None:
+            t=Tag.query.filter(Tag.name==name).first()
+            abort_if_exist(t,"tag")
             tag.name=name
         db.session.add(tag)
         db.session.commit()
@@ -411,7 +411,6 @@ class Tag1(Resource):
         permission=Permission(ActionNeed('删除新闻标签'))
         if permission.can()is not True:
             abort_if_unauthorized("删除新闻标签")
-        id=int(id)
         tag=Tag.query.filter(Tag.id==id).first()
         abort_if_not_exist(tag,"tag")
         db.session.delete(tag)
