@@ -135,7 +135,7 @@ class CurrentUser(Resource):
 
 class UserSpec(Resource):			
 	def get(self,id):
-		id=int(id)
+
 		user=User.query.filter(User.id==id).first()
 		abort_if_not_exist(user,"user")
 		log=LoginLog.query.filter(LoginLog.userName==user.userName).order_by(LoginLog.id.desc()).first()
@@ -170,7 +170,7 @@ class UserSpec(Resource):
 		permission1=EditUserPermission(EditUserNeed(current_user.id))
 		if (permission.can()is not True) and (permission1.can()is not True):
 			abort_if_unauthorized("修改用户")
-		id=int(id)
+
 		user=User.query.filter(User.id==id).first()
 		abort_if_not_exist(user,"user")
 		args=User1_parser.parse_args()
@@ -218,7 +218,7 @@ class Nodes(Resource):
 class NodeSpec(Resource):
 	@marshal_with(Node_fields)
 	def get(self,id):
-		id=int(id)
+
 		node=Node.query.filter(Node.id==id).first()
 		abort_if_not_exist(node,"node")
 		return node
@@ -227,7 +227,7 @@ class NodeSpec(Resource):
 		permission=Permission(ActionNeed("修改节点"))
 		if permission.can()is not True:
 			abort_if_unauthorized("修改节点")
-		id=int(id)
+
 		node=Node.query.filter(Node.id==id).first()
 		abort_if_not_exist(node,"node")
 		args=NodeSpec_parser.parse_args()
@@ -276,7 +276,7 @@ class Roles(Resource):
 
 class RoleSpec(Resource):
 	def get(self,id):
-		id=int(id)
+
 		role=Role.query.filter(Role.id==id).first()
 		abort_if_not_exist(role,"role")
 		data=dict()
@@ -295,7 +295,7 @@ class RoleSpec(Resource):
 		permission=Permission(ActionNeed('修改角色'))
 		if permission.can()is not True:
 			abort_if_unauthorized("修改角色")
-		id=int(id)
+	
 		role=Role.query.filter(Role.id==id).first()
 		abort_if_not_exist(role,"role")
 		args=RoleSpec_parser.parse_args()
@@ -323,7 +323,7 @@ class RoleSpec(Resource):
 		permission=Permission(ActionNeed('删除角色'))
 		if permission.can()is not True:
 			abort_if_unauthorized("删除角色")
-		id=int(id)
+
 		role=Role.query.filter(Role.id==id).first()
 		abort_if_not_exist(role,"role")
 		db.session.delete(role)
