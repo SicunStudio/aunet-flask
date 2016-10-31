@@ -12,7 +12,7 @@ from .search import SearchNews
 
 
 from aunet import lm,app,api
-from .models import User
+from .models import User,LoginLog
 from .models import EditUserPermission,EditUserNeed
 
 from collections import namedtuple
@@ -63,18 +63,20 @@ def index():
 @admin.route('/login',methods=["POST","GET"])
 def login():
     if request.method=="POST":
-        user=User.query.filter_by(User.userName==form.userName.data).first()
+        user=User.query.filter(User.userName==request.form['userName']).first()
         if user==None:
             return "user doesn't existed"
-        elif user.verify_password(form.password.data) is not True:
+        elif user.verify_password(request.form['password']) is not True:
             return "password error"
         else:
-            return "good"
+            
             login_user(user)
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
             identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))   
+            return "good"
             return redirect(request.args.get('next') or '/')
+
     return render_template("Admin/index.html")
 
 

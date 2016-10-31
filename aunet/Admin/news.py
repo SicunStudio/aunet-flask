@@ -281,7 +281,7 @@ class NewsSpec(Resource):
         permission=Permission(ActionNeed('删除新闻'))
         if permission.can()is not True:
             abort_if_unauthorized("删除新闻")
-        id=int(id)
+     
         news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
         db.session.delete(news)
