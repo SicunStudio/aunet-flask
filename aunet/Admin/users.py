@@ -167,7 +167,7 @@ class UserSpec(Resource):
 		if current_user.is_anonymous==True:
 			abort_if_unauthorized("修改用户")
 		permission=Permission(ActionNeed("修改用户"))
-		permission1=EditUserPermission(EditUserNeed(current_user.id))
+		
 		if (permission.can()is not True) and (permission1.can()is not True):
 			abort_if_unauthorized("修改用户")
 
