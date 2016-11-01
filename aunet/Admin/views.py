@@ -39,7 +39,7 @@ def on_identity_loaded(sender, identity):
     identity.user = current_user
     #user has the permission of edit himself
 
-    #identity.provides.add(EditUserPermission(current_user.id))
+    identity.provides.add(EditUserPermission(current_user.id))
 
     # Add the UserNeed to the identity
     if hasattr(current_user, 'id'):
