@@ -24,7 +24,7 @@ EditUserNeed=partial(namedtuple("user",['method','value']),'edit')
 
 class EditUserPermission(Permission):
     def __init__(self,user_id):
-        need=EditUserNeed(int(id))
+        need=EditUserNeed(int(user_id))
         super(EditUserPermission,self).__init__(need)
 
 
@@ -44,6 +44,7 @@ def on_identity_loaded(sender, identity):
     # Add the UserNeed to the identity
     if hasattr(current_user, 'id'):
         identity.provides.add(UserNeed(current_user.id))
+        identity.provides.add(RoleNeed(current_user.role[0].roleName))
 
     # Assuming the User model has a list of nodes, update the
     # identity with the nodes that the user provides
