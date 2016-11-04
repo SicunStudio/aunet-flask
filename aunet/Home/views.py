@@ -1,5 +1,5 @@
 from flask import render_template,flash,redirect,url_for,g,session,request,current_app
-from flask_login import current_app,login_required,login_user,logout_user
+from flask_login import login_required,login_user,logout_user
 from datetime import datetime, timedelta
 from flask import jsonify
 import json
