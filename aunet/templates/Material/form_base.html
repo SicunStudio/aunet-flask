@@ -1,0 +1,96 @@
+<!DOCTYPE>
+<html>
+ <head>
+  <title>物资系统-{{apply_type}}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--<link href="/AUNET/Public/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{url_for('material.static',filename='css/apply.css')}}" rel="stylesheet">
+  <link href="{{url_for('material.static',filename='css/sidebar.css')}}" rel="stylesheet">
+	<!--<script src="/AUNET/Public/bootstrap/js/jquery.min.js"></script>-->
+	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
+	<!--<script src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/bootstrap.min.css')}}"></script>-->
+	<script src="{{url_for('material.static',filename='js/jquery.validate.min.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/messages_zh.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/form_validate.js')}}"></script>
+
+<script src="{{url_for('material.static',filename='js/material_apply.js')}}"></script><!---->
+ </head>
+
+<body>
+
+	<div class="left">
+		<div class="material">
+			<div class="greenhead">物 资 借 用</div>
+			<div style="height:60px;"></div>
+			<a href="{{url_for('material.main',option='apply',type='material')}}"><div class="choice">物 资 借 用</div></a>
+		</div>
+
+		<div class="site">
+			<div class="greenhead">场 地 借 用</div>
+			<div style="height:60px;"></div>
+			<a href="{{url_for('material.main',option='apply',type='colorprint')}}"><div class="choice">彩喷悬挂</div></a>
+			<a href="{{url_for('material.main',option='apply',type='east4')}}"><div class="choice">东四三楼</div></a>
+			<a href="{{url_for('material.main',option='apply',type='sports')}}"><div class="choice">体育场馆</div></a>
+			<a href="{{url_for('material.main',option='apply',type='special')}}"><div class="choice">特殊场地</div></a>
+			<a href="{{url_for('material.main',option='apply',type='teachingbuilding')}}"><div class="choice">教学楼教室</div></a>
+			<a href="{{url_for('material.main',option='apply',type='outdoor')}}"><div class="choice">路演场地</div></a>
+			<a href="{{url_for('material.main',option='apply',type='sacenter')}}"><div class="choice">大活教室</div></a>
+		</div>
+	</div>
+
+
+	<div class="right">
+
+		<div class="tag">
+			<div class="tagarea" style="width:58%;margin-left:0;
+	text-align:left;padding-left:2%">当前处于: 
+				{% if apply_type=='物资借用' %}
+				物资借用 /
+				{% elif not apply_type %}
+				场地物资申请流程
+				{% else %}
+				场地借用 /
+				{% endif %}
+				{{apply_type}}</div>
+			<a href="{{url_for('material.procedure')}}">
+			<div class="tagarea" style="width:20%;position:relative;left:2.5%">场地物资申请流程</div>
+			</a>
+			<a href="{{url_for('material.status')}}">
+			<div class="tagarea" style="width:13%;position:relative;left:5%">状态查询</div>
+			</a>
+		</div>
+
+		<div class="content">
+			{% block form %}
+			{% endblock %}
+		</div>
+
+	</div>
+
+
+	<div style="clear:both;"></div>
+
+
+	</body>
+
+</html>
+
+
+<script type="text/javascript">
+if("{{data.association}}"!="procedure"){
+	addmonth1();
+	var idInput = "<input type='hidden' name='id' value=" + "'{{data.id}}'" + "/>" ;
+	$("#form1").append($(idInput));
+	var date = "{{data.date}}"
+	if (date != "") {
+		$("#year1").val(date.slice(0,4));
+		$("#month1").val(date.slice(5,7));
+		adddate1();
+		$("#date1").val(date.slice(8,10));
+	}
+}
+</script>
