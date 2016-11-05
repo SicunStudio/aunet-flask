@@ -27,7 +27,6 @@ Mako==1.0.4
 MarkupSafe==0.23
 passlib==1.6.5
 Pillow==3.4.2
-pkg-resources==0.0.0
 pycparser==2.16
 pycrypto==2.6.1
 pockets==0.3
