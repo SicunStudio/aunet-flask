@@ -4,12 +4,9 @@
 	<title>资源申请审批系统</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--
-	<script src="../static/jquery.validate.min.js"></script>
-	<script src="../static/messages_zh.js"></script>-->
+	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
+
 	<script src="{{url_for('material.static',filename='js/datedropper.min.js')}}"></script>
 	<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/datedropper.min.css')}}">
 	<link href="{{url_for('material.static',filename='css/admin.css')}}" type="text/css" rel="stylesheet">
