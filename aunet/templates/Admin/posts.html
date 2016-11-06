@@ -1,0 +1,132 @@
+<div class="posts uk-container uk-container-center uk-padding-remove">
+    <div v-show="view[1] === undefined">
+        <div class="menu-block">
+            <div class="uk-flex uk-flex-space-between">
+                <h2 class="menu-subtitle">
+                    筛选: 
+                    <span class="badge" style="background-color: #4CAF50;">
+                        <select v-model="POSTS.filterByColumn">
+                            <option value="" selected>栏目</option>
+                            <option v-for="i of columns">{{ i }}</option>
+                        </select>
+                    </span>
+
+                    <span class="badge" v-for="i of POSTS.filterByTags">
+                        <a v-on:click="POSTS.filterByTags.splice(POSTS.filterByTags.indexOf(i), 1)" style="color: inherit;">{{ i }} <i class="fa fa-times"></i></a>
+                    </span>
+                    <span class="badge">
+                        <select v-model="POSTS.tagSelected" v-on:change="onTagSelected">
+                            <option value="" selected>标签</option>
+                            <option v-for="i of tags">{{ i }}</option>
+                        </select>
+                    </span>
+                </h2>
+                <h2 class="menu-subtitle">
+                    排序: 
+                    <select v-model="POSTS.orderBy">
+                        <option selected value="lastModificationTime">最后更新时间</option>
+                        <option value="creationTime">创建时间</option>
+                        <option value="title">标题</option>
+                    </select>
+                    <a v-on:click="POSTS.order = POSTS.order * (-1)">
+                        {{ POSTS.order === 1 ? "从小到大" : "从大到小" }}
+                    </a>
+                </h2>
+            </div>
+            <ul class="menu-items"> <!--filterBy POSTS.filterByColumn in 'column'<-->
+                <li v-for="i of posts | postFilter | orderBy POSTS.orderBy POSTS.order" class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" transition="post">
+                    <div>
+                        <h3>{{ i.title }} <span class="author">{{ i.author }}</span></h3>
+                        <div class="uk-margin">
+                            <span class="badge uk-margin-small" style="background-color: #4CAF50;">{{ i.column ? i.column : "未分类" }}</span>
+                            <span v-for="tag in i.tags" class="badge uk-margin-small">{{ tag }}</span>
+                        </div>
+                        <div>最后更新 {{ new Date(i.lastModificationTime * 1000) }}</div>
+                    </div>
+                    <div>
+                        <a class="uk-text-danger uk-display-inline-block uk-margin-right" v-on:click="delete(i)">删除</a>
+                        <a class="uk-display-inline-block" v-on:click="localEdit(i)">编辑</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div v-show="view[1] === 'compose'">
+        <div class="menu-block">
+            <h2 class="menu-subtitle">标题</h2>
+            <div class="menu-items">
+                <div class="menu-items-item">
+                    <input type="text" placeholder="标题" class="uk-width-1-1 uk-h2" v-model="POSTS.COMPOSE.title" />
+                </div>
+            </div>
+        </div>
+        <div class="menu-block">
+            <textarea id="textarea" v-html="POSTS.COMPOSE.content" data-autosave="posts-compose-content">
+            </textarea>
+            <h2 class="menu-subtitle">已保存草稿于 {{ new Date(POSTS.COMPOSE.lastModificationTime * 1000) }}。<a class="uk-float-right" v-on:click="localSave">立即保存</a></h2>
+        </div>
+        <div class="menu-block">
+            <h2 class="menu-subtitle">添加栏目</h2>
+            <ul class="menu-items">
+                <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
+                    <select class="badge"v-model="POSTS.COMPOSE.column">
+                        <option v-for="i of columns" >{{ i }}</option>
+                    </select>
+                    <span>您只能添加一个栏目。</span>
+                </li>
+            </ul>
+        </div>
+        <div class="menu-block">
+            <h2 class="menu-subtitle">添加标签<a class="uk-float-right" v-on:click="POSTS.COMPOSE.tags=[]">删除所有标签</a></h2>
+            <ol class="menu-items">
+                <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" v-for="i of POSTS.COMPOSE.tags">
+                    <span class="badge" style="background-color: #4CAF50;">{{ i.name }}</span>
+                    <a v-on:click="removeTag($index)"><span class="uk-text-danger">删除</span></a>
+                </li>
+                <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
+                    <select class="badge" style="background-color: #4CAF50;" v-model="POSTS.COMPOSE.tag" v-on:change="addTag()">
+                        <option v-for="j of tags">{{ j.name }}</option>
+                    </select>
+                </li>
+            </ol>
+        </div>
+        <div class="menu-block">
+            <div class="menu-items">
+                <div class="menu-items-item" v-on:click="commit()">
+                    发布
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-show="view[1] === 'columns'">
+        <div class="menu-block">
+            <h2 class="menu-subtitle">所有栏目</h2>
+            <ul class="menu-items">
+                <li v-for="i of columns" class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
+                    <span class="badge" style="background-color: #4CAF50;">{{ i }}</span>
+                    <a v-on:click="deleteTag($index)"><span class="uk-text-danger">删除</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div v-show="view[1] === 'tags'">
+        <div class="menu-block">
+            <h2 class="menu-subtitle">所有标签</h2>
+            <ul class="menu-items">
+                <li v-for="i of tags" class="menu-items-item">
+                    <span class="badge">{{ i }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .author {
+        color: rgba(0, 0, 0, .35);
+    }
+
+    .simditor {
+        font-family: Simditor;
+    }
+</style>
