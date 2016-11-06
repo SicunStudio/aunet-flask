@@ -131,24 +131,24 @@ def submit():
     
     form = request.form
     type = form['type']
-    id = form['id']
+    id = form['uid']
     if type not in types: abort(404)
+    time = localtime()
     if id != "":
         data = query_data(type,id)
     else:
         data = types[type][0]()
+        upload_file = request.files['file']
+        if upload_file.filename != '':    
+            rand_filename = upload_file.filename+str(int(mktime(time)))
+            data.filename = rand_filename
+            upload_file.save(Upload_path+rand_filename)
+        else :
+            data.filename = 'Nothing'
+
     data.applicant = current_user.id
     data.date=form['year1']+'-'+form['month1']+'-'+form['date1']
-    time = localtime()
     data.apply_time = strftime('%Y-%m-%d %H:%M:%S',time)
-
-    upload_file = request.files['file']
-    if upload_file.filename != '':    
-        rand_filename = upload_file.filename+str(int(mktime(time)))
-        data.filename = rand_filename
-        upload_file.save(Upload_path+rand_filename)
-    else :
-        data.filename = 'Nothing'
     
  
     if type == 'material':
@@ -162,11 +162,10 @@ def submit():
     for b in ['1','2','3']]
     
     for key,value in form.items():
-        if key in date_items:continue
+        if key in date_items or key in ['uid','file']:continue
         if key[-3:] =='num' or key == 'number':
             value = 0 if value =='' else int(value)
         setattr(data,key,value)
-
     try:
         db.session.add(data)
         db.session.commit()
