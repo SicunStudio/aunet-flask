@@ -83,10 +83,15 @@
 <script type="text/javascript">
 if("{{data.association}}"!="procedure"){
 	addmonth1();
-	var idInput = "<input type='hidden' name='id' value=" + "'{{data.id}}'" + "/>" ;
+	var idInput = "<input type='hidden' name='uid' value=" + "'{{data.id}}'" + "/>" ;
 	$("#form1").append($(idInput));
 	var date = "{{data.date}}"
 	if (date != "") {
+		divFile = $("form input[type=file]").parents(".form-group");
+		divFile.empty();
+		notice = $("<p>如需修改策划请撤销申请并重新提交！</p>");
+		notice.css("color","red");
+		divFile.append(notice);
 		$("#year1").val(date.slice(0,4));
 		$("#month1").val(date.slice(5,7));
 		adddate1();
