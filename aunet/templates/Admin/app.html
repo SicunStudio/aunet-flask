@@ -4,20 +4,19 @@
     <title>设置</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/static/css/uikit.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/simditor.css" />
+    <link rel="stylesheet" type="text/css" href="/static/Admin/css/uikit.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/Admin/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/Admin/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/Admin/css/simditor.css" />
 
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/vue/1.0.26/vue.min.js"></script>
+    <script src="/static/Admin/js/jquery.min.js"></script>
     <!--script src="/static/js/vue.min.js"></script-->
-    <script src="/static/js/page.js"></script>
+    <script src="/static/Admin/js/page.js"></script>
 
-    <script src="/static/js/module.js"></script>
-    <script src="/static/js/hotkeys.js"></script>
-    <script src="/static/js/uploader.js"></script>
-    <script src="/static/js/simditor.js"></script>
+    <script src="/static/Admin/js/module.js"></script>
+    <script src="/static/Admin/js/hotkeys.js"></script>
+    <script src="/static/Admin/js/uploader.js"></script>
+    <script src="/static/Admin/js/simditor.js"></script>
     <!--Benjamin Shi, 2016-->
 </head>
 <body>
@@ -281,6 +280,7 @@
                     }).done(function(data) {
                         //data = JSON.parse(data);
                         console.log(data);
+                        app.posts = [];
                         for(i of data) {
                             app.posts.push({
                                 id: i.id,
@@ -363,6 +363,7 @@
                         contentType: "application/json",
                         dataType: "json",
                     }).done(function(data) {
+                        app.tags = [];
                         for(i of data) {
                             app.tags.push(i.name);
                         }
