@@ -195,6 +195,7 @@ def main(option,type):
         apply_type = apply_type)
 
 @material.route('/procedure')
+@material.route('/')
 @login_required
 @level2.require(403)
 def procedure():
