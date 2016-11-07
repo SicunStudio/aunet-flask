@@ -270,6 +270,23 @@ function PageDown()
 /****结束***/
 
 
+
+
+function IncludeLinkStyle(url) 
+{
+	document.getElementsByTagName("link")[0].setAttribute("href" , url);
+}
+function GetWinWidth()
+{
+	if (window.innerWidth)
+		return window.innerWidth;
+	else if ((document.body) && (document.body.clientWidth))
+		return document.body.clientWidth;
+	
+}
+
+
+
 function getTop(e)
 { 
 	var offset=e.offsetTop; 
@@ -286,10 +303,14 @@ function getHeight(e)
 { 
 	var offset=e.clientHeight;  
 	return offset; 
-} 
+}
+
+
+
+
+
 function InitPutMenuLine()
 {
-
 	var lis = document.getElementById("top_menu_menu").getElementsByTagName("li");
 	for(var loop = 0 ; loop < lis.length; loop++)
 		if(lis[loop].id == "on")
@@ -312,6 +333,29 @@ function PutMenuLine()
 	line.style.left = left + "px";
 	line.style.top = top + getHeight(this) - getHeight(line) + "px";
 }
+function HideMenuLine()
+{
+	var winWidth;
+		winWidth = GetWinWidth();
+	if(winWidth < 960)
+	{
+		document.getElementById("menu_bottom_line").style.display = "none";
+	}
+	else
+		document.getElementById("menu_bottom_line").style.display = "block";
+}
+
+Old_width = GetWinWidth(); 
+function ResetMenuLine()
+{
+	var winWidth;
+	winWidth = GetWinWidth();
+	if(winWidth != Old_width)
+	{
+	Old_width = winWidth;
+	InitPutMenuLine();
+	}
+}
 function InitMenuLine()
 {
 	InitPutMenuLine();
@@ -323,4 +367,10 @@ function InitMenuLine()
 		}
 }
 
+function InitHeader()
+{
+	InitMenuLine();
+	var loop_1  = setInterval(HideMenuLine , 100);
+	var loop_2	= setInterval(ResetMenuLine , 10)
+}
 

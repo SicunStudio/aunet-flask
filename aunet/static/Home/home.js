@@ -6,34 +6,21 @@ window.onload=function()
 	LoopNews();
 	InitImgSrc();
 	document.getElementsByClassName("menu")[0].addEventListener("click",_menu);
-	InitMenuLine();
+	InitHeader();
 
 
 
-	function IncludeLinkStyle(url) 
-	{
-		document.getElementsByTagName("link")[0].setAttribute("href" , url);
-	}
-	function GetWinWidth()
-	{
-		if (window.innerWidth)
-			return window.innerWidth;
-		else if ((document.body) && (document.body.clientWidth))
-			return document.body.clientWidth;
-		
-	}
-
-	Old_width = GetWinWidth();
+	//Old_width = GetWinWidth();
 	function SetHotnewsMargin()
 	{
 		var winWidth;
 		winWidth = GetWinWidth();
-		if(winWidth != Old_width)
-		{
-		// 	IncludeLinkStyle("../../../static/Home/index_mobile.css");
-		Old_width = winWidth;
-		InitMenuLine();
-		}
+		// if(winWidth != Old_width)
+		// {
+		// // 	IncludeLinkStyle("../../../static/Home/index_mobile.css");
+		// Old_width = winWidth;
+		// InitMenuLine();
+		// }
 		var hot_new_left_width;
 		hot_new_left_width = document.getElementById("hot_news").getElementsByClassName("left")[0].clientWidth;
 		var hot_new_right_width;
