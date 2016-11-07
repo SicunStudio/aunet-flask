@@ -11,10 +11,10 @@ document.getElementsByTagName("year")[0].innerHTML = myDate.getFullYear();
 function GetImg()
 {
 	var news = document.getElementsByClassName("news");
-	for(var loop = 0;loop < 5;loop++)
+	for(var loop = 0;loop < news.length;loop++)
 		news[loop].id = "";
 	this.id = "on";//被选中
-	for(var loop = 0;loop < 5;loop++)
+	for(var loop = 0;loop < news.length;loop++)
 		if(news[loop].id == "on")
 			break;
 	var order = loop;
@@ -38,7 +38,7 @@ function InitImgSrc()
 {
 	var img_1 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByTagName("img");
 	var img_2 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("preview")[0].getElementsByTagName("img");
-	for(var loop = 0 ; loop < 5 ; loop ++)
+	for(var loop = 0 ; loop < img_2.length ; loop ++)
 		img_1[loop].src = img_2[loop].src;
 }
 /*******
@@ -47,7 +47,7 @@ function InitImgSrc()
 function _GetImg(m , order)
 {
 	var news = document.getElementsByClassName("news");
-	for(var loop = 0;loop < 5;loop++)
+	for(var loop = 0;loop < news.length;loop++)
 		news[loop].id = "";
 	m.id = "on";//被选中
 	var wid;
@@ -74,7 +74,7 @@ function LoopNews()
 	var s = setInterval(function(){
 		_GetImg(news[loop] , loop);
 		loop++;
-		if(loop >= 5) loop = 0;	
+		if(loop >= news.length) loop = 0;	
 	},5000);
 }
 
@@ -97,7 +97,7 @@ function _menu(){
 function DisplayNews(news)
 {
 	var news = document.getElementsByClassName("news_2_x");
-	for(var loop = 0;loop < 10;loop++)
+	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
 	var page = JSON.parse(news);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page["news_Length"] + "");
