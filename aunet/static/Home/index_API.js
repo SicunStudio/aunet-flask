@@ -270,6 +270,60 @@ function PageDown()
 /****结束***/
 
 
+function getTop(e)
+{ 
+	var offset=e.offsetTop; 
+	if(e.offsetParent!=null) offset+=getTop(e.offsetParent); 
+	return offset; 
+} 
+function getLeft(e)
+{ 
+	var offset=e.offsetLeft; 
+	if(e.offsetParent!=null) offset+=getLeft(e.offsetParent); 
+	return offset; 
+} 
+function getHeight(e)
+{ 
+	var offset=e.clientHeight;  
+	return offset; 
+} 
+function InitPutMenuLine()
+{
+
+	var lis = document.getElementById("top_menu_menu").getElementsByTagName("li");
+	for(var loop = 0 ; loop < lis.length; loop++)
+		if(lis[loop].id == "on")
+		{
+			e = lis[loop];
+			break;
+		}	
+	var left = getLeft(e);
+	var top = getTop(e);
+	var line = document.getElementById("menu_bottom_line");
+	line.style.left = left + "px";
+	line.style.top = top + getHeight(e) - getHeight(line) + "px";
+	line.style.transition = "all 0.3s";
+}
+function PutMenuLine()
+{
+	var left = getLeft(this);
+	var top = getTop(this);
+	var line = document.getElementById("menu_bottom_line");
+	line.style.left = left + "px";
+	line.style.top = top + getHeight(this) - getHeight(line) + "px";
+}
+function InitMenuLine()
+{
+	InitPutMenuLine();
+	lis = document.getElementById("top_menu_menu").getElementsByTagName("li");
+	for(var loop = 0 ; loop < lis.length; loop++)
+		{
+			lis[loop].addEventListener("mouseover",PutMenuLine);
+			lis[loop].addEventListener("mouseleave",InitPutMenuLine);
+		}
+}
+
+
 /****文档加载完成后的执行代码*****/
 window.onload=function()
 {

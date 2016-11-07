@@ -7,4 +7,5 @@ window.onload=function()
 	document.getElementsByClassName("goto")[0].getElementsByTagName("a")[0].addEventListener("click",PageUp);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("a")[2].addEventListener("click",PageDown);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("a")[1].addEventListener("click",GetAllOn);
+	InitMenuLine();
 }

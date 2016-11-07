@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div id="top_menu">
-			<img src="" alt="" class="logo">
+			<img src="../../../static/Home/AUlogo.png" alt="" class="logo">
 			<span class="top_menu_title">
 				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
 				<div>华中科技大学学生社团联合会</div>
@@ -22,6 +22,7 @@
 				<a href=""><li>管&nbsp;理</li></a>
 				<a href=""><li>其&nbsp;他</li></a>
 			</ul>
+			<div id="menu_bottom_line"></div>
 			<div class="menu">
 				<div class="icon"></div>
 				<div class="icon"></div>
@@ -45,14 +46,9 @@
 					<div class="title" id="picture_title"></div>	
 				</div>
 				<div class="preview">
-				<!-- {%for News in LatestFiveNews%} -->
+				{%for News in LatestFiveNews%}
 					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
-					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
-					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
-					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
-					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
-
-				<!-- {%endfor%} -->
+				{%endfor%}
 				</div>
 			</div>
 			<div class="right">
@@ -72,14 +68,6 @@
 		
 	
 		<div id="star_">
-			<!-- <div class="star_1">
-				<div><p>社团之星 </p><img src="{{StarAssociation1.star_Img_Url}}" alt="{{StarAssociation1.star_Role}}"></div>
-				<div>{{StarAssociation1.star_Intro}}</div>
-				<div><p>社联之星</p><img src="{{StarAssociation2.star_Img_Url}}" alt="{{StarAssociation2.star_Role}}"></div>
-				<div>{{StarAssociation2.star_Intro}}</div>
-				<div><p>指导老师</p><img src="{{StarAssociation3.star_Img_Url}}" alt="{{StarAssociation3.star_Role}}"></div>
-				<div>{{StarAssociation3.star_Intro}}</div>
-			</div> -->
 			<div class="star_2">
 				<div class="star_2_1">
 					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
@@ -123,7 +111,6 @@
 					<div>
 						<span class="time">{{NewsYuLans.news_Year}}.{{NewsYuLans.news_Month}}.{{NewsYuLans.news_Day}}</span>
 						<span class="detail"><a href="{{NewsYuLans.news_Detail}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
-						<span class="comment"><a href="{{NewsYuLans.news_Comments}}"><img src="../../../static/Home/pl.png" alt="">评论 <span></span></a></span>
 					</div>
 				</div>
 				<br><br><br><br><hr><br>
@@ -151,7 +138,7 @@
 						<div>资源申请</div>
 					</div>
 				</a>
-				
+				<span></span>
 				<a href="">
 					<div class="menu">
 						<img src="" alt="">
@@ -187,6 +174,9 @@
 					<li><a href="">醉晚亭</a></li>
 				</ul>
 			</span>
+			<span>
+				<img src="" alt="">
+			</span>
 		</div>
 
 		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
@@ -194,5 +184,5 @@
 	
 	<script src="../../../static/Home/index_API.js"></script>
 	<script src="../../../static/Home/home.js"></script>
-
+	
 </html>
