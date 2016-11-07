@@ -324,7 +324,3 @@ function InitMenuLine()
 }
 
 
-/****文档加载完成后的执行代码*****/
-window.onload=function()
-{
-}
