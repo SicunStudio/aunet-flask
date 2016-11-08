@@ -1,0 +1,141 @@
+<!--特殊场地申请表-->
+{% extends modal_type+"_modal.html" %}
+
+{% block table %}
+
+<div align="center">
+	<table style="border-collapse: collapse; border: none; margin-left: 6.75pt; margin-right: 6.75pt;" border="1" cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr style="height: 34.95pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">协会名称</span></p>
+					</td>
+				<td style="width: 104.9pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="140">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['association']}}</span></p>
+					</td>
+				<td style="width: 63.75pt; border: solid windowtext 1.0pt; border-left: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" width="85">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动名称</span></p>
+					</td>
+				<td style="width: 99.25pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" width="132">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['activity']}}</span></p>
+					</td>
+				<td style="width: 63.8pt; border: solid windowtext 1.0pt; border-left: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="85">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">参与人数</span></p>
+					</td>
+				<td style="width: 100.65pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="134">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['number']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 35.1pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 35.1pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动日期</span></p>
+					</td>
+				<td style="width: 104.9pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 35.1pt;" colspan="2" width="140">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['date']}}</span></p>
+					</td>
+				<td style="width: 63.75pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 35.1pt;" width="85">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动时间</span></p>
+					</td>
+				<td style="width: 263.7pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 35.1pt;" colspan="5" width="352">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['time']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 41.75pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 41.75pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动地点</span></p>
+					</td>
+				<td style="width: 267.9pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 41.75pt;" colspan="4" width="357">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 15.0pt; font-family: 宋体;">{{context['site']}}</span></p>
+					</td>
+				<td style="width: 99.2pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 41.75pt;" colspan="3" width="132">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">是否经系统查询</span></p>
+					</td>
+				<td style="width: 65.25pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 41.75pt;" width="87">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['is_query']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 119.9pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 119.9pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动内容</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">（主题，</span></p>
+					<p style="text-align: center; text-indent: 12.0pt;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">目的，</span></p>
+					<p style="text-align: center; text-indent: 12.0pt;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">流程，</span></p>
+					<p style="text-align: center; text-indent: 12.0pt;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">安全负责人）</span></p>
+					</td>
+				<td style="width: 432.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 119.9pt;" colspan="8" width="576">
+					<p style="text-align: center;" align="center"><span lang="EN-US">{{context['content']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 55.75pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 55.75pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">有无商业赞助</span></p>
+					</td>
+				<td style="width: 104.9pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 55.75pt;" colspan="2" width="140">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['is_sponsor']}}</span></p>
+					</td>
+				<td style="width: 63.75pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 55.75pt;" width="85">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">赞助方名</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">及赞助方式（如有）</span></p>
+					</td>
+				<td style="width: 263.7pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 55.75pt;" colspan="5" width="352">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['sponsor']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 42.45pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.45pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动负责人</span></p>
+					</td>
+				<td style="width: 168.65pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.45pt;" colspan="3" width="225">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['resp_person']}}</span></p>
+					</td>
+				<td style="width: 100.7pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.45pt;" colspan="2" width="134">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">联系电话</span></p>
+					</td>
+				<td style="width: 163.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.45pt;" colspan="3" width="217">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['tel']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 63.15pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 63.15pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">社</span><span style="font-size: 12.0pt; font-family: 宋体;">团意见</span></p>
+					</td>
+				<td style="width: 168.65pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 63.15pt;" colspan="3" width="225">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['opinion']}}</span></p>
+					</td>
+				<td style="width: 100.7pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 63.15pt;" colspan="2" width="134">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">社联意见</span></p>
+					</td>
+				<td style="width: 163.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 63.15pt;" colspan="3" width="217">&nbsp;</td>
+				</tr>
+			<tr style="height: 44.45pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 44.45pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">社联经手人</span></p>
+					</td>
+				<td style="width: 168.65pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 44.45pt;" colspan="3" width="225">&nbsp;</td>
+				<td style="width: 100.7pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 44.45pt;" colspan="2" width="134">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">联系电话</span></p>
+					</td>
+				<td style="width: 163.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 44.45pt;" colspan="3" width="217">&nbsp;</td>
+				</tr>
+			<tr style="height: 94.45pt;">
+				<td style="width: 91.9pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 94.45pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">共青团</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">华中科技大学</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">委员会意见</span></p>
+					</td>
+				<td style="width: 97.8pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 94.45pt;" width="130">&nbsp;</td>
+				<td style="width: 70.85pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 94.45pt;" colspan="2" width="94">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">审批单位</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">意见</span></p>
+					</td>
+				<td style="width: 100.7pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 94.45pt;" colspan="2" width="134">&nbsp;</td>
+				<td style="width: 62.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 94.45pt;" width="83">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">审批单位</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">意见</span></p>
+					</td>
+				<td style="width: 100.65pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 94.45pt;" colspan="2" width="134">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	{% endblock %}

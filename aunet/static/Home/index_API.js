@@ -14,20 +14,68 @@ function GetImg()
 	for(var loop = 0;loop < 5;loop++)
 		news[loop].id = "";
 	this.id = "on";//被选中
+	for(var loop = 0;loop < 5;loop++)
+		if(news[loop].id == "on")
+			break;
+	var order = loop;
+	var wid;
+	if(parseInt(document.body.clientWidth) > 1199)
+		wid = 404;
+	else if(parseInt(document.body.clientWidth) > 950)
+		wid = 334;
+	else if(parseInt(document.body.clientWidth) >= 720)
+		wid = 410;
+	else if(parseInt(document.body.clientWidth) >= 415)
+		wid = 235;
+	else 
+		wid = 174;
+	
+	document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
 	document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+}
+
+function InitImgSrc()
+{
+	var img_1 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByTagName("img");
+	var img_2 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("preview")[0].getElementsByTagName("img");
+	for(var loop = 0 ; loop < 5 ; loop ++)
+		img_1[loop].src = img_2[loop].src;
 }
 /*******
 循环预览图片
 *********/
+function _GetImg(m , order)
+{
+	var news = document.getElementsByClassName("news");
+	for(var loop = 0;loop < 5;loop++)
+		news[loop].id = "";
+	m.id = "on";//被选中
+	var wid;
+	if(parseInt(document.body.clientWidth) > 1199)
+		wid = 404;
+	else if(parseInt(document.body.clientWidth) >= 950)
+		wid = 334;
+	else if(parseInt(document.body.clientWidth) >= 720)
+		wid = 410;
+	else if(parseInt(document.body.clientWidth) >= 415)
+		wid = 235;
+	else 
+		wid = 174;
+	
+	document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
+	document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+}
 function LoopNews()
 {
 	var news = document.getElementsByClassName("news");
 	var loop = 0;
+	_GetImg(news[loop] , loop);
+	loop++;
 	var s = setInterval(function(){
-		GetImg(news[loop]);
+		_GetImg(news[loop] , loop);
 		loop++;
 		if(loop >= 5) loop = 0;	
-	},5000	)
+	},5000);
 }
 
 
@@ -52,17 +100,16 @@ function DisplayNews(news)
 	for(var loop = 0;loop < 10;loop++)
 		news[loop].setAttribute("style","display:none");
 	var page = JSON.parse(news);
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page.news_Length + "");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page.news_Current_Page + "");
-	var loop;
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page["news_Length"] + "");
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page["news_Current_Page"] + "");
 	for(loop = 0;loop < page.news_Length;loop++)
 	{
 		news[loop].setAttribute("style","display:block");
 		/******一下的json访问可能存在问题******/
-		news[loop].getElementsByClassName("news_title")[0].innerHTML = page.news_Title[loop][loop];
-		news[loop].getElementsByClassName("article")[0].innerHTML = page.news_Outline[loop][loop];
-		news[loop].getElementsByTagName("img")[0].setAttribute("src",page.news_Img_Url[loop][loop]);
-		news[loop].getElementsByClassName("time")[0].innerHTML = page.Post_Time[loop][loop];
+		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["news_Title"][loop][loop+""];
+		news[loop].getElementsByClassName("article")[0].innerHTML = page["news_Outline"][loop][loop+""];
+		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["news_Img_Url"][loop][loop+""]);
+		news[loop].getElementsByClassName("time")[0].innerHTML = page["news_Post_Time"][loop][loop+""];
 	}
 }
 

@@ -77,7 +77,6 @@ def login():
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
             identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))   
-            return "good"
             return redirect(request.args.get('next') or '/')
 
     return render_template("Admin/index.html")
@@ -100,9 +99,8 @@ def logout():
 
     return redirect(request.args.get('next') or '/')
 
-
-@app.route('/api/modules/<path:string>',methods=['GET',"POST"])
-def getHtml():
+@app.route("/templates/Admin/<string:path>",methods=['GET',"POST"])
+def getHtml(path):
     # path=request.args.get("path","templates/Home/index/index.html")
     #return "dg"
     path=os.path.join(app.config['BASEDIR'],'aunet/templates/Admin/',path)
@@ -114,6 +112,16 @@ def getHtml():
         return res
     except:
         return "not found" ,404
+
+
+@app.route("/dashboard", methods=["GET"])
+@app.route("/dashboard/<string:path>", methods=["GET"])
+def app():
+    with open("aunet/templates/Admin/app.html") as f:
+        return f.read()
+
+
+
     
 
 @admin.route('/upload',methods=['GET',"POST"])

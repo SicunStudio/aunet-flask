@@ -18,6 +18,7 @@ MAIL_SERVER='smtp.qq.com'#邮箱服务器
 MAIL_PORT=465
 MAIL_USE_SSL=True
 MAIL_USERNAME='1412511544'#如果是qq邮箱则为qq号，136邮箱同理
-MAIL_PASSWORD='gldzutovmrvzfhfe'#客户端密码
+MAIL_PASSWORD=''#客户端密码
 MAIL_USE_TLS = False
 MAIL=('me','1412511544@qq.com')#发件人如('me','1412511544@qq.com')
+

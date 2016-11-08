@@ -1,0 +1,57 @@
+
+
+	<div style="display:inline-block;position:absolute;top:10%;right:28%;left:10%;" align="center">
+		<div class="modal-content" style="margin-bottom:100px">
+			<div class="modal-body" style="margin-bottom:30px">
+				<br>
+				<h4 style="font-family:SimHei;font-size:24pt">
+				华中科技大学学生社团联合会
+				</h4>
+				<h5 style="font-family:微软雅黑;font-size:18pt">{{type}}申请表</h5>
+				
+				{% block table %}
+				{% endblock %}
+			</div>
+		</div><!-- /.modal-content-->
+	</div>
+
+	<div style="display:inline-block;position:fixed;left:73%;top:10%;right:11.5%">
+		<div class="modal-content" id="approve">
+			<form id="approve-form" method="post" action="{{url_for('material.approve')}}">
+			<div class="modal-body" id="modal-approve">
+				<label class="modal-label">
+				<input type="checkbox" name="is_print" id="is_print" >
+				 是否已打印</label>
+			 	<br/>
+				<label class="modal-label">初审</label>
+				<input type="text" name="pre_verify" id="pre_verify" placeholder="填写初审人姓名" value="{{data.pre_verify}}">
+
+			<label class="modal-label">审 批 结 果</label>
+			<select name="result" value="{{data.result}}" id="result">
+			  <option value="0">审批中</option>
+			  <option value="1">审批通过</option>
+			  <option value="2">未通过</option>
+			</select>
+			<label class="modal-label">审 批 意 见</label>
+			<textarea name="advice" id="advice" rows="5" style="resize:none;border-radius:4px;width:100%;" >{{data.advice}}</textarea>
+			<input type="hidden" name="id" id="approve-id"/>
+			<input type="hidden" name="type" id="approve-type"/>
+			</div>
+			<div class="modal-footer"style="text-align:center">
+				<input type="submit" class="download" value="保    存"style="background-color:#237fdd"/>
+				<button type="button" class="download" style="background-color:#18c14c;"onclick="formDownload($(this),1)">下 载 表 格
+				</button>
+				{% if context['filename'] == 'Nothing' %}
+				<button type="button" class="download" style="background-color:#c0c0c0" disabled="disabled">下 载 策 划
+				</button>
+				{% else %}
+				<button type="button" class="download" style="background-color:#f06920"onclick="schemeDownload($(this),1)">下 载 策 划
+				</button>
+				{% endif %}
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog-->
+ <script>
+ 	if ("{{data.is_print}}" == '是')$("input[name=is_print]").attr("checked","checked");
+	$("select[name=result]").val({{data.result}})
+</script>
