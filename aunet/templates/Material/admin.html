@@ -104,7 +104,7 @@
 
 <!---->	<div class="items">
 		{% for data in datas %}
-			<div class="item" type="{{data.__tablename__}}" uid="{{data.id}}" result="{{data.result}}">
+			<div class="item" mtype="{{data.__tablename__}}" uid="{{data.id}}" result="{{data.result}}">
 
 				<div class="i1">
 					<div class="seal"></div>
@@ -141,11 +141,11 @@
 						</button>
 						<div class="triangle2"></div>
 						<ul class="dropdown-menu" role="menu">
-							<button class="main-download" style="background:#18c14c" onclick="formDownload($(this))">表   格</button>
+							<button class="main-download" style="background:#18c14c" onclick="formDownload($(this),0)">表   格</button>
 							{% if data.filename == 'Nothing' %}
 							<button class="main-download" style="background:#c0c0c0" disabled="disabled">策   划</button>
 							{% else %}
-							<button class="main-download" style="background:#f06920"onclick="schemeDownload($(this))">策   划</button>
+							<button class="main-download" style="background:#f06920"onclick="schemeDownload($(this),0)">策   划</button>
 							{% endif %}
 						</ul>
 					</div>
