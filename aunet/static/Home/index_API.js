@@ -11,27 +11,32 @@ document.getElementsByTagName("year")[0].innerHTML = myDate.getFullYear();
 function GetImg()
 {
 	var news = document.getElementsByClassName("news");
-	for(var loop = 0;loop < news.length;loop++)
-		news[loop].id = "";
-	this.id = "on";//被选中
-	for(var loop = 0;loop < news.length;loop++)
-		if(news[loop].id == "on")
-			break;
-	var order = loop;
-	var wid;
-	if(parseInt(document.body.clientWidth) > 1199)
-		wid = 404;
-	else if(parseInt(document.body.clientWidth) > 950)
-		wid = 334;
-	else if(parseInt(document.body.clientWidth) >= 720)
-		wid = 410;
-	else if(parseInt(document.body.clientWidth) >= 415)
-		wid = 235;
-	else 
-		wid = 174;
-	
-	document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
-	document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+	if(!news)
+		return;
+	else
+	{
+		for(var loop = 0;loop < news.length;loop++)
+			news[loop].id = "";
+		this.id = "on";//被选中
+		for(var loop = 0;loop < news.length;loop++)
+			if(news[loop].id == "on")
+				break;
+		var order = loop;
+		var wid;
+		if(parseInt(document.body.clientWidth) > 1199)
+			wid = 404;
+		else if(parseInt(document.body.clientWidth) > 950)
+			wid = 334;
+		else if(parseInt(document.body.clientWidth) >= 720)
+			wid = 410;
+		else if(parseInt(document.body.clientWidth) >= 415)
+			wid = 235;
+		else 
+			wid = 174;
+		
+		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
+		document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+	}
 }
 
 function InitImgSrc()
@@ -47,35 +52,46 @@ function InitImgSrc()
 function _GetImg(m , order)
 {
 	var news = document.getElementsByClassName("news");
-	for(var loop = 0;loop < news.length;loop++)
-		news[loop].id = "";
-	m.id = "on";//被选中
-	var wid;
-	if(parseInt(document.body.clientWidth) > 1199)
-		wid = 404;
-	else if(parseInt(document.body.clientWidth) >= 950)
-		wid = 334;
-	else if(parseInt(document.body.clientWidth) >= 720)
-		wid = 410;
-	else if(parseInt(document.body.clientWidth) >= 415)
-		wid = 235;
-	else 
-		wid = 174;
-	
-	document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
-	document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+	if(!news)
+		return;
+	else
+	{
+		for(var loop = 0;loop < news.length;loop++)
+			news[loop].id = "";
+		if(m)
+			m.id = "on";//被选中
+		var wid;
+		if(parseInt(document.body.clientWidth) > 1199)
+			wid = 404;
+		else if(parseInt(document.body.clientWidth) >= 950)
+			wid = 334;
+		else if(parseInt(document.body.clientWidth) >= 720)
+			wid = 410;
+		else if(parseInt(document.body.clientWidth) >= 415)
+			wid = 235;
+		else 
+			wid = 174;		
+		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
+		if(m)
+			document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+	}
 }
 function LoopNews()
 {
 	var news = document.getElementsByClassName("news");
-	var loop = 0;
-	_GetImg(news[loop] , loop);
-	loop++;
-	var s = setInterval(function(){
+	if(!news)
+		return;
+	else
+	{
+		var loop = 0;
 		_GetImg(news[loop] , loop);
 		loop++;
-		if(loop >= news.length) loop = 0;	
-	},5000);
+		var s = setInterval(function(){
+			_GetImg(news[loop] , loop);
+			loop++;
+			if(loop >= news.length) loop = 0;	
+		},5000);
+	}
 }
 
 
