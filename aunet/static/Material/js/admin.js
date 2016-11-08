@@ -80,43 +80,44 @@ $(document).ready(function(){
 	$("div.header_filt p[status=0]").trigger("click");
 })
 	function formDownload(button,option){
-
+		var item;
 		if(option==1){
 			item = button.parents("#approve");
 		}
 		else{
 			item = button.parents("div.item");
 		}
-		form = document.getElementById("form");
+		var form = document.getElementById("form");
 		$(form).attr("action","/Material/download/form");
-		$("#type").val(item.attr("type"));
+		$("#type").val(item.attr("mtype"));
 		$("#id").val(item.attr("uid"));
 		form.submit();
 		
 	};
 	function schemeDownload(button,option){
+		var item;
 		if(option==1){
 			item = button.parents("#approve")
 		}
 		else{
 			item = button.parents("div.item")
 		}
-		form = document.getElementById("form");
+		var form = document.getElementById("form");
 		$(form).attr("action","/Material/download/scheme");
-		$("#type").val(item.attr("type"));
+		$("#type").val(item.attr("mtype"));
 		$("#id").val(item.attr("uid"));
 		form.submit();
 	}
 	function getModal(button){
 
-		item = button.parents("div.item")
+		var item = button.parents("div.item")
 
-		htmlobj=$.ajax({
+		var htmlobj=$.ajax({
 			url:"/Material/modal/",
 			type:"post",
 			data:{
 				id:item.attr("uid"),
-				type:item.attr("type"),
+				type:item.attr("mtype"),
 				modal_type:"approve"
 			},
 			async:false,
@@ -125,10 +126,10 @@ $(document).ready(function(){
 		$("#modal-approve").html(htmlobj.responseText);
 		$("#approve").attr({
 			"uid":item.attr("uid"),
-			"type":item.attr("type")
+			"mtype":item.attr("mtype")
 		});
 		$("#approve-id").val(item.attr("uid"));
-		$("#approve-type").val(item.attr("type"));
+		$("#approve-type").val(item.attr("mtype"));
 		$("#modal-approve").modal("show");
     }	
 
@@ -142,7 +143,7 @@ $(document).ready(function(){
 		$(".item").each(function(){
 		
 			if(
-				(printType=="all" || $(this).find("span.is_print").text() == printType)&&(date == "" || $(this).find("span[name='applytime']").text().indexOf(date)>=0)&&(materialType=="all" || $(this).attr("type") == materialType) && (status.indexOf($(this).attr('result'))>=0)
+				(printType=="all" || $(this).find("span.is_print").text() == printType)&&(date == "" || $(this).find("span[name='applytime']").text().indexOf(date)>=0)&&(materialType=="all" || $(this).attr("mtype") == materialType) && (status.indexOf($(this).attr('result'))>=0)
 			){
 				$(this).show();
 			}

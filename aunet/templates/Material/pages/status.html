@@ -2,13 +2,13 @@
 <html>
   <head>
 	<meta charset="UTF-8" />
-	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--<script src="{{url_for('static',filename='jquery.js')}}"></script>-->
+	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
 	<script>
+
 	function theDeleteModal(record){
-		var value = 'drop("'+record.attr("type")+'","'+record.attr("uid")+'")';
+		var value = 'drop("'+record.attr("mtype")+'","'+record.attr("uid")+'")';
 		$("#confirm-delete").attr("onclick",value);
 		$("#modal-delete").modal("show")
 	}
@@ -30,7 +30,7 @@
 		htmlobj=$.ajax({
 			url:"/Material/modal/",
 			type:"post",
-			data:{id:bt.attr("uid"),type:bt.attr("type"),modal_type:"preview"},
+			data:{id:bt.attr("uid"),type:bt.attr("mtype"),modal_type:"preview"},
 			async:false,
 		});
 		$("#modal-approve").html(htmlobj.responseText);
@@ -38,7 +38,7 @@
     }
     function modify(bt){
     	var form = $("<form></form>");
-    	var action = '/Material/modify/' + bt.attr("type") + "/";
+    	var action = '/Material/modify/' + bt.attr("mtype") + "/";
     	form.attr({
     		"method":"post",
     		"action":action,
@@ -116,16 +116,16 @@
 			<td>{{types[data.__tablename__][1]}}</td>
 			<td>{{results[data.result]}}</td>
 			<td>				
-				<button id="download" type="{{data.__tablename__}}" uid="{{data.id}}" onclick="download($(this).attr('type'),$(this).attr('uid'))">下载</button>
+				<button id="download" mtype="{{data.__tablename__}}" uid="{{data.id}}" onclick="download($(this).attr('mtype'),$(this).attr('uid'))">下载</button>
 			</td>
 			<td>
-				<button id="delete" type="{{data.__tablename__}}" uid="{{data.id}}" onclick="theDeleteModal($(this))">删除</button>
+				<button id="delete" mtype="{{data.__tablename__}}" uid="{{data.id}}" onclick="theDeleteModal($(this))">删除</button>
 			</td>
 			<td>
-				<button type="{{data.__tablename__}}" uid="{{data.id}}" onclick="getModal($(this))">查看</button>
+				<button mtype="{{data.__tablename__}}" uid="{{data.id}}" onclick="getModal($(this))">查看</button>
 			</td>
 			<td>
-				<button type="{{data.__tablename__}}" class="modify-button" uid="{{data.id}}" onclick="modify($(this))">修改</button>
+				<button mtype="{{data.__tablename__}}" class="modify-button" uid="{{data.id}}" onclick="modify($(this))">修改</button>
 			</td>
 			<br/>
 		</tr>	

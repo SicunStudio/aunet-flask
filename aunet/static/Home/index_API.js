@@ -11,34 +11,39 @@ document.getElementsByTagName("year")[0].innerHTML = myDate.getFullYear();
 function GetImg()
 {
 	var news = document.getElementsByClassName("news");
-	for(var loop = 0;loop < 5;loop++)
-		news[loop].id = "";
-	this.id = "on";//被选中
-	for(var loop = 0;loop < 5;loop++)
-		if(news[loop].id == "on")
-			break;
-	var order = loop;
-	var wid;
-	if(parseInt(document.body.clientWidth) > 1199)
-		wid = 404;
-	else if(parseInt(document.body.clientWidth) > 950)
-		wid = 334;
-	else if(parseInt(document.body.clientWidth) >= 720)
-		wid = 410;
-	else if(parseInt(document.body.clientWidth) >= 415)
-		wid = 235;
-	else 
-		wid = 174;
-	
-	document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
-	document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+	if(!news)
+		return;
+	else
+	{
+		for(var loop = 0;loop < news.length;loop++)
+			news[loop].id = "";
+		this.id = "on";//被选中
+		for(var loop = 0;loop < news.length;loop++)
+			if(news[loop].id == "on")
+				break;
+		var order = loop;
+		var wid;
+		if(parseInt(document.body.clientWidth) > 1199)
+			wid = 404;
+		else if(parseInt(document.body.clientWidth) > 950)
+			wid = 334;
+		else if(parseInt(document.body.clientWidth) >= 720)
+			wid = 410;
+		else if(parseInt(document.body.clientWidth) >= 415)
+			wid = 235;
+		else 
+			wid = 174;
+		
+		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
+		document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+	}
 }
 
 function InitImgSrc()
 {
 	var img_1 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByTagName("img");
 	var img_2 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("preview")[0].getElementsByTagName("img");
-	for(var loop = 0 ; loop < 5 ; loop ++)
+	for(var loop = 0 ; loop < img_2.length ; loop ++)
 		img_1[loop].src = img_2[loop].src;
 }
 /*******
@@ -47,35 +52,46 @@ function InitImgSrc()
 function _GetImg(m , order)
 {
 	var news = document.getElementsByClassName("news");
-	for(var loop = 0;loop < 5;loop++)
-		news[loop].id = "";
-	m.id = "on";//被选中
-	var wid;
-	if(parseInt(document.body.clientWidth) > 1199)
-		wid = 404;
-	else if(parseInt(document.body.clientWidth) >= 950)
-		wid = 334;
-	else if(parseInt(document.body.clientWidth) >= 720)
-		wid = 410;
-	else if(parseInt(document.body.clientWidth) >= 415)
-		wid = 235;
-	else 
-		wid = 174;
-	
-	document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
-	document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+	if(!news)
+		return;
+	else
+	{
+		for(var loop = 0;loop < news.length;loop++)
+			news[loop].id = "";
+		if(m)
+			m.id = "on";//被选中
+		var wid;
+		if(parseInt(document.body.clientWidth) > 1199)
+			wid = 404;
+		else if(parseInt(document.body.clientWidth) >= 950)
+			wid = 334;
+		else if(parseInt(document.body.clientWidth) >= 720)
+			wid = 410;
+		else if(parseInt(document.body.clientWidth) >= 415)
+			wid = 235;
+		else 
+			wid = 174;		
+		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
+		if(m)
+			document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+	}
 }
 function LoopNews()
 {
 	var news = document.getElementsByClassName("news");
-	var loop = 0;
-	_GetImg(news[loop] , loop);
-	loop++;
-	var s = setInterval(function(){
+	if(!news)
+		return;
+	else
+	{
+		var loop = 0;
 		_GetImg(news[loop] , loop);
 		loop++;
-		if(loop >= 5) loop = 0;	
-	},5000);
+		var s = setInterval(function(){
+			_GetImg(news[loop] , loop);
+			loop++;
+			if(loop >= news.length) loop = 0;	
+		},5000);
+	}
 }
 
 
@@ -97,7 +113,7 @@ function _menu(){
 function DisplayNews(news)
 {
 	var news = document.getElementsByClassName("news_2_x");
-	for(var loop = 0;loop < 10;loop++)
+	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
 	var page = JSON.parse(news);
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page["news_Length"] + "");
@@ -273,7 +289,107 @@ function PageDown()
 /****结束***/
 
 
-/****文档加载完成后的执行代码*****/
-window.onload=function()
+
+
+function IncludeLinkStyle(url) 
 {
+	document.getElementsByTagName("link")[0].setAttribute("href" , url);
 }
+function GetWinWidth()
+{
+	if (window.innerWidth)
+		return window.innerWidth;
+	else if ((document.body) && (document.body.clientWidth))
+		return document.body.clientWidth;
+	
+}
+
+
+
+function getTop(e)
+{ 
+	var offset=e.offsetTop; 
+	if(e.offsetParent!=null) offset+=getTop(e.offsetParent); 
+	return offset; 
+} 
+function getLeft(e)
+{ 
+	var offset=e.offsetLeft; 
+	if(e.offsetParent!=null) offset+=getLeft(e.offsetParent); 
+	return offset; 
+} 
+function getHeight(e)
+{ 
+	var offset=e.clientHeight;  
+	return offset; 
+}
+
+
+
+
+
+function InitPutMenuLine()
+{
+	var lis = document.getElementById("top_menu_menu").getElementsByTagName("li");
+	for(var loop = 0 ; loop < lis.length; loop++)
+		if(lis[loop].id == "on")
+		{
+			e = lis[loop];
+			break;
+		}	
+	var left = getLeft(e);
+	var top = getTop(e);
+	var line = document.getElementById("menu_bottom_line");
+	line.style.left = left + "px";
+	line.style.top = top + getHeight(e) - getHeight(line) + "px";
+	line.style.transition = "all 0.3s";
+}
+function PutMenuLine()
+{
+	var left = getLeft(this);
+	var top = getTop(this);
+	var line = document.getElementById("menu_bottom_line");
+	line.style.left = left + "px";
+	line.style.top = top + getHeight(this) - getHeight(line) + "px";
+}
+function HideMenuLine()
+{
+	var winWidth;
+		winWidth = GetWinWidth();
+	if(winWidth < 960)
+	{
+		document.getElementById("menu_bottom_line").style.display = "none";
+	}
+	else
+		document.getElementById("menu_bottom_line").style.display = "block";
+}
+
+Old_width = GetWinWidth(); 
+function ResetMenuLine()
+{
+	var winWidth;
+	winWidth = GetWinWidth();
+	if(winWidth != Old_width)
+	{
+	Old_width = winWidth;
+	InitPutMenuLine();
+	}
+}
+function InitMenuLine()
+{
+	InitPutMenuLine();
+	lis = document.getElementById("top_menu_menu").getElementsByTagName("li");
+	for(var loop = 0 ; loop < lis.length; loop++)
+		{
+			lis[loop].addEventListener("mouseover",PutMenuLine);
+			lis[loop].addEventListener("mouseleave",InitPutMenuLine);
+		}
+}
+
+function InitHeader()
+{
+	InitMenuLine();
+	var loop_1  = setInterval(HideMenuLine , 100);
+	var loop_2	= setInterval(ResetMenuLine , 10)
+}
+

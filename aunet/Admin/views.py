@@ -71,14 +71,12 @@ def login():
             return "user doesn't existed"
         elif user.verify_password(request.form['password']) is not True:
             return "password error"
-        else:
-            
+        else:          
             login_user(user)
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
-            identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))   
+            identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
             return redirect(request.args.get('next') or '/')
-
     return render_template("Admin/index.html")
 
 

@@ -62,7 +62,8 @@ def make_context(data,type):
 def query_data(type,id):
     if type not in types.keys():abort(404)
     data = types[type][0].query.filter_by(id=int(id)).first_or_404()
-    if str(current_user.id) != data.applicant:abort(403)
+    if str(current_user.id) != data.applicant and \
+    not level1.can():abort(403)
     return data
 
 @material.route('/download/<file_type>',methods=['POST'])
@@ -195,6 +196,7 @@ def main(option,type):
         apply_type = apply_type)
 
 @material.route('/procedure')
+@material.route('/')
 @login_required
 @level2.require(403)
 def procedure():
