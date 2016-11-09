@@ -37,7 +37,7 @@ class User(db.Model,UserMixin):
 	email=db.Column(db.String(40))
 	status=db.Column(db.Boolean)
 	remark=db.Column(db.String(20))
-	role=db.relationship("Role",secondary=user_role,backref=db.backref('users',lazy="dynamic"))
+	roles=db.relationship("Role",secondary=user_role,backref=db.backref('users',lazy="dynamic"))
 
 
 	def verify_password(self, passWord):
@@ -56,15 +56,15 @@ class User(db.Model,UserMixin):
 			node=node+r.nodes
 		return node
 
-
+	def addRole(self,roleName):
+		r=Role.query.filter(Role.roleName==roleName).first()
+		self.roles.append(r)
 
     
-	def __init__(self,userName,passWord,email,roleName):
+	def __init__(self,userName,passWord,email):
 		self.userName = userName
 		self.passWord = generate_password_hash(passWord)
 		self.email=email
-		r=Role.query.filter(Role.roleName==roleName).first()
-		self.role.append(r)
 		self.status=True
 
     	#self.role=Role.query.filter(Role.roleName==roleName).first()

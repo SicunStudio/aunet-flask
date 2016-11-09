@@ -76,7 +76,10 @@ def login():
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
             identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
-            return redirect(request.args.get('next') or '/')
+            if user.userName=="association" or user.userName=="association_admin":
+                return redirect("/Material")
+            else:
+                return redirect(request.args.get('next') or '/')
     return render_template("Admin/index.html")
 
 
@@ -156,6 +159,7 @@ def confirm_email(token):
     return "good"
 
 #User 模块
+api.add_resource(CurrentUser,"/api/User/CurrentUser")
 api.add_resource(Users, '/api/User/Users')
 api.add_resource(UserSpec,"/api/User/Users/<string:id>")
 api.add_resource(Nodes,"/api/User/Nodes")
