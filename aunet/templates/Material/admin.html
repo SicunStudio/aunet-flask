@@ -35,7 +35,7 @@
 		<div style="width:18%;float:left;height:1px;"></div>
 
 		<div class="header_filt">
-			<p status="012">所&nbsp;&nbsp;&nbsp;&nbsp;有</p>
+			<p status="012">所&nbsp;&nbsp;有</p>
 		</div>
 
 		<div class="header_filt">
@@ -56,7 +56,7 @@
 
 		<div class="logout">
 			<p style="font-size:16px;text-align:center;margin:5px 0 5px 0;color:#a0a0a0;">admin</p>
-			<button class="btn btn-danger" id="btn-logout"><p style="font-size:15px;">注&nbsp;&nbsp;&nbsp;&nbsp;销</p></button>
+			<button class="btn btn-danger" id="btn-logout"><p style="font-size:15px;">注&nbsp;&nbsp;销</p></button>
 		</div>
 
 		<div style="clear:both;"></div>
@@ -72,7 +72,7 @@
 			<div class="btn-group">
 				<div class="triangle1"></div>
 				<select class="filt-button" onchange="filter()" id="type-filter">
-					<option value="all" selected="selected">所&nbsp;&nbsp;&nbsp;&nbsp;有</option>
+					<option value="all" selected="selected">所&nbsp;&nbsp;有</option>
 					{% for key,value in types.items()%}
 					<option value="{{key}}">{{value[1]}}</option>
 					{% endfor %}
@@ -87,7 +87,7 @@
 			<div class="btn-group">
 				<div class="triangle1"></div>
 				<select  class="filt-button" id="print-filter" onchange="filter()">
-					<option selected="selected" value="all">所&nbsp;&nbsp;&nbsp;&nbsp;有</option>
+					<option selected="selected" value="all">所&nbsp;&nbsp;有</option>
 					<option >已 打 印</option>
 					<option >未 打 印</option>
 				</select>
@@ -104,14 +104,14 @@
 
 <!---->	<div class="items">
 		{% for data in datas %}
-			<div class="item" mtype="{{data.__tablename__}}" uid="{{data.id}}" result="{{data.result}}">
+			<div class="item" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" result="{{data.result}}">
 
 				<div class="i1">
 					<div class="seal"></div>
 					<p>{{data.association}}</p>
 				</div>
 				<div class="i2">
-					<p>{{types[data.__tablename__][1]}}</p>
+					<p>{{types[data.__tablename__[9:]][1]}}</p>
 				</div>
 
 				<div class="i3">
@@ -130,14 +130,14 @@
 				<div class="i5">
 					
 					{% if data.pre_verify == None %}
-					<button class="button1" data-toggle="modal" style="background-color:#237fdd;" onclick="getModal($(this))">审&nbsp;&nbsp;&nbsp;&nbsp;批</button>
+					<button class="button1" data-toggle="modal" style="background-color:#237fdd;" onclick="getModal($(this))">审&nbsp;批</button>
 					{% else %}
 					<button class="button1" data-toggle="modal" style="background-color:#e93945;" onclick="getModal($(this))">修 改 审 批</button>
 					{% endif %}
 					
 					<div class="btn-group">
 						<button type="button" class="dropdown-toggle button2" data-toggle="dropdown">
-							下&nbsp;&nbsp;&nbsp;&nbsp;载
+							下&nbsp;载
 						</button>
 						<div class="triangle2"></div>
 						<ul class="dropdown-menu" role="menu">
