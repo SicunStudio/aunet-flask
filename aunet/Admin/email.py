@@ -10,13 +10,8 @@ def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
-def send_email(subject, recipients, html):
-    recipients=list(recipients)
-    msg = Message(subject, sender=MAIL, recipients=recipients)
-    #msg.body = text_body
-    msg.html=html
+def send_email(subject, sender, recipients, text_body):
+    msg = Message(subject, sender=sender, recipients=recipients)
+    msg.body = text_body
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
-
-
-
