@@ -193,7 +193,7 @@ class News1(Resource):
             if k>1:
                 os.remove(path)
             else:
-                imgUrlFirst="static/Uploads/News"+filename
+                imgUrlFirst="static/Uploads/News/"+filename
         if k==0:
             imgUrlFirst="static/uploads/News/1.jpg"
         # return imgUrlFirst
