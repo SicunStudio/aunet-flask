@@ -1,11 +1,11 @@
-from . import admin
 from flask import render_template,current_app,redirect,request,make_response
 from flask_login import current_user,login_user,logout_user,login_required
 from flask_principal import identity_loaded,RoleNeed,UserNeed,ActionNeed
 from flask_principal import Identity, AnonymousIdentity, \
      identity_changed,Permission
 import json,os
-
+from werkzeug.security import generate_password_hash
+from flask import abort
 from .news import SilderShow1,SliderShowSpec,News1,NewsSpec,NewsSpecDetail,Tags,Tag1,Categorys,Category1
 from .users import Users,UserSpec,Roles,RoleSpec,Nodes,NodeSpec,CurrentUser
 from .search import SearchNews
@@ -14,7 +14,9 @@ from .search import SearchNews
 from aunet import lm,app,api
 from .models import User,LoginLog
 from .models import EditUserPermission,EditUserNeed
-
+from .email import send_email
+from . import admin
+from . import ts
 from collections import namedtuple
 from functools import partial
 
@@ -74,7 +76,10 @@ def login():
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
             identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
-            return redirect(request.args.get('next') or '/')
+            if user.userName=="association" or user.userName=="association_admin":
+                return redirect("/Material")
+            else:
+                return redirect(request.args.get('next') or '/')
     return render_template("Admin/index.html")
 
 
@@ -95,12 +100,11 @@ def logout():
 
     return redirect(request.args.get('next') or '/')
 
-
-@app.route('/api/modules/<path:string>',methods=['GET',"POST"])
-def getHtml():
+@app.route("/templates/Admin/<string:path>",methods=['GET',"POST"])
+def getHtml(path):
     # path=request.args.get("path","templates/Home/index/index.html")
     #return "dg"
-    path=os.path.join(app.config['BASEDIR'],'aunet/',path)
+    path=os.path.join(app.config['BASEDIR'],'aunet/templates/Admin/',path)
     path=str(path)
     try:
         f=open(path)
@@ -109,14 +113,53 @@ def getHtml():
         return res
     except:
         return "not found" ,404
+
+
+@app.route("/dashboard", methods=["GET"])
+@app.route("/dashboard/<string:path>", methods=["GET"])
+def app():
+    with open("aunet/templates/Admin/app.html") as f:
+        return f.read()
+
+
+
     
 
 @admin.route('/upload',methods=['GET',"POST"])
 def upload():
     pass
 
+@admin.route('/forget',methods=["GET","POST"])
+def forget():
+    if request.method=="POST":
+        userName=request.form['userName']
+        email=request.form['email']
+        user=User.query.filter(User.userName==userName).first()
+        subject="验证邮箱"
+        token=ts.dumps(user.userName,salt="you will never guess")
+        confirm_url=url_for("admin.confirm",token=token,_external=True)
+        html=render_template(
+            'Admin/conform.html',
+            confirm_url=confirm_url)
+        if email==user.email:
+            send_email(subject,user.email,html)
+        return redirect(url_for("index"))
+    return render_template("")
+
+@admin.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        userName=ts.loads(token,salt="you will never guess", max_age=86400)
+    except:
+        abort(404)
+    user=User.query.filter(User.userName==userName).first_or_404()
+    user.passWord=generate_password_hash("123456")
+    db.session.add(user)
+    db.session.commit()
+    return "good"
 
 #User 模块
+api.add_resource(CurrentUser,"/api/User/CurrentUser")
 api.add_resource(Users, '/api/User/Users')
 api.add_resource(UserSpec,"/api/User/Users/<string:id>")
 api.add_resource(Nodes,"/api/User/Nodes")

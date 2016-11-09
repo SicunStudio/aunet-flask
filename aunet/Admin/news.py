@@ -382,7 +382,6 @@ class Tags(Resource):
         db.session.commit()
 
 class Tag1(Resource):
-
     def get(self,id):
         tag=Tag.query.filter_by(id=id).first()
         abort_if_not_exist(tag,"tag")

@@ -24,12 +24,12 @@ User_parser=reqparse.RequestParser()			# User zhong method post de parser
 User_parser.add_argument('userName',type=str,required =True,location="json",help="userName is needed")
 User_parser.add_argument('passWord',type=str,required =True,location="json",help="passWord is needed")
 User_parser.add_argument('email',type=str,location="json",help="email is needed",required=True)
-User_parser.add_argument('roleName',type=str,required =True,location="json",help="roleName is needed")
+User_parser.add_argument('roleName',type=str,required =True,location="json",action="append",help="roleName is needed")
 
 User1_parser=reqparse.RequestParser()			#User1 zhong method post de parser
 User1_parser.add_argument('email',type=str,location="json")
 User1_parser.add_argument('passWord',type=str,location="json")
-User1_parser.add_argument('roleName',type=str,location="json")
+User1_parser.add_argument('roleName',type=str,location="json",action="append")
 User1_parser.add_argument('userName',type=str,location="json")
 User1_parser.add_argument('status',type=bool,location="json")
 
@@ -76,23 +76,25 @@ class Users(Resource):
 			data['userName']=user.userName
 			data['status']=user.status
 			data['email']=user.email
-			data['role']=dict()
-			data['role']['roleName']=user.role[0].roleName
-			data['role']['status']=user.role[0].status
+			data['roles']=list()
 			data['nodes']=list()
-			for node in user.role[0].nodes:
-				n=dict()
-				n['nodeName']=node.nodeName
-				n['status']=node.status
-				n['level']=node.level
-				data['nodes'].append(n)
+			for role in user.roles:
+				for node in role.nodes:
+					n=dict()
+					n['nodeName']=node.nodeName
+					n['status']=node.status
+					n['level']=node.level
+					data['nodes'].append(n)
+				r=dict()
+				r['roleName']=role.roleName
+				r['status']=role.status
+				data['roles'].append(r)
 			datas.append(data)
 		return datas
 	def post(self):
 		permission=Permission(ActionNeed('添加用户'))
 		if permission.can()is not True:
 			abort_if_unauthorized("添加用户")
-
 		args=User_parser.parse_args()
 		userName=args['userName']
 		passWord=args['passWord']
@@ -100,9 +102,11 @@ class Users(Resource):
 		roleName=args['roleName']
 		user1=User.query.filter(User.userName==userName).first()
 		abort_if_exist(user1,"userName")
-		role=Role.query.filter(Role.roleName==roleName).first()
-		abort_if_not_exist(role,"role")
-		user=User(userName,passWord,email,roleName)
+		user=User(userName,passWord,email)
+		for name in roleName:
+			role=Role.query.filter(Role.roleName==name).first()
+			abort_if_not_exist(role,"role")
+			user.roles.append(role)
 		db.session.add(user)
 		db.session.commit()
 
@@ -121,16 +125,19 @@ class CurrentUser(Resource):
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
-		data['role']=dict()
-		data['role']['roleName']=user.role[0].roleName
-		data['role']['status']=user.role[0].status
+		data['roles']=list()
 		data['nodes']=list()
-		for node in user.role[0].nodes:
-			n=dict()
-			n['nodeName']=node.nodeName
-			n['status']=node.status
-			n['level']=node.level
-			data['nodes'].append(n)
+		for role in user.roles:
+			for node in role.nodes:
+				n=dict()
+				n['nodeName']=node.nodeName
+				n['status']=node.status
+				n['level']=node.level
+				data['nodes'].append(n)
+			r=dict()
+			r['roleName']=role.roleName
+			r['status']=role.status
+			data['roles'].append(r)
 		return data
 
 class UserSpec(Resource):			
@@ -149,17 +156,19 @@ class UserSpec(Resource):
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
-		data['role']=dict()
-		data['role']['roleName']=user.role[0].roleName
-		data['role']['status']=user.role[0].status
+		data['roles']=list()
 		data['nodes']=list()
-		for node in user.role[0].nodes:
-			n=dict()
-			n['nodeName']=node.nodeName
-			n['status']=node.status
-			n['level']=node.level
-			data['nodes'].append(n)
-	
+		for role in user.roles:
+			for node in role.nodes:
+				n=dict()
+				n['nodeName']=node.nodeName
+				n['status']=node.status
+				n['level']=node.level
+				data['nodes'].append(n)
+			r=dict()
+			r['roleName']=role.roleName
+			r['status']=role.status
+			data['roles'].append(r)
 		return data
 
 
@@ -189,7 +198,12 @@ class UserSpec(Resource):
 		if passWord!=None:
 			user.passWord=generate_password_hash(passWord)
 		if roleName!=None and permission.can():
-			user.role[0]=Role.query.filter(Role.roleName==roleName).first()
+			r=list()
+			for name in roleName:
+				role=Role.query.filter(Role.roleName==name).first()
+				abort_if_not_exist(role,"role")
+				r.append(role)
+			user.role=r
 		if userName!=None:
 			user.userName=userName
 		db.session.add(user)
