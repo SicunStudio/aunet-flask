@@ -32,29 +32,30 @@ class Base1(object):
 
 class East4(db.Model,Base,Base1):
     '''model of east4'''
-    __tablename__ = 'east4'
+    __tablename__ = 'material_east4'
     site = None
 
 
 class Outdoor(db.Model,Base,Base1):
     '''model of outdoor'''
-    __tablename__ = 'outdoor'
+    __tablename__ = 'material_outdoor'
     
 
 class Sacenter(db.Model,Base,Base1):
     '''model of student activity center'''
-    __tablename__ = 'sacenter'
+    __tablename__ = 'material_sacenter'
     is_query = db.Column(db.CHAR(1))
     site_type = db.Column(db.CHAR(1))
 
 class Special(db.Model,Base,Base1):
     '''model of special'''
-    __tablename__ = 'special'
+    __tablename__ = 'material_special'
     is_query = db.Column(db.CHAR(1))
 
 
 class Colorprint(db.Model,Base):
     '''model of colorprint'''
+    __tablename__ = 'material_colorprint'
     is_sponsor = db.Column(db.CHAR(1))
     remark = db.Column(db.TEXT)
     time = db.Column(db.String(5))
@@ -63,7 +64,7 @@ class Colorprint(db.Model,Base):
 
 class Sports(db.Model,Base):
     '''model of sports'''
-    __tablename__ = 'sports'
+    __tablename__ = 'material_sports'
     school_id = db.Column(db.String(10))
     remark = db.Column(db.TEXT)
     time = db.Column(db.String(5))
@@ -74,7 +75,7 @@ class Sports(db.Model,Base):
 
 class Materials(db.Model,Base):
     '''model of material'''
-    __tablename__ = 'material'
+    __tablename__ = 'material_material'
     resp_person = db.Column(db.String(10),nullable = False)
     activity = db.Column(db.String(15))
     opinion = db.Column(db.String(20))
@@ -90,7 +91,7 @@ class Materials(db.Model,Base):
 
 class Teachingbuilding(db.Model,Base):
     '''model of teachingbuilding'''
-    __tablename__ = 'teachingbuilding'
+    __tablename__ = 'material_teachingbuilding'
     content = db.Column(db.TEXT())
     activity = db.Column(db.String(15))
     signature = db.Column(db.String(10))

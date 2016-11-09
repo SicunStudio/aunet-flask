@@ -1,22 +1,45 @@
-<!DOCTYPE>
-<html>
- <head>
-  <title>物资系统-{{apply_type}}</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html>	
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<link rel="stylesheet" type="text/css" href="../../../static/Home/header_footer.css">
+	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+	<link href="{{url_for('material.static',filename='css/apply.css')}}" rel="stylesheet">
+	<link href="{{url_for('material.static',filename='css/sidebar.css')}}" rel="stylesheet">
+	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/jquery.validate.min.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/messages_zh.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/form_validate.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/material_apply.js')}}"></script><!---->
+		<title>华中科技大学社团网</title>
+	</head>
+	<body>
+		<div id="top_menu">
+			<img src="../../../static/Home/AUlogo.png" alt="" class="logo">
+			<span class="top_menu_title">
+				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
+				<div>华中科技大学学生社团联合会</div>
+			</span>
+			<ul id="top_menu_menu">
+				<a href=""><li id="on">首&nbsp;页</li></a>
+				<a href=""><li>新&nbsp;闻</li></a>
+				<a href=""><li>社&nbsp;团</li></a>
+				<a href=""><li>社&nbsp;联</li></a>
+				<a href=""><li>管&nbsp;理</li></a>
+				<a href=""><li>其&nbsp;他</li></a>
+			</ul>
+			<div id="menu_bottom_line"></div>
+			<div class="menu">
+				<div class="icon"></div>
+				<div class="icon"></div>
+				<div class="icon"></div>
+			</div>
+			<a href=""><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
+		</div>
 
-  <link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{url_for('material.static',filename='css/apply.css')}}" rel="stylesheet">
-  <link href="{{url_for('material.static',filename='css/sidebar.css')}}" rel="stylesheet">
-  <script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
-  <script src="{{url_for('material.static',filename='js/jquery.validate.min.js')}}"></script>
-  <script src="{{url_for('material.static',filename='js/messages_zh.js')}}"></script>
-  <script src="{{url_for('material.static',filename='js/form_validate.js')}}"></script>
-  <script src="{{url_for('material.static',filename='js/material_apply.js')}}"></script><!---->
-</head>
-
-<body>
-
+	<div style="margin-top:5px">
 	<div class="left">
 		<div class="material">
 			<div class="greenhead">物 资 借 用</div>
@@ -41,7 +64,7 @@
 	<div class="right">
 
 		<div class="tag">
-			<div class="tagarea" style="width:58%;margin-left:0;
+			<div class="tagarea" style="width:50%;margin-left:0;
 	text-align:left;padding-left:2%">当前处于: 
 				{% if apply_type=='物资借用' %}
 				物资借用 /
@@ -52,10 +75,10 @@
 				{% endif %}
 				{{apply_type}}</div>
 			<a href="{{url_for('material.procedure')}}">
-			<div class="tagarea" style="width:20%;position:relative;left:2.5%">场地物资申请流程</div>
+			<div class="tagarea" style="width:25%;position:relative;left:2.5%">场地物资申请流程</div>
 			</a>
 			<a href="{{url_for('material.status')}}">
-			<div class="tagarea" style="width:13%;position:relative;left:5%">状态查询</div>
+			<div class="tagarea" style="width:15%;position:relative;left:5%">状态查询</div>
 			</a>
 		</div>
 
@@ -65,14 +88,37 @@
 		</div>
 
 	</div>
-
-
 	<div style="clear:both;"></div>
+	</div>
 
+		<div id="bottom_menu">
+			<span>友情链接</span>
+			<span>
+				<ul>
+					<li><a href="">华中科技大学</a></li>
+					<li><a href="">学工在线</a></li>
+					<li><a href="">校团委</a></li>
+					<li><a href="">醉晚亭</a></li>
+				</ul>
+			</span>
+			<span>
+				<img src="" alt="">
+			</span>
+		</div>
 
+		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
 	</body>
-
+	
+	<script src="../../../static/Home/index_API.js"></script>
+	<script>
+		window.onload=function()
+		{
+			InitHeader();
+		}
+	</script>
+	
 </html>
+
 
 
 <script type="text/javascript">

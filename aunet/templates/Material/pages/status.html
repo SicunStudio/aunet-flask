@@ -113,19 +113,19 @@
 		<tr>
 			<td>{{ loop.index }}</td>
 			<td>{{data.apply_time.strftime('%Y-%m-%d %H:%M')}}</td>
-			<td>{{types[data.__tablename__][1]}}</td>
+			<td>{{types[data.__tablename__[9:]][1]}}</td>
 			<td>{{results[data.result]}}</td>
 			<td>				
-				<button id="download" mtype="{{data.__tablename__}}" uid="{{data.id}}" onclick="download($(this).attr('mtype'),$(this).attr('uid'))">下载</button>
+				<button id="download" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="download($(this).attr('mtype'),$(this).attr('uid'))">下载</button>
 			</td>
 			<td>
-				<button id="delete" mtype="{{data.__tablename__}}" uid="{{data.id}}" onclick="theDeleteModal($(this))">删除</button>
+				<button id="delete" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="theDeleteModal($(this))">删除</button>
 			</td>
 			<td>
-				<button mtype="{{data.__tablename__}}" uid="{{data.id}}" onclick="getModal($(this))">查看</button>
+				<button mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="getModal($(this))">查看</button>
 			</td>
 			<td>
-				<button mtype="{{data.__tablename__}}" class="modify-button" uid="{{data.id}}" onclick="modify($(this))">修改</button>
+				<button mtype="{{data.__tablename__[9:]}}" class="modify-button" uid="{{data.id}}" onclick="modify($(this))">修改</button>
 			</td>
 			<br/>
 		</tr>	

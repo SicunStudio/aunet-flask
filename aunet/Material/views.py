@@ -1,4 +1,5 @@
 # -- coding: UTF-8 --
+from .. import app
 from urllib.request import quote
 from docxtpl import DocxTemplate,RichText
 from time import time,mktime,strftime,strptime,localtime
@@ -13,8 +14,8 @@ import os
 from .. import db
 from . import material
 
-Upload_path = os.getcwd()+'/aunet/static/Uploads/Material/'
-Docx_path = os.getcwd()+'/aunet/static/Material/docx/'
+Upload_path = os.path.join(app.config['BASEDIR'],'aunet','static','Uploads','Material') + '/'
+Docx_path = os.path.join(app.config['BASEDIR'],'aunet','static','Material','docx') + '/'
 types = {
     'east4':(East4,'东四三楼'),
     'colorprint':(Colorprint,'彩喷悬挂'),
@@ -89,11 +90,11 @@ def download(file_type):
             context[key] = RichText(value)     
         doc = DocxTemplate(Docx_path+type+'.docx')
         doc.render(context)
-        temp_file = str(current_user.id) +'result.docx'
+        temp_file = Upload_path + str(current_user.id) +'result.docx'
         doc.save(temp_file)
         #读取渲染后的文件并将之删除
         with open(temp_file,'rb') as f:
-            content = f.read()           
+            content = f.read()
         if os.path.exists(temp_file):
             os.remove(temp_file)
         filename = quote(data.association+'-'+types[type][1]+'.docx')     
