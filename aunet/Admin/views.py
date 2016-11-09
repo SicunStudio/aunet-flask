@@ -46,15 +46,17 @@ def on_identity_loaded(sender, identity):
     # Add the UserNeed to the identity
     if hasattr(current_user, 'id'):
         identity.provides.add(UserNeed(current_user.id))
-        identity.provides.add(RoleNeed(current_user.role[0].roleName))
-
+        for role in current_user.roles:
+            identity.provides.add(RoleNeed(role.roleName))
+        
     # Assuming the User model has a list of nodes, update the
     # identity with the nodes that the user provides
     if hasattr(current_user,"nodes"):
-    	for node in current_user.role[0].nodes:
-    	   if (node.status==1) and (current_user.status==1) and (current_user.role[0].status==1):
-    	       identity.provides.add(ActionNeed(node.nodeName))
-
+        for role in current_user.roles:
+            for node in role.nodes:
+                if (node.status==1) and (current_user.status==1) and (current_user.role[0].status==1):
+                    identity.provides.add(ActionNeed(node.nodeName))
+    	
     
     		
 @admin.route('/index')
