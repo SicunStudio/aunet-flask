@@ -1,3 +1,4 @@
+# -*-coding:utf-8 -*-
 from flask_restful import reqparse, abort,Resource,fields,marshal_with
 from flask_principal import Permission,ActionNeed
 from aunet import db,app

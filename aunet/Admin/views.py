@@ -1,3 +1,4 @@
+# -*-coding:utf-8 -*-
 from flask import render_template,current_app,redirect,request,make_response
 from flask_login import current_user,login_user,logout_user,login_required
 from flask_principal import identity_loaded,RoleNeed,UserNeed,ActionNeed
