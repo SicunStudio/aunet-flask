@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+>>>>>>> 6b00a56a44dcacf19cf5f53447f4f1e6abdb46d4
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
 

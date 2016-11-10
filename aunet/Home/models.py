@@ -1,3 +1,4 @@
+# -*-coding:utf-8 -*-
 from .. import db
 from datetime import datetime
 from flask_login import current_user
