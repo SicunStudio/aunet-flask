@@ -1,0 +1,140 @@
+<!DOCTYPE>
+<html>
+  <head>
+	<meta charset="UTF-8" />
+	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
+	<script>
+
+	function theDeleteModal(record){
+		var value = 'drop("'+record.attr("mtype")+'","'+record.attr("uid")+'")';
+		$("#confirm-delete").attr("onclick",value);
+		$("#modal-delete").modal("show")
+	}
+	function drop(type,id){
+		form = document.getElementById("form");
+		$(form).attr("action","{{url_for('material.delete')}}");
+		$("#type").val(type);
+		$("#id").val(id);
+		form.submit();
+	}
+	function download(type,id){
+		form = document.getElementById("form");
+		$(form).attr("action","{{url_for('material.download',file_type='form')}}");
+		$("#type").val(type);
+		$("#id").val(id);
+		form.submit();
+	}
+	function getModal(bt){	
+		htmlobj=$.ajax({
+			url:"/Material/modal/",
+			type:"post",
+			data:{id:bt.attr("uid"),type:bt.attr("mtype"),modal_type:"preview"},
+			async:false,
+		});
+		$("#modal-approve").html(htmlobj.responseText);
+		$("#modal-approve").modal("show");
+    }
+    function modify(bt){
+    	var form = $("<form></form>");
+    	var action = '/Material/modify/' + bt.attr("mtype") + "/";
+    	form.attr({
+    		"method":"post",
+    		"action":action,
+    		"target":"_self"
+    	})
+    	var input = $("<input name='id'/>");
+    	input.val(bt.attr("uid"));
+    	form.append(input);
+    	form.appendTo("body");
+        form.css('display','none');  
+        form.submit();
+    }
+	</script>
+
+	<style>
+	td>p {margin:0px;}
+	.model-label{
+		font-weight:inherit;
+		font-size:20px;
+		display:block;
+		text-align:left;
+		margin-top:5px;
+	}
+	</style>
+
+  </head>
+
+  <body>
+	<div class="modal fade" id="modal-approve" tabindex="-1" role="dialog" aria-hidden="true">
+	</div>
+
+	<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						删除
+					</h4>
+				</div>
+				<div class="modal-body">
+					确定要删除吗？(删除后不可恢复)
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="background:green;border:none">关闭
+					</button>
+					<button type="button" id="confirm-delete" class="btn btn-primary" style="background:red;border:none">
+						确定
+					</button>
+				</div>
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog-->
+	</div>
+
+	{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+	<table bolder="1">
+		<tr>
+			<th>序号</th>
+			<th>提交时间</th>
+			<th>物资类型</th>
+			<th>审批结果</th>
+		</tr>		
+		{% for data in datas:%}
+		<tr>
+			<td>{{ loop.index }}</td>
+			<td>{{data.apply_time.strftime('%Y-%m-%d %H:%M')}}</td>
+			<td>{{types[data.__tablename__[9:]][1]}}</td>
+			<td>{{results[data.result]}}</td>
+			<td>				
+				<button id="download" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="download($(this).attr('mtype'),$(this).attr('uid'))">下载</button>
+			</td>
+			<td>
+				<button id="delete" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="theDeleteModal($(this))">删除</button>
+			</td>
+			<td>
+				<button mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="getModal($(this))">查看</button>
+			</td>
+			<td>
+				<button mtype="{{data.__tablename__[9:]}}" class="modify-button" uid="{{data.id}}" onclick="modify($(this))">修改</button>
+			</td>
+			<br/>
+		</tr>	
+		{% endfor %}		
+	</table>
+
+	<form id="form" method="post" action="">
+		<input type="hidden" id="type" name="type" value=""/>
+		<input type="hidden" id="id" name="id" value=""/>
+	</form>
+  </body>  
+</html>

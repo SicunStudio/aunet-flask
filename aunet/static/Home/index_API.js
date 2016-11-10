@@ -183,8 +183,11 @@ function GetNews(posts)
         },
         error: function (message) {
             alert("提交数据失败！");
+<<<<<<< HEAD
+=======
 
                 DisplayNews(message);
+>>>>>>> 78ffe36e419bf31173d3faf1fa8e68dc7e54ff30
         }
     });
     alert(JSON.stringify(posts));

@@ -1,0 +1,101 @@
+<!--彩喷悬挂申请表-->
+
+{% extends modal_type+"_modal.html" %}
+
+{% block table %}
+
+<div align="center" style="layout-grid: 15.6pt;">
+	<table style="border-collapse: collapse; border: none; margin-left: 6.75pt; margin-right: 6.75pt;" border="1" cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr style="height: 15.75pt;">
+				<td style="width: 90.0pt; border: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" width="120">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">申请单位</span></strong></p>
+					</td>
+				<td style="width: 408.5pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" colspan="5" width="545">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 15.0pt; font-family: 宋体;">{{context['association']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 29.9pt;">
+				<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 29.9pt;" width="120">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">经办人信息</span></strong></p>
+					</td>
+				<td style="width: 51.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 29.9pt;" width="68">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">姓名</span></strong></p>
+					</td>
+				<td style="width: 112.5pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 29.9pt;" width="150">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 15.0pt; font-family: 宋体;">{{context['resp_person']}}</span></p>
+					</td>
+				<td style="width: 93.75pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 29.9pt;" width="125">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">联系方式</span></strong></p>
+					</td>
+				<td style="width: 151.25pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 29.9pt;" colspan="2" width="202">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 15.0pt; font-family: 宋体;">{{context['tel']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 84.45pt;">
+				<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 84.45pt;" width="120">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">活动内容</span></strong></p>
+					</td>
+				<td style="width: 408.5pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 84.45pt;" colspan="5" width="545">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 15.0pt; font-family: 宋体;">{{context['content']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 15.75pt;">
+				<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" width="120">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">活动日期</span></strong></p>
+					</td>
+				<td style="width: 163.5pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" colspan="2" width="218">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 18.0pt; font-family: 宋体;">{{context['date']}}</span></p>
+					</td>
+				<td style="width: 93.75pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" width="125">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">使用时间</span></strong></p>
+					</td>
+				<td style="width: 151.25pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" colspan="2" width="202">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 18.0pt; font-family: 宋体;">{{context['time']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 15.75pt;">
+				<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" width="120">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">使用地点</span></strong></p>
+					</td>
+				<td style="width: 163.5pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" colspan="2" width="218">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 18.0pt; font-family: 宋体;">{{context['site']}}</span></p>
+					</td>
+				<td style="width: 163.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" colspan="2" width="217">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">彩喷是否具有商业性质</span></strong></p>
+					</td>
+				<td style="width: 82.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 15.75pt;" width="109">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 18.0pt; font-family: 宋体;">{{context['is_sponsor']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 53.45pt;">
+				<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 53.45pt;" width="120">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">备<span lang="EN-US">&nbsp;&nbsp;&nbsp; </span>注</span></strong></p>
+					</td>
+				<td style="width: 408.5pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 53.45pt;" colspan="5" width="545">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 18.0pt; font-family: 宋体;">{{context['remark']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 187.95pt;">
+				<td style="width: 253.5pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 187.95pt;" colspan="3" width="338">
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">校团委意见（盖章）</span></strong></p>
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">年<span lang="EN-US">&nbsp;&nbsp;&nbsp; </span>月<span lang="EN-US">&nbsp;&nbsp;&nbsp; </span>日</span></strong></p>
+					</td>
+				<td style="width: 245.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 187.95pt;" colspan="3" width="327">
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center">&nbsp;</p>
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">场地审批单位意见（盖章）</span></strong></p>
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 15.0pt; font-family: 宋体;">年<span lang="EN-US">&nbsp;&nbsp;&nbsp; </span>月<span lang="EN-US">&nbsp;&nbsp;&nbsp; </span>日</span></strong></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

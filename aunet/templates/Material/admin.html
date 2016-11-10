@@ -1,0 +1,174 @@
+<!DOCTYPE>
+<html>
+	<head>
+	<title>资源申请审批系统</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{url_for('material.static',filename='js/datedropper.min.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/datedropper.min.css')}}">
+	<link href="{{url_for('material.static',filename='css/admin.css')}}" type="text/css" rel="stylesheet">
+
+	
+</head>
+
+
+ <body>
+	<div class="modal fade" id="modal-approve" tabindex="-1" role="dialog" aria-hidden="true">
+	</div>
+
+	<div style="width:100%;height:4px;background-color:#686868;overflow:visible;"></div>
+	<div class="header">	
+		
+		<div style="width:8%;float:left;height:1px;"></div>
+
+		<div class="logo_title">
+			<div class="logo"></div>
+			<div style="margin-top:8%;margin-bottom:8%;text-align:center;font-family:Simhei;font-weight:bold;">
+				<p style="font-size:126%;">资源申请审批系统</p>
+				<p style="font-size:66%">华中科技大学学生社团联合会</p>
+			</div>
+		</div>
+
+		<div style="width:18%;float:left;height:1px;"></div>
+
+		<div class="header_filt">
+			<p status="012">所&nbsp;&nbsp;有</p>
+		</div>
+
+		<div class="header_filt">
+			<p status="1">已 通 过</p>
+		</div>
+
+		<div class="header_filt">
+			<p status="2">未 通 过</p>
+		</div>
+
+		<div class="header_filt">
+			<p status="12">已 审 批</p>
+		</div>
+
+		<div class="header_filt">
+			<p status="0">审 批 中</p>
+		</div>
+
+		<div class="logout">
+			<p style="font-size:16px;text-align:center;margin:5px 0 5px 0;color:#a0a0a0;">admin</p>
+			<button class="btn btn-danger" id="btn-logout"><p style="font-size:15px;">注&nbsp;&nbsp;销</p></button>
+		</div>
+
+		<div style="clear:both;"></div>
+
+	</div>
+
+<!--<div class="triangle2"></div>-->
+	<div class="main">
+
+		<div style="width:28%;height:1px;float:left;"></div>
+		<div class="filter" style="text-align:center">
+			<p>申请类型</p>
+			<div class="btn-group">
+				<div class="triangle1"></div>
+				<select class="filt-button" onchange="filter()" id="type-filter">
+					<option value="all" selected="selected">所&nbsp;&nbsp;有</option>
+					{% for key,value in types.items()%}
+					<option value="{{key}}">{{value[1]}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<p>申请时间</p>
+			<div class="btn-group">
+				<input class="filt-button" type="text" style="width:110px;padding-left:5%" id="datePicker" onchange="$('#time-clear').css('display','inline');filter()"/>
+				<span id="time-clear" onclick="timeClear()">×</span>
+			</div>
+			<p>打印状态</p>
+			<div class="btn-group">
+				<div class="triangle1"></div>
+				<select  class="filt-button" id="print-filter" onchange="filter()">
+					<option selected="selected" value="all">所&nbsp;&nbsp;有</option>
+					<option >已 打 印</option>
+					<option >未 打 印</option>
+				</select>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+		{% for message in get_flashed_messages() %}
+	    <div class="alert alert-warning">
+	        <button type="button" class="close" data-dismiss="alert">&times;</button>
+	        {{ message }}
+	    </div>
+	    {% endfor %}
+
+
+<!---->	<div class="items">
+		{% for data in datas %}
+			<div class="item" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" result="{{data.result}}">
+
+				<div class="i1">
+					<div class="seal"></div>
+					<p>{{data.association}}</p>
+				</div>
+				<div class="i2">
+					<p>{{types[data.__tablename__[9:]][1]}}</p>
+				</div>
+
+				<div class="i3">
+					<div style="height:20%"></div>
+					<p><span>申请时间</span>&nbsp;&nbsp;<span name="applytime">{{data.apply_time}}</span></p>
+					<p><span>审批时间</span>&nbsp;&nbsp;<span name="checktime">{{data.approve_time}}</span></p>
+				</div>
+				<div class="i4">
+					<div style="height:15%"></div>
+					
+					<p><span>初审：</span>&nbsp;&nbsp;<span name="outcome">{{data.pre_verify}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="is_print">{% if data.is_print=='是' %}已 打 印{% else %}未 打 印{% endif %}</span></p>
+					<p><span>审核意见：</span><span name="checker">{{data.advice}}</span></p>
+				</div>
+
+				<div class="i5">
+					
+					{% if data.pre_verify == None %}
+					<button class="button1" data-toggle="modal" style="background-color:#237fdd;" onclick="getModal($(this))">审&nbsp;批</button>
+					{% else %}
+					<button class="button1" data-toggle="modal" style="background-color:#e93945;" onclick="getModal($(this))">修 改 审 批</button>
+					{% endif %}
+					
+					<div class="btn-group">
+						<button type="button" class="dropdown-toggle button2" data-toggle="dropdown">
+							下&nbsp;载
+						</button>
+						<div class="triangle2"></div>
+						<ul class="dropdown-menu" role="menu">
+							<button class="main-download" style="background:#18c14c" onclick="formDownload($(this),0)">表   格</button>
+							{% if data.filename == 'Nothing' %}
+							<button class="main-download" style="background:#c0c0c0" disabled="disabled">策   划</button>
+							{% else %}
+							<button class="main-download" style="background:#f06920"onclick="schemeDownload($(this),0)">策   划</button>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		{% endfor %}
+
+<!---->	</div>
+
+	</div>
+
+
+	<div class="footer">
+		<p>copyright : Copyright © 2008-2016 AU Sicun Studio. All rights reserved.</p>
+	</div>
+
+	<form id="form" method="post" action="" style="display:none">
+		<input type="hidden" id="type" name="type" value=""/>
+		<input type="hidden" id="id" name="id" value=""/>
+	</form>
+
+ </body>
+ 	<script type="text/javascript" src="{{url_for('material.static',filename='js/admin.js')}}"></script>
+</html>
+

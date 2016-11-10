@@ -1,0 +1,124 @@
+<!--体育场馆申请表-->
+{% extends modal_type+"_modal.html" %}
+
+{% block table %}
+<div align="center">
+<table style="border-collapse: collapse; border: none;" border="1" cellspacing="0" cellpadding="0">
+	<tbody>
+		<tr style="height: 36.0pt;">
+			<td style="width: 89.95pt; border: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.0pt;" width="120">
+				<p style="line-height: 16.0pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong><strong><span style="font-size: 14.0pt; font-family: 宋体;">申请单位</span></strong></p>
+				</td>
+			<td style="width: 391.0pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.0pt;" colspan="8" width="521">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['association']}}</span></p>
+				</td>
+			</tr>
+		<tr style="height: 25.65pt;">
+			<td style="width: 89.95pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 25.65pt;" rowspan="2" width="120">
+				<p><strong><span style="font-size: 14.0pt; font-family: 宋体;">经办人信息</span></strong></p>
+				</td>
+			<td style="width: 49.4pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 25.65pt;" width="66">
+				<p style="text-align: center;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">姓名</span></strong></p>
+				</td>
+			<td style="width: 112.85pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 25.65pt;" colspan="3" width="150">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['resp_person']}}</span></p>
+				</td>
+			<td style="width: 91.65pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 25.65pt;" colspan="2" width="122">
+				<p style="text-indent: 7.05pt; line-height: 17.0pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">联系方式</span></strong></p>
+				</td>
+			<td style="width: 137.1pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 25.65pt;" colspan="2" width="183">
+				<p style="text-align: center; text-indent: 7.0pt; line-height: 17.0pt;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['tel']}}</span></p>
+				</td>
+			</tr>
+		<tr style="height: 22.85pt;">
+			<td style="width: 49.4pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.85pt;" width="66">
+				<p style="text-align: center;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">学号</span></strong></p>
+				</td>
+			<td style="width: 112.85pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.85pt;" colspan="3" width="150">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['school_id']}}</span></p>
+				</td>
+			<td style="width: 91.65pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.85pt;" colspan="2" width="122">
+				<p style="text-indent: 7.05pt; line-height: 17.0pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">所在院（系）</span></strong></p>
+				</td>
+			<td style="width: 137.1pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.85pt;" colspan="2" width="183">
+				<p style="text-align: center; text-indent: 7.0pt; line-height: 17.0pt;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['department']}}</span></p>
+				</td>
+			</tr>
+		<tr style="height: 70.5pt;">
+			<td style="width: 89.95pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 70.5pt;" width="120">
+				<p style="text-align: center;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">活动内容</span></strong></p>
+				</td>
+			<td style="width: 391.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 70.5pt;" colspan="8" width="521">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['content']}}</span></p>
+				</td>
+			</tr>
+		<tr style="height: 36.55pt;">
+			<td style="width: 89.95pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.55pt;" width="120">
+				<p style="text-align: center;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">活动日期</span></strong></p>
+				</td>
+			<td style="width: 83.45pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.55pt;" colspan="3" width="111">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['date']}}</span></p>
+				</td>
+			<td style="width: 78.8pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.55pt;" width="105">
+				<p style="text-align: center; text-indent: 6.9pt;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">使用时间</span></strong></p>
+				</td>
+			<td style="width: 68.2pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.55pt;" width="91">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['time']}}</span></p>
+				</td>
+			<td style="width: 73.5pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.55pt;" colspan="2" width="98">
+				<p style="text-align: center;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">使用地点</span></strong></p>
+				</td>
+			<td style="width: 87.05pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 36.55pt;" width="116">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['site']}}</span></p>
+				</td>
+			</tr>
+		<tr style="height: 48.45pt;">
+			<td style="width: 89.95pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 48.45pt;" width="120">
+				<p><strong><span style="font-size: 14.0pt; font-family: 宋体;">备 注</span></strong></p>
+				</td>
+			<td style="width: 391.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 48.45pt;" colspan="8" width="521">
+				<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">{{context['remark']}}</span></p>
+				</td>
+			</tr>
+		<tr style="height: 123.25pt;">
+			<td style="width: 480.95pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 123.25pt;" colspan="9" valign="top" width="641">
+				<p style="margin-bottom: 12.0pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">院（系）或部门负责人意见</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;">&nbsp;</p>
+				<p style="text-indent: 174.3pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.15pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">院（系）或部门公章</span></strong></p>
+				<p style="text-indent: 174.3pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.15pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">年 月 日 </span></strong></p>
+				</td>
+			</tr>
+		<tr style="height: 167.75pt;">
+			<td style="width: 156.1pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 167.75pt;" colspan="3" valign="top" width="208">
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">保卫处审批意见<span lang="EN-US">(</span>盖章<span lang="EN-US">)</span></span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">年 月 日 </span></strong></p>
+				</td>
+			<td style="width: 164.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 167.75pt;" colspan="3" valign="top" width="219">
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">体育场管中心审批意见<span lang="EN-US">(</span>盖章<span lang="EN-US">)</span></span></strong></p>
+				<p style="margin-bottom: 12.0pt; text-indent: 42.15pt; layout-grid-mode: char;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">年 月 日 </span></strong></p>
+				</td>
+			<td style="width: 160.55pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 167.75pt;" colspan="3" valign="top" width="214">
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span lang="EN-US" style="font-size: 14.0pt; font-family: 宋体;">&nbsp;</span></strong></p>
+				<p style="margin-bottom: 12.0pt; layout-grid-mode: char;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">团委审批意见（盖章）</span></strong></p>
+				<p style="text-indent: -112.45pt; layout-grid-mode: char; margin: 0cm 0cm 12.0pt 112.45pt;"><strong><span style="font-size: 14.0pt; font-family: 宋体;">年 月 日</span></strong></p>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
+	{% endblock %}
