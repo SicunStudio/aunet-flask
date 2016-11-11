@@ -52,10 +52,10 @@ def on_identity_loaded(sender, identity):
         
     # Assuming the User model has a list of nodes, update the
     # identity with the nodes that the user provides
-    if hasattr(current_user,"nodes"):
+    if hasattr(current_user,"roles"):
         for role in current_user.roles:
             for node in role.nodes:
-                if (node.status==1) and (current_user.status==1) and (current_user.role[0].status==1):
+                if (node.status==1) and (current_user.status==1) and (current_user.roles[0].status==1):
                     identity.provides.add(ActionNeed(node.nodeName))
     	
     
