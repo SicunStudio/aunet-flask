@@ -55,7 +55,7 @@ def on_identity_loaded(sender, identity):
     if hasattr(current_user,"roles"):
         for role in current_user.roles:
             for node in role.nodes:
-                if (node.status==1) and (current_user.status==1) and (current_user.roles[0].status==1):
+                if (node.status==1) and (current_user.status==1) and (role.status==1):
                     identity.provides.add(ActionNeed(node.nodeName))
     	
     

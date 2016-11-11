@@ -260,7 +260,7 @@ class NewsSpec(Resource):
                 if k>1:
                     os.remove(path)
                 else:
-                    imgUrlFirst="static/Uploads/News"+filename
+                    imgUrlFirst="static/Uploads/News/"+filename
             if k==0:
                 imgUrlFirst="static/uploads/News/1.jpg"
             outline=soup.get_text()[:100]
