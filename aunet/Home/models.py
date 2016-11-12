@@ -63,7 +63,7 @@ class News(db.Model):
 			self.author=current_user.userName
 
 	def __str__(self):
-		return "Title:%s"%self.news_Title
+		return "Title:%s"%self.title
 	__repr__ = __str__
 
 class Category(db.Model):
