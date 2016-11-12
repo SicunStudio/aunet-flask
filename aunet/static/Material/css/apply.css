@@ -1,0 +1,106 @@
+div{text-align:center;}
+textarea{
+	resize:none;
+}
+	label{
+		text-align:left;
+		font-size:18px;
+		font-family:'Microsoft-YaHei';
+		font-weight:400;
+		font-color:#2b2b2b;
+	}
+	input{border-radius:0;}
+	p{
+		font-size:20px;
+		font-family:'Microsoft-YaHei';
+		margin:0;
+	}		/*16px 20px 22px 24px*/
+	select{
+		height:34px;
+	}
+	#year1,#year2,#year3,#month1,#month2,#month3,#date1,#date2,#date3{
+		padding:0;
+	}
+	.form-control{
+		border-radius:0;
+		height:31px;
+	}
+	.form-horizontal .control-label{
+		padding:0;/**/
+		text-align:left;
+	}
+	.col-sm-1{
+		padding-right:0;
+	}
+	.col-sm-3{
+		padding-left:0;
+		padding-right:0;
+	}
+	.col-xs-4,.col-sm-4,.col-md-4,.col-lg-5{
+		padding-left:0;
+	}
+	.form-horizontal .form-group{
+		margin-left:0;
+		margin-right:0;
+	}
+	.col-txt-1{		/*年、月、日*/
+		width:5%;
+		padding:0;
+	}
+	#alert{
+		display:none;
+		margin:0 15px 0 15px;
+	}
+
+body,div{margin:0;padding:0;}
+.cup p{margin:2px 0 2px 5px;font-size:18px;font-family:'Microsoft-YaHei';font-weight:700;}
+tr{margin:0;}
+td{margin:0;border-bottom:1px solid #000000;border-right:1px solid #000000;height:25px;}
+.verticle{
+	margin:0 auto;
+	width:20px;
+}
+.left-top-td{
+	border-top:1px solid #000000;
+	border-left:1px solid #000000;
+}
+.left-td{
+	border-left:1px solid #000000;
+}
+.top-td{
+	border-top:1px solid #000000;
+	height:95px;
+}
+.cup{
+	wisth:95%;
+	margin-left:45px;
+	font-size:16px;
+}
+.cup p{
+	margin-left:25px;
+	font-size:16px;
+	font-weight:400;
+}
+label.error{
+	color:red;
+}
+.out {
+    font-weight: bold;
+    color: #f44336;
+}
+div.procedure-container>p,div.cup>p,div.cup>h5{
+	text-align: left;
+}
+.nopadding{
+	padding:0;	
+}
+div.tagarea{
+	letter-spacing: 5px;
+}
+label[for=state_choose] div{
+	top:0px;
+}
+input[type=submit]{
+	position: relative;
+	top:30px;
+}
