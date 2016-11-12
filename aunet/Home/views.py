@@ -45,7 +45,7 @@ def indexNews():
 
 
 def getNews(number,category):
-	news=News.query.filter(News.cate==category).order_by(News.post_time.desc()).limit(number).all()
+	news=News.query.join(news_category).join(Category).filter(Category.name==category).order_by(News.post_time.desc()).limit(number).all()
 	return news
 
 def news2Json(news,length,page):
