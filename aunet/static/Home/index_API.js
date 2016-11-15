@@ -176,8 +176,7 @@ function GetNews(posts)
         dataType: "json",
         success: function (message) {
             if (message > 0) {
-                alert("请求已提交！");
-                alert(JSON.parse(message));
+                //alert("请求已提交！");
                 DisplayNews(message);
             }
         },
@@ -188,7 +187,7 @@ function GetNews(posts)
 
         }
     });
-    alert(JSON.stringify(posts));
+    //alert(JSON.stringify(posts));
 
 // $.ajax{
 // 	type:'POST',
@@ -234,7 +233,7 @@ function GetAllOn()
 	var on = document.getElementsByClassName("search_option")[0].getElementsByTagName("li");
 	var loop = 0;
 	var jsonData = {};
-	for(loop;loop < 12;loop++)
+	for(loop;loop < on.length;loop++)
 	{
 		if(on[loop].getAttribute("class") == "on")
 		{
@@ -252,6 +251,7 @@ function GetAllOn()
 		jsonData["gotoPage"]= gotoPage.getElementsByTagName("input")[0].value;
 		// jsonData.goto_Page = gotoPage.getElementsByTagName("input")[0].value;
 	//alert(jsonData["gotoPage"]);
+	//alert(JSON.stringify(jsonData));
 	GetNews(jsonData);
 }
 
