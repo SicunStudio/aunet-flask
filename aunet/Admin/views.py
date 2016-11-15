@@ -1,3 +1,4 @@
+# -*-coding:utf-8 -*-
 from flask import render_template,current_app,redirect,request,make_response
 from flask_login import current_user,login_user,logout_user,login_required
 from flask_principal import identity_loaded,RoleNeed,UserNeed,ActionNeed
@@ -51,10 +52,10 @@ def on_identity_loaded(sender, identity):
         
     # Assuming the User model has a list of nodes, update the
     # identity with the nodes that the user provides
-    if hasattr(current_user,"nodes"):
+    if hasattr(current_user,"roles"):
         for role in current_user.roles:
             for node in role.nodes:
-                if (node.status==1) and (current_user.status==1) and (current_user.role[0].status==1):
+                if (node.status==1) and (current_user.status==1) and (role.status==1):
                     identity.provides.add(ActionNeed(node.nodeName))
     	
     

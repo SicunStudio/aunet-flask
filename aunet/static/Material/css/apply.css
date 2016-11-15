@@ -97,3 +97,10 @@ div.procedure-container>p,div.cup>p,div.cup>h5{
 div.tagarea{
 	letter-spacing: 5px;
 }
+label[for=state_choose] div{
+	top:0px;
+}
+input[type=submit]{
+	position: relative;
+	top:30px;
+}

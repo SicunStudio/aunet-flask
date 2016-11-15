@@ -7,15 +7,16 @@ from flask import render_template,redirect,url_for,flash,\
      Blueprint,make_response,request,abort,send_file
 # from flask_mail import Message
 from flask_login import login_required,current_user
-from flask_principal import RoleNeed,Permission
+from flask_principal import Permission,ActionNeed
 from .models import *
-import os
+from os import path,remove
+from random import randint
 
 from .. import db
 from . import material
 
-Upload_path = os.path.join(app.config['BASEDIR'],'aunet','static','Uploads','Material') + '/'
-Docx_path = os.path.join(app.config['BASEDIR'],'aunet','static','Material','docx') + '/'
+Upload_path = path.join(app.config['BASEDIR'],'aunet','static','Uploads','Material')
+Docx_path = path.join(app.config['BASEDIR'],'aunet','static','Material','docx')
 types = {
     'east4':(East4,'东四三楼'),
     'colorprint':(Colorprint,'彩喷悬挂'),
@@ -27,8 +28,9 @@ types = {
     'teachingbuilding':(Teachingbuilding,'教学楼教室')
     }
 
-level1 = Permission(RoleNeed('association_admin'))
-level2 = level1.union(Permission(RoleNeed('association')))
+action_permission = Permission(ActionNeed('materialAction'))
+admin_permission = Permission(ActionNeed('materialAdmin'))
+
 
 def make_context(data,type):
     context = {}
@@ -64,12 +66,12 @@ def query_data(type,id):
     if type not in types.keys():abort(404)
     data = types[type][0].query.filter_by(id=int(id)).first_or_404()
     if str(current_user.id) != data.applicant and \
-    not level1.can():abort(403)
+    not admin_permission.can():abort(403)
     return data
 
 @material.route('/download/<file_type>',methods=['POST'])
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def download(file_type):
     '''下载接口'''
 
@@ -79,24 +81,24 @@ def download(file_type):
     data = query_data(type,id)
     #下载策划
     if file_type == 'scheme':
-        if data.filename == '':abort(404)
-        content = send_file(Upload_path+data.filename)
-        filename = quote(data.filename[:-10])
+        if data.filename == 'Nothing':abort(404)
+        content = send_file(path.join(Upload_path,data.rand_filename))
+        filename = quote(data.filename)
     #if data.applicant!=current_user.name :abort(404)
     else :
         #生成context并进行渲染
         context=make_context(data,type)
         for key,value in context.items() :
             context[key] = RichText(value)     
-        doc = DocxTemplate(Docx_path+type+'.docx')
+        doc = DocxTemplate(path.join(Docx_path,type+'.docx'))
         doc.render(context)
-        temp_file = Upload_path + str(current_user.id) +'result.docx'
+        temp_file = path.join(Upload_path,str(current_user.id) +'result.docx')
         doc.save(temp_file)
         #读取渲染后的文件并将之删除
         with open(temp_file,'rb') as f:
             content = f.read()
-        if os.path.exists(temp_file):
-            os.remove(temp_file)
+        if path.exists(temp_file):
+            remove(temp_file)
         filename = quote(data.association+'-'+types[type][1]+'.docx')     
  
     response = make_response(content)
@@ -108,7 +110,7 @@ def download(file_type):
 
 @material.route('/delete/',methods=['POST'])
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def delete():
     '''删除申请'''
     
@@ -116,9 +118,9 @@ def delete():
     type = request.form.get('type')
     data = query_data(type,id)
 
-    if data.filename is not None and \
-    os.path.exists(Upload_path+data.filename):
-        os.remove(Upload_path+data.filename)
+    if data.filename != 'Nothing' and \
+    path.exists(path.join(Upload_path,data.rand_filename)):
+        remove(path.join(Upload_path,data.rand_filename))
     db.session.delete(data)
     db.session.commit()
     flash('删除成功！')
@@ -127,7 +129,7 @@ def delete():
 
 @material.route('/submit/',methods=['POST'])
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def submit():
     '''申请提交接口'''
     
@@ -141,10 +143,11 @@ def submit():
     else:
         data = types[type][0]()
         upload_file = request.files['file']
-        if upload_file.filename != '':    
-            rand_filename = upload_file.filename+str(int(mktime(time)))
-            data.filename = rand_filename
-            upload_file.save(Upload_path+rand_filename)
+        if upload_file.filename != '': 
+            data.filename = upload_file.filename   
+            rand_filename = str(randint(10000,99999))+str(int(mktime(time)))
+            data.rand_filename = rand_filename
+            upload_file.save(path.join(Upload_path,rand_filename))
         else :
             data.filename = 'Nothing'
 
@@ -172,6 +175,8 @@ def submit():
         db.session.add(data)
         db.session.commit()
     except:
+        if upload_file.name != '' and path.exists(path.join(Upload_path,rand_filename)):
+            remove(path.join(Upload_path,rand_filename))
         db.session.rollback()
         flash("表单数据有误，未能成功提交！")
         return redirect(url_for('material.status'))     
@@ -182,7 +187,7 @@ def submit():
 
 @material.route('/<option>/<type>/',methods=['POST','GET'])
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def main(option,type):
     '''apply'''
     if type not in types.keys() or \
@@ -199,7 +204,7 @@ def main(option,type):
 @material.route('/procedure')
 @material.route('/')
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def procedure():
     data = {'association':'procedure'}
     return render_template('/pages/'+'procedure.html',\
@@ -208,7 +213,7 @@ def procedure():
 
 @material.route('/admin/')
 @login_required
-@level1.require(403)
+@admin_permission.require(403)
 def admin():
     datas=[]
     for db_type in types.values():
@@ -222,7 +227,7 @@ def admin():
 
 @material.route('/status/')
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def status():
     results ={ '0':'审批中','1':'已通过','2':'未通过'}
     datas=[]
@@ -237,7 +242,7 @@ def status():
 
 @material.route('/approve/',methods=['POST'])
 @login_required
-@level1.require(403)
+@admin_permission.require(403)
 def approve():
 
     type = request.form.get('type')
@@ -261,7 +266,7 @@ def approve():
 
 @material.route('/modal/',methods=['POST'])
 @login_required
-@level2.require(403)
+@action_permission.require(403)
 def modal():
     id = request.form.get('id')
     type = request.form.get('type')

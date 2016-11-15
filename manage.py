@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
 
@@ -44,6 +45,8 @@ def CreateSuperRole():
 		node14=Node("修改新闻标签",1)
 		node15=Node("删除新闻标签",1)
 		node16=Node("修改节点",1)
+		node17=Node("materialAdmin",1)
+		node18=Node("materialAction",1)
 		db.session.add(node1)
 		db.session.add(node2)
 		db.session.add(node3)
@@ -60,6 +63,8 @@ def CreateSuperRole():
 		db.session.add(node14)
 		db.session.add(node15)
 		db.session.add(node16)
+		db.session.add(node17)
+		db.session.add(node18)
 		db.session.add(role)
 		db.session.commit()
 		role=Role.query.filter(Role.roleName=="超管").first()
@@ -79,6 +84,8 @@ def CreateSuperRole():
 		role.addNode("修改新闻标签")
 		role.addNode("删除新闻标签")
 		role.addNode("修改节点")
+		role.addNode("materialAdmin")
+		role.addNode("materialAction")
 		db.session.add(role)
 		db.session.commit()
 		print("successfully create a super role name:超管");

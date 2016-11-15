@@ -1,3 +1,4 @@
+# -*-coding:utf-8 -*-
 from .. import db
 from datetime import datetime
 from flask_login import current_user
@@ -41,8 +42,7 @@ class News(db.Model):
 		self.tags.append(tag)
 	@property
 	def cate(self):
-	    return self.category[0].name
-	
+		return self.category[0].name
 
 
 	def __init__(self,news_Detail,news_Title,news_Outline,news_Img_Url):
@@ -63,7 +63,7 @@ class News(db.Model):
 			self.author=current_user.userName
 
 	def __str__(self):
-		return "Title:%s"%self.news_Title
+		return "Title:%s"%self.title
 	__repr__ = __str__
 
 class Category(db.Model):

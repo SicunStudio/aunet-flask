@@ -1,3 +1,4 @@
+# -*-coding:utf-8 -*-
 from flask_restful import reqparse, abort,Resource,fields,marshal_with
 from flask_principal import Permission,ActionNeed
 from aunet import db,app
@@ -259,7 +260,7 @@ class NewsSpec(Resource):
                 if k>1:
                     os.remove(path)
                 else:
-                    imgUrlFirst="static/Uploads/News"+filename
+                    imgUrlFirst="static/Uploads/News/"+filename
             if k==0:
                 imgUrlFirst="static/uploads/News/1.jpg"
             outline=soup.get_text()[:100]
