@@ -117,7 +117,7 @@ function DisplayNews(news)
 	var news = document.getElementsByClassName("news_2_x");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value","1");
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page["news_number"] + "");
 	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page["current_page"] + "");
 	for(loop = 0;loop < parseInt(page["length"]);loop++)
 	{
