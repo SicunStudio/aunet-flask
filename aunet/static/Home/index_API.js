@@ -112,20 +112,21 @@ function _menu(){
 
 function DisplayNews(news)
 {
+	var page = news;
+	//alert(JSON.stringify(news))
 	var news = document.getElementsByClassName("news_2_x");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
-	var page = JSON.parse(news);
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page["news_Length"] + "");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page["news_Current_Page"] + "");
-	for(loop = 0;loop < page.news_Length;loop++)
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value","1");
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page["current_page"] + "");
+	for(loop = 0;loop < parseInt(page["length"]);loop++)
 	{
 		news[loop].setAttribute("style","display:block");
 		/******一下的json访问可能存在问题******/
-		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["news_Title"][loop][loop+""];
-		news[loop].getElementsByClassName("article")[0].innerHTML = page["news_Outline"][loop][loop+""];
-		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["news_Img_Url"][loop][loop+""]);
-		news[loop].getElementsByClassName("time")[0].innerHTML = page["news_Post_Time"][loop][loop+""];
+		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["title"][loop][loop+""];
+		news[loop].getElementsByClassName("article")[0].innerHTML = page["outline"][loop][loop+""];
+		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["img_url"][loop][loop+""]);
+		news[loop].getElementsByClassName("time")[0].innerHTML = page["post_time"][loop][loop+""];
 	}
 }
 
@@ -174,43 +175,31 @@ function GetNews(posts)
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(posts),
         dataType: "json",
-        success: function (message) {
-            if (message > 0) {
+        success: function(data) {
+            if (data > 0) 
                 alert("请求已提交！");
-                alert(JSON.parse(message));
-                DisplayNews(message);
-            }
+            DisplayNews(data);
         },
-        error: function (message) {
+        error: function() {
             alert("提交数据失败！");
 
-                DisplayNews(message);
+         //       DisplayNews(message);
 
         }
     });
-    alert(JSON.stringify(posts));
-
-// $.ajax{
-// 	type:'POST',
-// 	dataType:'json',
-// 	url:'news/news2Json',
-// 	data:post,
-// }
-// 
-// 
-// $().ajax({
-//     type: 'POST',
-//     url: 'news/news2Json',
-//     data: JSON.stringify(posts),
-//     contentType: 'application/json; charset=UTF-8',
-//     dataType: 'json',
-//     success: function(data) { 
-//     },
-//     error: function(xhr, type) {
-//     }
-// });
-// 
+    //alert(JSON.stringify(posts));
 }
+
+// function FillPage()
+// {
+// 	var news = document.getElementById("news_").getElementsByClassName("news_2_x");
+// 	for(var loop = 0 ;loop < news.length ; loop++)
+// 	{
+
+// 	}
+	
+// }
+
 /*****
 新闻部分的条件搜索栏
 更改其class值
@@ -234,7 +223,7 @@ function GetAllOn()
 	var on = document.getElementsByClassName("search_option")[0].getElementsByTagName("li");
 	var loop = 0;
 	var jsonData = {};
-	for(loop;loop < 12;loop++)
+	for(loop;loop < on.length;loop++)
 	{
 		if(on[loop].getAttribute("class") == "on")
 		{
@@ -252,6 +241,7 @@ function GetAllOn()
 		jsonData["gotoPage"]= gotoPage.getElementsByTagName("input")[0].value;
 		// jsonData.goto_Page = gotoPage.getElementsByTagName("input")[0].value;
 	//alert(jsonData["gotoPage"]);
+	//alert(JSON.stringify(jsonData));
 	GetNews(jsonData);
 }
 

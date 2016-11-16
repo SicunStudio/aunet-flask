@@ -379,8 +379,8 @@ a:hover{opacity: 0.7}
 	display: inline-block;
 }
 #news_ .news_3 .menu{
-	width:100px;
-	height:100px;
+	width:80px;
+	height:80px;
 	border-radius: 50% 50% 50% 50%;
 	background: #57a544;
 	display: inline-block;
@@ -394,7 +394,7 @@ a:hover{opacity: 0.7}
 #news_ .news_3 .menu img{
 	width:50px;
 	height:50px;
-	margin-top: 25px;
+	margin-top: 15px;
 }
 }
 
