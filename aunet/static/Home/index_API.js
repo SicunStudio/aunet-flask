@@ -113,7 +113,7 @@ function _menu(){
 function DisplayNews(news)
 {
 	var page = news;
-	//alert(JSON.stringify(news))
+	alert(JSON.stringify(news))
 	var news = document.getElementsByClassName("news_2_x");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
