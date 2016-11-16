@@ -6,7 +6,6 @@ window.onload=function()
 			news[loop].addEventListener("click",GetImg);
 	LoopNews();
 	InitImgSrc();
-	document.getElementsByClassName("menu")[0].addEventListener("click",_menu);
 	InitHeader();
 
 

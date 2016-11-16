@@ -110,6 +110,14 @@ function _menu(){
 	}
 }
 
+function GetAllNewsPage(number)
+{
+	number /= 10;
+	if((number - parseInt(number)) > 0)
+		return (parseInt(number) + 1);
+	else 
+		return parseInt(number);
+}
 function DisplayNews(news)
 {
 	var page = news;
@@ -117,12 +125,14 @@ function DisplayNews(news)
 	var news = document.getElementsByClassName("news_2_x");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",page["news_number"] + "");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page["current_page"] + "");
+	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value",GetAllNewsPage(parseInt(page["news_number"])) + "");
+	if(GetAllNewsPage(parseInt(page["news_number"])) >= parseInt(page["current_page"]))
+		document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",parseInt(page["current_page"]) + "");
+	else 
+		document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",GetAllNewsPage(parseInt(page["news_number"])) + "");
 	for(loop = 0;loop < parseInt(page["length"]);loop++)
 	{
 		news[loop].setAttribute("style","display:block");
-		/******一下的json访问可能存在问题******/
 		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["title"][loop][loop+""];
 		news[loop].getElementsByClassName("article")[0].innerHTML = page["outline"][loop][loop+""];
 		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["img_url"][loop][loop+""]);
@@ -176,9 +186,8 @@ function GetNews(posts)
         data: JSON.stringify(posts),
         dataType: "json",
         success: function(data) {
-            if (data > 0) 
-                alert("请求已提交！");
-            DisplayNews(data);
+            if (data) 
+ 	           DisplayNews(data);
         },
         error: function() {
             alert("提交数据失败！");
@@ -377,6 +386,7 @@ function InitMenuLine()
 function InitHeader()
 {
 	InitMenuLine();
+	document.getElementsByClassName("menu")[0].addEventListener("click",_menu);
 	var loop_1  = setInterval(HideMenuLine , 100);
 	var loop_2	= setInterval(ResetMenuLine , 10)
 }

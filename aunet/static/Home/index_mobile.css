@@ -1255,10 +1255,10 @@ a:hover{opacity: 0.7}
 	margin-top: 10px;
 }
 #news_ .news_3 .menu img{
-	width:100%;
-	height:100%;
+	width:40px;
+	height:40px;
 	border-radius: 50% 50% 50% 50%;
-	margin-top: 0px;
+	margin-top: 10px;
 }
 }
 @media screen and (min-width: 560px) and (max-width: 1199px){
@@ -1381,7 +1381,7 @@ a:hover{opacity: 0.7}
 	height:80px;
 	border-radius: 50% 50% 50% 50%;
 	background: #57a544;
-	display: inline-block;
+	display: inline-block; 
 	margin:20px 25px;
 }
 #news_ .news_3 .menu div{
