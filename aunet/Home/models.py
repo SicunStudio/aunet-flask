@@ -54,7 +54,7 @@ class News(db.Model):
 		# self.img_url=news_Img_Url
 		self.img_url=news_Img_Url
 		self.editable=True
-		if current_user.is_anonymous==True:
+		if current_user==None:
 			self.author="匿名"
 		else:
 			self.author=current_user.userName
@@ -94,7 +94,7 @@ class Tag(db.Model):
 class SilderShow(db.Model):
 	id=db.Column(db.Integer,primary_key=True)
 	title=db.Column(db.String(60))
-	img_url=db.Column(db.String(20))
+	img_url=db.Column(db.String(40))
 	outline=db.Column(db.Text)
 	post_time=db.Column(db.DateTime)
 	link=db.Column(db.String(30))

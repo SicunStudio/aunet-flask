@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-11-01 17:52:00
--- 服务器版本： 5.7.15-0ubuntu0.16.04.1
+-- Generation Time: 2016-11-16 09:09:20
+-- 服务器版本： 5.7.16-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -36,7 +36,7 @@ CREATE TABLE `alembic_version` (
 --
 
 INSERT INTO `alembic_version` (`version_num`) VALUES
-('804d193995a6');
+('6babb0d46bde');
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,12 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `remark`) VALUES
-(1, 'news', NULL);
+(1, 'news', NULL),
+(2, 'notice', NULL),
+(3, 'advance_notice', NULL),
+(4, 'charm_association', NULL),
+(5, 'pin_pai', NULL),
+(6, 'charm_hust', NULL);
 
 -- --------------------------------------------------------
 
@@ -68,6 +73,249 @@ CREATE TABLE `login_log` (
   `userName` varchar(64) DEFAULT NULL,
   `loginTime` varchar(25) DEFAULT NULL,
   `loginIp` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_colorprint`
+--
+
+CREATE TABLE `material_colorprint` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `is_sponsor` char(1) DEFAULT NULL,
+  `remark` text,
+  `time` varchar(5) DEFAULT NULL,
+  `content` text,
+  `resp_person` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_east4`
+--
+
+CREATE TABLE `material_east4` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `activity` varchar(15) DEFAULT NULL,
+  `number` smallint(6) DEFAULT NULL,
+  `sponsor` text,
+  `opinion` varchar(10) DEFAULT NULL,
+  `content` text,
+  `resp_person` varchar(10) NOT NULL,
+  `time` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_material`
+--
+
+CREATE TABLE `material_material` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `resp_person` varchar(10) NOT NULL,
+  `activity` varchar(15) DEFAULT NULL,
+  `opinion` varchar(20) DEFAULT NULL,
+  `projector_date` date DEFAULT NULL,
+  `projector_num` smallint(6) DEFAULT NULL,
+  `chair_date` date DEFAULT NULL,
+  `electricity_num` smallint(6) DEFAULT NULL,
+  `desk_num` smallint(6) DEFAULT NULL,
+  `chair_num` smallint(6) DEFAULT NULL,
+  `trans_desk_num` smallint(6) DEFAULT NULL,
+  `trans_chair_num` smallint(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_outdoor`
+--
+
+CREATE TABLE `material_outdoor` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `activity` varchar(15) DEFAULT NULL,
+  `number` smallint(6) DEFAULT NULL,
+  `sponsor` text,
+  `opinion` varchar(10) DEFAULT NULL,
+  `content` text,
+  `resp_person` varchar(10) NOT NULL,
+  `time` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_sacenter`
+--
+
+CREATE TABLE `material_sacenter` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `activity` varchar(15) DEFAULT NULL,
+  `number` smallint(6) DEFAULT NULL,
+  `sponsor` text,
+  `opinion` varchar(10) DEFAULT NULL,
+  `content` text,
+  `resp_person` varchar(10) NOT NULL,
+  `time` varchar(5) DEFAULT NULL,
+  `is_query` char(1) DEFAULT NULL,
+  `site_type` char(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_special`
+--
+
+CREATE TABLE `material_special` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `activity` varchar(15) DEFAULT NULL,
+  `number` smallint(6) DEFAULT NULL,
+  `sponsor` text,
+  `opinion` varchar(10) DEFAULT NULL,
+  `content` text,
+  `resp_person` varchar(10) NOT NULL,
+  `time` varchar(5) DEFAULT NULL,
+  `is_query` char(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_sports`
+--
+
+CREATE TABLE `material_sports` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `school_id` varchar(10) DEFAULT NULL,
+  `remark` text,
+  `time` varchar(5) DEFAULT NULL,
+  `resp_person` varchar(10) NOT NULL,
+  `department` varchar(15) DEFAULT NULL,
+  `content` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `material_teachingbuilding`
+--
+
+CREATE TABLE `material_teachingbuilding` (
+  `id` int(11) NOT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `approve_time` timestamp NULL DEFAULT NULL,
+  `result` char(1) NOT NULL,
+  `applicant` varchar(10) NOT NULL,
+  `advice` varchar(20) DEFAULT NULL,
+  `pre_verify` varchar(20) DEFAULT NULL,
+  `is_print` char(1) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `association` varchar(10) NOT NULL,
+  `tel` varchar(15) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `site` varchar(10) DEFAULT NULL,
+  `content` text,
+  `activity` varchar(15) DEFAULT NULL,
+  `signature` varchar(10) DEFAULT NULL,
+  `capacity` smallint(6) DEFAULT NULL,
+  `number` smallint(6) DEFAULT NULL,
+  `week` varchar(5) DEFAULT NULL,
+  `person_type` char(5) DEFAULT NULL,
+  `function` char(5) DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `section` char(5) DEFAULT NULL,
+  `activity_type` char(1) DEFAULT NULL,
+  `host` varchar(10) DEFAULT NULL,
+  `unit` varchar(20) DEFAULT NULL,
+  `title` varchar(10) DEFAULT NULL,
+  `resp_person` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -101,7 +349,17 @@ INSERT INTO `news` (`id`, `year`, `month`, `day`, `post_time`, `detail`, `title`
 (56, 2016, 10, 27, '2016-10-27 17:57:22', '<body>hello world <img src="data:image/jpg;base64,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"/></body>', 'hello', 'hello world ', 'ddd', 1, '匿名'),
 (57, 2016, 10, 27, '2016-10-27 18:22:18', '<body>\n hello world\n <img src="data:image/jpg;base64,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"/>\n</body>', 'hello', 'hello world ', 'ddd', 1, '匿名'),
 (58, 2016, 10, 27, '2016-10-27 18:25:03', '<body>\n hello world\n <img src="data:image/jpg;base64,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"/>\n</body>', 'hello', 'hello world ', 'ddd', 1, '匿名'),
-(59, 2016, 10, 27, '2016-10-27 18:26:27', '<body>\n hello world\n <img src="data:image/jpg;base64,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"/>\n</body>', 'hello', 'hello world ', 'static/Uploads/News1477593066.png', 1, '匿名');
+(59, 2016, 10, 27, '2016-10-27 18:26:27', '<body>\n hello world\n <img src="data:image/jpg;base64,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"/>\n</body>', 'hello', 'hello world ', 'static/Uploads/News1477593066.png', 1, '匿名'),
+(60, 2016, 11, 16, '2016-11-16 00:55:38', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(61, 2016, 11, 16, '2016-11-16 00:55:38', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(62, 2016, 11, 16, '2016-11-16 00:55:38', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(63, 2016, 11, 16, '2016-11-16 00:55:38', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(64, 2016, 11, 16, '2016-11-16 00:55:38', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(65, 2016, 11, 16, '2016-11-16 00:59:49', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(66, 2016, 11, 16, '2016-11-16 00:59:49', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(67, 2016, 11, 16, '2016-11-16 00:59:49', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(68, 2016, 11, 16, '2016-11-16 00:59:49', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名'),
+(69, 2016, 11, 16, '2016-11-16 00:59:49', '<body>good</body>', 'hello', 'hello', 'static/Uploads/News/1477594002.png', 1, '匿名');
 
 -- --------------------------------------------------------
 
@@ -126,7 +384,17 @@ INSERT INTO `news_category` (`news_id`, `category_id`, `created_at`) VALUES
 (57, 1, '2016-10-28 02:22:18'),
 (58, 1, '2016-10-28 02:25:03'),
 (59, 1, '2016-10-28 02:26:27'),
-(53, 1, '2016-10-28 02:33:05');
+(53, 1, '2016-10-28 02:33:05'),
+(60, 2, '2016-11-16 08:55:38'),
+(60, 3, '2016-11-16 08:55:38'),
+(60, 4, '2016-11-16 08:55:38'),
+(60, 5, '2016-11-16 08:55:38'),
+(60, 6, '2016-11-16 08:55:38'),
+(65, 2, '2016-11-16 08:59:49'),
+(66, 3, '2016-11-16 08:59:49'),
+(67, 4, '2016-11-16 08:59:49'),
+(68, 5, '2016-11-16 08:59:49'),
+(69, 6, '2016-11-16 08:59:49');
 
 -- --------------------------------------------------------
 
@@ -258,7 +526,7 @@ INSERT INTO `role_node` (`node_id`, `role_id`, `created_at`) VALUES
 CREATE TABLE `silder_show` (
   `id` int(11) NOT NULL,
   `title` varchar(60) DEFAULT NULL,
-  `img_url` varchar(20) DEFAULT NULL,
+  `img_url` varchar(40) DEFAULT NULL,
   `outline` text,
   `post_time` datetime DEFAULT NULL,
   `link` varchar(30) DEFAULT NULL,
@@ -271,7 +539,12 @@ CREATE TABLE `silder_show` (
 
 INSERT INTO `silder_show` (`id`, `title`, `img_url`, `outline`, `post_time`, `link`, `editable`) VALUES
 (1, 'hellosfs', NULL, 'hello', NULL, 'https://www.google.com', 1),
-(2, 'hellosfs', '1.jpg', 'hello', '2016-10-27 18:47:54', 'https://www.google.com', 1);
+(2, 'hellosfs', '1.jpg', 'hello', '2016-10-27 18:47:54', 'https://www.google.com', 1),
+(3, 'good', 'static/Uploads/News/1477594002.png', 'dood', '2016-11-16 00:59:49', 'http://www.google.com', 1),
+(4, 'good', 'static/Uploads/News/1477594002.png', 'dood', '2016-11-16 01:01:49', 'http://www.google.com', 1),
+(5, 'good', 'static/Uploads/News/1477594002.png', 'dood', '2016-11-16 01:01:51', 'http://www.google.com', 1),
+(6, 'good', 'static/Uploads/News/1477594002.png', 'dood', '2016-11-16 01:01:53', 'http://www.google.com', 1),
+(7, 'good', 'static/Uploads/News/1477594002.png', 'dood', '2016-11-16 01:01:56', 'http://www.google.com', 1);
 
 -- --------------------------------------------------------
 
@@ -311,7 +584,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `userName`, `passWord`, `email`, `status`, `remark`) VALUES
-(2, '思存', 'pbkdf2:sha1:1000$gpZhYu29$1e7eb0c937aae5e52bd682adb2dc7014a1c2abcc', '1412511544@qq.com', 1, NULL);
+(2, '思存', 'pbkdf2:sha1:1000$gpZhYu29$1e7eb0c937aae5e52bd682adb2dc7014a1c2abcc', '1412511544@qq.com', 1, NULL),
+(3, 'admin', 'pbkdf2:sha1:1000$Magl3nmf$19f89915cdf2f26fcfe922ffcb4cee3e3dcb0227', NULL, 1, NULL),
+(5, 'ly', 'pbkdf2:sha1:1000$eaAMVds0$40848acac5afb045ee95372435995dfb6bb2acc0', NULL, 1, NULL),
+(6, 'lyjdwh', 'pbkdf2:sha1:1000$0YGw920F$2d39a3bf1e16c0dc267b5194bb0b5157f26346cf', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -330,7 +606,10 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id`, `role_id`, `created_at`) VALUES
-(2, 1, '2016-10-27 02:02:07');
+(2, 1, '2016-10-27 02:02:07'),
+(3, 1, '2016-11-09 08:55:05'),
+(5, 1, '2016-11-09 08:57:44'),
+(6, 1, '2016-11-09 08:58:14');
 
 --
 -- Indexes for dumped tables
@@ -347,6 +626,54 @@ ALTER TABLE `category`
 -- Indexes for table `login_log`
 --
 ALTER TABLE `login_log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_colorprint`
+--
+ALTER TABLE `material_colorprint`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_east4`
+--
+ALTER TABLE `material_east4`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_material`
+--
+ALTER TABLE `material_material`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_outdoor`
+--
+ALTER TABLE `material_outdoor`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_sacenter`
+--
+ALTER TABLE `material_sacenter`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_special`
+--
+ALTER TABLE `material_special`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_sports`
+--
+ALTER TABLE `material_sports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `material_teachingbuilding`
+--
+ALTER TABLE `material_teachingbuilding`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -425,17 +752,57 @@ ALTER TABLE `user_role`
 -- 使用表AUTO_INCREMENT `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- 使用表AUTO_INCREMENT `login_log`
 --
 ALTER TABLE `login_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- 使用表AUTO_INCREMENT `material_colorprint`
+--
+ALTER TABLE `material_colorprint`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_east4`
+--
+ALTER TABLE `material_east4`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_material`
+--
+ALTER TABLE `material_material`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_outdoor`
+--
+ALTER TABLE `material_outdoor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_sacenter`
+--
+ALTER TABLE `material_sacenter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_special`
+--
+ALTER TABLE `material_special`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_sports`
+--
+ALTER TABLE `material_sports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- 使用表AUTO_INCREMENT `material_teachingbuilding`
+--
+ALTER TABLE `material_teachingbuilding`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- 使用表AUTO_INCREMENT `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- 使用表AUTO_INCREMENT `node`
 --
@@ -450,7 +817,7 @@ ALTER TABLE `role`
 -- 使用表AUTO_INCREMENT `silder_show`
 --
 ALTER TABLE `silder_show`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- 使用表AUTO_INCREMENT `tag`
 --
@@ -460,7 +827,7 @@ ALTER TABLE `tag`
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- 限制导出的表
 --
