@@ -12,6 +12,7 @@ class Base(object):
     pre_verify = db.Column(db.String(20))
     is_print = db.Column(db.CHAR(1))
     filename = db.Column(db.VARCHAR(50))
+    rand_filename = db.Column(db.VARCHAR(15))
 
     association = db.Column(db.String(10),nullable = False)
     tel = db.Column(db.String(15))

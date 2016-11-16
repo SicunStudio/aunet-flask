@@ -100,7 +100,7 @@
 
 	  <div class="form-group">
 		<div class="col-xs-1 nopadding">
-			<label for="is_query" class="col-xs-12 control-label" style="padding-left:7px;">是否经系统查询</label>
+			<label for="is_query" class="col-xs-12 control-label" style="padding-left:7px;">是否经过系统查询</label>
 		</div>
 		<div class="col-xs-4" style="width:38%;">
 				<select class="form-control" id="is_query" name="is_query">
@@ -169,7 +169,7 @@
 
 	  <div class="form-group">
 		<div class="col-xs-2 col-lg-1 nopadding">
-			<label for="resp_person" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动<br/>负责人</label>
+			<label for="resp_person" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">负&ensp;责&ensp;人</label>
 		</div>
 		<div class="col-xs-4 col-lg-5">
 		  <input type="text" class="form-control" id="resp_person" name="resp_person" value="{{data.resp_person}}"placeholder="请输入活动负责人">
@@ -221,10 +221,12 @@
 <script>
 function tosite(n){
 	var room,i;
-	for(i in ['1','2','3']){
-		if(i == n)continue;
+	var string;
+	for(i=1;i<=3;i++){
+		str = i.toString()
+		if(str == n)continue;
 		else{
-			room = "#room" + i;
+			room = "#room" + str;
 			$(room).val("")
 		}
 	};

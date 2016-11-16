@@ -40,6 +40,9 @@ class News(db.Model):
 	def addTag(self,tagName):
 		tag=Tag.query.filter(Tag.name==tagName).first()
 		self.tags.append(tag)
+	@property
+	def cate(self):
+		return self.category[0].name
 
 
 	def __init__(self,news_Detail,news_Title,news_Outline,news_Img_Url):

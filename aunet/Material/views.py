@@ -10,6 +10,7 @@ from flask_login import login_required,current_user
 from flask_principal import Permission,ActionNeed
 from .models import *
 from os import path,remove
+from random import randint
 
 from .. import db
 from . import material
@@ -80,9 +81,9 @@ def download(file_type):
     data = query_data(type,id)
     #下载策划
     if file_type == 'scheme':
-        if data.filename == '':abort(404)
-        content = send_file(path.join(Upload_path,data.filename))
-        filename = quote(data.filename[:-10])
+        if data.filename == 'Nothing':abort(404)
+        content = send_file(path.join(Upload_path,data.rand_filename))
+        filename = quote(data.filename)
     #if data.applicant!=current_user.name :abort(404)
     else :
         #生成context并进行渲染
@@ -117,9 +118,9 @@ def delete():
     type = request.form.get('type')
     data = query_data(type,id)
 
-    if data.filename is not None and \
-    path.exists(path.join(Upload_path,data.filename)):
-        remove(path.join(Upload_path,data.filename))
+    if data.filename != 'Nothing' and \
+    path.exists(path.join(Upload_path,data.rand_filename)):
+        remove(path.join(Upload_path,data.rand_filename))
     db.session.delete(data)
     db.session.commit()
     flash('删除成功！')
@@ -142,9 +143,10 @@ def submit():
     else:
         data = types[type][0]()
         upload_file = request.files['file']
-        if upload_file.filename != '':    
-            rand_filename = upload_file.filename+str(int(mktime(time)))
-            data.filename = rand_filename
+        if upload_file.filename != '': 
+            data.filename = upload_file.filename   
+            rand_filename = str(randint(10000,99999))+str(int(mktime(time)))
+            data.rand_filename = rand_filename
             upload_file.save(path.join(Upload_path,rand_filename))
         else :
             data.filename = 'Nothing'
