@@ -27,7 +27,7 @@ window.onload=function()
 		//hot_new_right_width = document.getElementById("hot_news").getElementsByClassName("right")[0].clientWidth;
 		if(winWidth >= 950)
 		{
-			document.getElementById("hot_news").getElementsByClassName("left")[0].style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -30) / 2 + "px";
+			document.getElementById("hot_news").getElementsByClassName("left")[0].style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -20) / 2 + "px";
 			//document.getElementById("hot_news").getElementsByClassName("right")[0].style.marginRight = (winWidth - (hot_new_left_width+hot_new_right_width) - 30) / 2 + "px";
 			document.getElementById("news_").style.width = (hot_new_left_width+hot_new_right_width) + "px";
 			document.getElementById("news_").style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -30) / 2 + "px";
