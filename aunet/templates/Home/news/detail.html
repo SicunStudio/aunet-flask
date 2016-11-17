@@ -1,13 +1,12 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html>	
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css">
 		<link rel="stylesheet" type="text/css" href="../../../static/Home/header_footer.css">
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/news.css">
-		<title>华中科技大学社团网__新闻</title>
+		<link rel="stylesheet" type="text/css" href="../../../static/Home/news_detail.css">
+		<title>华中科技大学社团网</title>
 	</head>
 	<body>
 		<div id="top_menu">
@@ -18,7 +17,7 @@
 			</span>
 			<ul id="top_menu_menu">
 				<a href="../index"><li>首&nbsp;页</li></a>
-				<a href=""><li id="on">新&nbsp;闻</li></a>
+				<a href="../news"><li id="on">新&nbsp;闻</li></a>
 				<a href=""><li>社&nbsp;团</li></a>
 				<a href=""><li>社&nbsp;联</li></a>
 				<a href=""><li>管&nbsp;理</li></a>
@@ -32,49 +31,7 @@
 			</div>
 			<a href=""><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
 		</div>
-
-		<div id="search_">
-
-			<div class="search_option">
-				<ul name="Category">
-					<caption>类型：</caption>
-					<li class="on" name="all">全部</li>
-					<li name="news">新闻</li>
-					<li name="notice">通知</li>
-					<li name="preview">预告</li>
-				</ul>
-				<ul name="Time">
-					<caption>时间：</caption>
-					<li class="on" name="all">全部</li>
-					<li name="week">一周</li>
-					<li name="month">三月</li>
-					<li name="year">一年</li>
-				</ul>
-				<ul name="Sort">
-					<caption>排序：</caption>
-					<li class="on" name="all">综合</li>
-					<li name="hot">热门</li>
-					<li name="latest">最新</li>
-					<li name="oldest">最旧</li>
-				</ul>
-			</div>
-		</div>
-
-
-
-		<div id="news_">
-			<div class="news_2">
-				<div class="goto">
-					<span><a>上一页</a></span>
-					<span><input type="number" value="1">/<input type="number" value="1" disabled=""><a >跳转</a></span>
-					<span><a>下一页</a></span>
-				</div>
-			</div>
-		</div>
-		
-
-
-
+		<div id="news_container"><div id="news_detail"></div></div>
 		<div id="bottom_menu">
 			<span>友情链接</span>
 			<span>
@@ -92,7 +49,13 @@
 
 		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
 	</body>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
 	<script src="../../../static/Home/index_API.js"></script>
-	<script src="../../../static/Home/news.js"></script>
+	<script>
+		window.onload=function()
+		{
+			InitHeader();
+		}
+	</script>
+	
 </html>

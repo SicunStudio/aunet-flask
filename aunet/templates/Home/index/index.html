@@ -47,24 +47,12 @@
 					<div class="title" id="picture_title"></div>	
 				</div>
 				<div class="preview">
-				{%for News in LatestFiveNews%}
-					<div class="preview_x"><a><img class="news" id="" src="{{News.news_Img_Url}}" alt="{{News.news_Title}}"></a></div>
+				{%for News in silde_show%}
+					<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="{{News.title}}"></a></div>
 				{%endfor%}
 				</div>
 			</div>
-			<div class="right">
-				<img src="../../../static/Home/mlclub.png" class="title">
-				<div class="mlimg"><img src="{{CharmAssociation.charm_Img_Url}}" class="img"></div>
-				<div class="content">
-					<div class="content_1"><i>{{CharmAssociation.charm_Name}}</i></div>
-					<div class="content_2">
-						{%for tag in CharmAssociation.charm_Tag%}
-						<span class="content_2_x">{{tag.tag}}</span>
-						{%endfor%}
-					</div>
-					<div class="content_3">{{CharmAssociation.charm_Intro}}</div>
-				</div>
-			</div>
+
 		</div>
 		
 	
@@ -72,12 +60,12 @@
 			<div class="star_2">
 				<div class="star_2_1">
 					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
-					<div>{{LatestNotice.notice_Detail}}</div>
+					<div>{{LatestAdvanceNotice[0].detail}}</div>
 					<a href="">更 &nbsp;&nbsp; 多</a>
 				</div>
 				<div class="star_2_2">
 					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新通知</div>
-					<div>{{LatestAdvanceNotice.an_Detail}}</div>
+					<div>{{LatestNotice[0].detail}}</div>
 					<a href="">更 &nbsp;&nbsp; 多</a>
 				</div>
 			</div>
@@ -88,30 +76,30 @@
 			<div class="news_1">
 				<div class="news_1_1">
 					<div class="title">品 牌 活 动</div><div class="hr"><a href="">更 多></a></div>
-					<div><img src="{{NewsPinPai.news_Img_Url}}" alt=""></div>
-					<div class="text">{{NewsPinPai.news_Outline}}</div>
+					<div><img src="{{NewsPinPai[0].img_url}}" alt=""></div>
+					<div class="text">{{NewsPinPai[0].outline}}</div>
 				</div>
 				<div class="news_1_2">
 					<div class="title">魅 力 华 科</div><div class="hr"><a href="">更 多></a></div>
-					<div><img src="{{NewsCharmHust.news_Img_Url}}" alt=""></div>
+					<div><img src="{{NewsCharmHust[0].img_url}}" alt=""></div>
 				</div>
 			</div>
 			<div class="news_2">
 				<div class="title">新 闻 预 览</div>
 				<div class="hr"><a href="">更 多></a></div>
-	
+				<br><br>
 				{%for NewsYuLans in NewsYuLan%}
 				<div class="news_2_x">
-					<img src="{{NewsYuLans.news_Img_Url}}" alt="">
+					<img src="{{NewsYuLans.img_url}}" alt="">
 					<div>
-						<div class="news_title">{{NewsYuLans.news_Title}}</div>
+						<div class="news_title">{{NewsYuLans.title}}</div>
 						<div class="article">
-						{{NewsYuLans.news_Outline}}
+						{{NewsYuLans.outline}}
 						</div>
 					</div>
 					<div>
-						<span class="time">{{NewsYuLans.news_Year}}.{{NewsYuLans.news_Month}}.{{NewsYuLans.news_Day}}</span>
-						<span class="detail"><a href="{{NewsYuLans.news_Detail}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
+						<span class="time">{{NewsYuLans.post_time}}</span>
+						<span class="detail"><a href="{{NewsYuLans.detail}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
 					</div>
 				</div>
 				<br><br><br><br><hr><br>
@@ -122,41 +110,41 @@
 			<div class="news_3">
 				<a href="">
 					<div class="menu">
-						<img src="" alt="">
+						<img src="../../../static/Home/Download_72px_1190776_easyicon.net.ico" alt="">
 						<div>资料下载</div>
 					</div>
 				</a>
 				<a href="">
 					<div class="menu">
-						<img src="" alt="">
+						<img src="../../../static/Home/recurring_appointment_96px_1169552_easyicon.net.ico" alt="">
 						<div>设计委任</div>
 					</div>	
 				</a>
 				
 				<a href="/Material/">
 					<div class="menu">
-						<img src="" alt="">
+						<img src="../../../static/Home/stock_mail_filters_apply_72px_1078478_easyicon.net.ico" alt="">
 						<div>资源申请</div>
 					</div>
 				</a>
 				<span></span>
 				<a href="">
 					<div class="menu">
-						<img src="" alt="">
+						<img src="../../../static/Home/system_report_96px_1168708_easyicon.net.ico" alt="">
 						<div>评分系统</div>
 					</div>
 				</a>
 				
 				<a href="">
 					<div class="menu">
-						<img src="" alt="">
+						<img src="../../../static/Home/memory_card_96px_1199870_easyicon.net.ico" alt="">
 						<div>社团卡</div>
 					</div>
 				</a>
 				
 				<a href="">
 					<div class="menu">
-						<img src="" alt="">
+						<img src="../../../static/Home/menu_96px_1199476_easyicon.net.ico" alt="">
 						<div>菜单</div>
 					</div>
 				</a>
@@ -169,14 +157,14 @@
 			<span>友情链接</span>
 			<span>
 				<ul>
-					<li><a href="">华中科技大学</a></li>
-					<li><a href="">学工在线</a></li>
-					<li><a href="">校团委</a></li>
-					<li><a href="">醉晚亭</a></li>
+					<li><a href="http://www.hust.edu.cn/">华中科技大学</a></li>
+					<li><a href="http://www.ehust.net/">学工在线</a></li>
+					<li><a href="http://youth.hust.edu.cn">校团委</a></li>
+					<li><a href="http://www.zuiwan.net/">醉晚亭</a></li>
 				</ul>
 			</span>
 			<span>
-				<img src="" alt="">
+				<img src="../../../static/Home/1479310722.png" alt="">
 			</span>
 		</div>
 

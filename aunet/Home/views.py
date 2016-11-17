@@ -48,13 +48,14 @@ def getNews(number,category):
 	news=News.query.join(news_category).join(Category).filter(Category.name==category).order_by(News.post_time.desc()).limit(number).all()
 	return news
 
-def news2Json(news,length,page):
+def news2Json(news,length,page,news_number):
 	newsJson=dict()
 	newsJson['title']=list()
 	newsJson['outline']=list()
 	newsJson['img_url']=list()
 	newsJson['post_time']=list()
 	newsJson['length']=length
+	newsJson['news_number']=news_number
 	newsJson['current_page']=str(page)
 	i=0
 	for new in news:
@@ -90,20 +91,24 @@ def newJson():
 
 		if(category=="all" and (sort=="all" or sort=="hot" or sort=="latest")):
 			news=News.query.filter(News.post_time>time).order_by(News.post_time.desc()).all()
+			news_number=len(news)
 			news=news[(goto_page-1)*10:goto_page*10]
 		elif(category=="all" and sort=="oldest"):
 			news=News.query.filter(News.post_time>time).order_by(News.post_time).all()
+			news_number=len(news)
 			news=news[(goto_page-1)*10:goto_page*10]
 		elif(category!="all" and (sort=="all" or sort=="hot" or sort=="latest")):
 			news=News.query.join(news_category).join(Category).filter(News.post_time>time).filter(Category.name==category).order_by(News.post_time.desc()).all()
+			news_number=len(news)
 			news=news[(goto_page-1)*10:goto_page*10]
 		elif(category!="all" and sort=="oldest"):
 			news=News.query.join(news_category).join(Category).filter(News.post_time>time,Category.name==category).order_by(News.post_time).all()
+			news_number=len(news)
 			news=news[(goto_page-1)*10:goto_page*10]
 		else:
 			news=None
 		if news!=None:
-			NewsJson=news2Json(news,len(news),goto_page)
+			NewsJson=news2Json(news,len(news),goto_page,news_number)
 			return jsonify(NewsJson)
 		else:
 			return "<html><body>bad</body></html>"
