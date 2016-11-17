@@ -1,0 +1,150 @@
+a{outline: none;}
+html{overflow-x: hidden;}
+body{font-family:  Microsoft YaHei;
+	padding:0 0;
+	margin:0 0;
+	background: #eaeaea;}
+a{text-decoration: none;
+color:#000;}
+a:hover{opacity: 0.7}
+#top_menu{
+	padding: 0 0;
+	margin:0 0;
+	background: #f4f4f4;
+	width:100%;
+	padding:0 0;
+}
+#top_menu #menu_bottom_line{
+	position: absolute;
+	top:0;
+	width:70px;
+	height:2px;
+	background: #bebebe;
+}
+*{
+	margin:0 0;
+	padding:0 0;
+}
+html{overflow-x: hidden;}
+body{font-family:  Microsoft YaHei;
+	padding:0 0;
+	margin:0 0;
+	background: #eaeaea;}
+a{text-decoration: none;
+color:#000;
+cursor: pointer;}
+a:hover{opacity: 0.7}
+#top_menu{
+	padding: 0 0;
+	margin:0 0;
+	background: #f4f4f4;
+	width:100%;
+	height:100%;
+	padding:0 0;
+	clear: both;
+}
+#top_menu .top_menu_title{
+	float:left;
+	position: relative;
+	top:15px;
+}
+#top_menu .top_menu_title div:first-child{
+	font-size: 1.5em;
+	width:180px;
+	text-align: center;
+}
+#top_menu .top_menu_title div:last-child{
+	font-size: 0.5em;
+	width: 180px;
+	text-align: center;
+	letter-spacing: 0px;
+}
+#top_menu .logo{
+	background: url("../../../static/Home/au_logo.png");
+	width:60px;
+	height:60px;
+	margin:10px 10px;
+	margin-left: 60px;
+	float: left;
+	border-radius: 50% 50% 50% 50%;
+	/*border:2px solid #000;*/
+}
+#top_menu ul{
+	/*position: relative;
+	*//*left:20%;*/
+	list-style: none;
+	margin:0px 0;
+	padding:0 0 ;
+	}
+#top_menu li{
+	padding:30px 20px;
+	margin:0 0;
+	border:0;
+	display: inline-block;
+}
+#top_menu button{
+	position: absolute;
+	top:45px;
+	margin:0 0;
+	font-size: 16px;
+	right:50px;
+	padding:5px 30px;
+	border-radius: 15px 15px 15px 15px;
+	color:#fff;
+	background: #e93945;
+	outline: none;
+	border:0;
+	cursor: pointer;
+	width: 9%;
+	height: 30px;
+}
+
+
+
+#bottom_menu{	
+	background: #193b19;
+	width:100%;
+	height:150px;
+	color: #2c682c;
+}
+#bottom_menu ul{
+	list-style: none;
+}
+#friendship-link{
+	font-size: 30px;
+	position: relative;
+	float: left;
+	line-height: 150px;
+	left: 200px;
+}
+#friendship-list{
+	position: relative;
+	left:250px;
+	float: left;
+	line-height: 25px;
+	top:7px;
+}
+#bottom_menu div img{
+	width:120px;
+	height:120px;
+	float: right;
+	margin:15px 200px;
+}
+#bottom_menu div ul li{
+	padding: 4px 0;
+}
+#bottom_menu div ul li a{color:#77aa77;}
+#bottom_menu div ul li a:hover{text-decoration: underline;}
+#bottom_menu div ul{
+	left:250px;
+	top:20px;
+}
+
+#footer_{	
+	background: #112811;
+	width:100%;
+	color:#3d913d;
+	text-align: center;
+	line-height: 48px;
+	font-size: 0.5em;
+}
