@@ -110,26 +110,68 @@ function _menu(){
 	}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function GetAllNewsPage(number)
+{
+	number /= 10;
+	if((number - parseInt(number)) > 0)
+		return (parseInt(number) + 1);
+	else 
+		return parseInt(number);
+}
 function DisplayNews(news)
 {
 	var page = news;
+	var input_1 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1];
+	var input_0 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
+	var all_pages = GetAllNewsPage(parseInt(page["news_number"]));
 	//alert(JSON.stringify(news))
 	var news = document.getElementsByClassName("news_2_x");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1].setAttribute("value","1");
-	document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0].setAttribute("value",page["current_page"] + "");
+	input_1.setAttribute("min",1 + "");
+	if(all_pages > 0)
+	{
+		input_1.setAttribute("value",all_pages + "");
+		if(all_pages >= parseInt(page["current_page"]))
+			input_0.setAttribute("value",parseInt(page["current_page"]) + "");
+		else 
+			input_0.setAttribute("value",all_pages + "");
+
+	}
+	else 
+	{
+		input_1.setAttribute("value",1 + "");
+	}
+	input_0.setAttribute("max",all_pages + "");
+	input_0.setAttribute("min",1 + "");
+	if (parseInt(page["current_page"]) <= 0)
+	{
+		input_0.setAttribute("value" , 1 + "");
+	}
 	for(loop = 0;loop < parseInt(page["length"]);loop++)
 	{
 		news[loop].setAttribute("style","display:block");
-		/******一下的json访问可能存在问题******/
 		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["title"][loop][loop+""];
 		news[loop].getElementsByClassName("article")[0].innerHTML = page["outline"][loop][loop+""];
 		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["img_url"][loop][loop+""]);
 		news[loop].getElementsByClassName("time")[0].innerHTML = page["post_time"][loop][loop+""];
 	}
 }
-
 /*******
 获取不同浏览器内核的ajax请求对象
 *******/
@@ -176,9 +218,7 @@ function GetNews(posts)
         data: JSON.stringify(posts),
         dataType: "json",
         success: function(data) {
-            if (data > 0) 
-                alert("请求已提交！");
-            DisplayNews(data);
+ 	           DisplayNews(data);
         },
         error: function() {
             alert("提交数据失败！");
@@ -199,6 +239,12 @@ function GetNews(posts)
 // 	}
 	
 // }
+
+
+
+
+
+
 
 /*****
 新闻部分的条件搜索栏
@@ -275,6 +321,14 @@ function PageDown()
 	}
 }
 /****结束***/
+
+
+
+
+
+
+
+
 
 
 
@@ -377,6 +431,7 @@ function InitMenuLine()
 function InitHeader()
 {
 	InitMenuLine();
+	document.getElementsByClassName("menu")[0].addEventListener("click",_menu);
 	var loop_1  = setInterval(HideMenuLine , 100);
 	var loop_2	= setInterval(ResetMenuLine , 10)
 }
