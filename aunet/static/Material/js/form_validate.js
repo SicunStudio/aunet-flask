@@ -15,7 +15,12 @@ jQuery.validator.addMethod("validFileType", function(value, element) {
 
 	$().ready(function() {
 		$("#form1").validate({
-			rules:{											// 验证规则
+			rules:{	
+				week:"required",
+				capacity:"required",
+				host:"required",
+				unit:"required",
+				title:"required",
 				association:"required",
 				activity:"required",
 				site:"required",
