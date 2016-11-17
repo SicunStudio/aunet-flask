@@ -1,75 +1,11 @@
-<!DOCTYPE>
-<html>
-  <head>
-	<meta charset="UTF-8" />
-	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
-	<script src="{{url_for('material.static',filename='js/jquery.js')}}"></script>
-	<script type="text/javascript" src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
-	<script>
+{% extends "form_base.html" %}
+{% block form %}
+<script src="{{url_for('material.static',filename='js/datedropper.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/datedropper.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/status.css')}}">
 
-	function theDeleteModal(record){
-		var value = 'drop("'+record.attr("mtype")+'","'+record.attr("uid")+'")';
-		$("#confirm-delete").attr("onclick",value);
-		$("#modal-delete").modal("show")
-	}
-	function drop(type,id){
-		form = document.getElementById("form");
-		$(form).attr("action","{{url_for('material.delete')}}");
-		$("#type").val(type);
-		$("#id").val(id);
-		form.submit();
-	}
-	function download(type,id){
-		form = document.getElementById("form");
-		$(form).attr("action","{{url_for('material.download',file_type='form')}}");
-		$("#type").val(type);
-		$("#id").val(id);
-		form.submit();
-	}
-	function getModal(bt){	
-		htmlobj=$.ajax({
-			url:"/Material/modal/",
-			type:"post",
-			data:{id:bt.attr("uid"),type:bt.attr("mtype"),modal_type:"preview"},
-			async:false,
-		});
-		$("#modal-approve").html(htmlobj.responseText);
-		$("#modal-approve").modal("show");
-    }
-    function modify(bt){
-    	var form = $("<form></form>");
-    	var action = '/Material/modify/' + bt.attr("mtype") + "/";
-    	form.attr({
-    		"method":"post",
-    		"action":action,
-    		"target":"_self"
-    	})
-    	var input = $("<input name='id'/>");
-    	input.val(bt.attr("uid"));
-    	form.append(input);
-    	form.appendTo("body");
-        form.css('display','none');  
-        form.submit();
-    }
-	</script>
-
-	<style>
-	td>p {margin:0px;}
-	.model-label{
-		font-weight:inherit;
-		font-size:20px;
-		display:block;
-		text-align:left;
-		margin-top:5px;
-	}
-	</style>
-
-  </head>
-
-  <body>
-	<div class="modal fade" id="modal-approve" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
 	</div>
-
 	<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -85,7 +21,7 @@
 					确定要删除吗？(删除后不可恢复)
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal" style="background:green;border:none">关闭
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="background:green;border:none;color:white">关闭
 					</button>
 					<button type="button" id="confirm-delete" class="btn btn-primary" style="background:red;border:none">
 						确定
@@ -94,47 +30,77 @@
 			</div><!-- modal-content -->
 		</div><!-- modal-dialog-->
 	</div>
-
-	{% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-    {% endfor %}
-
-	<table bolder="1">
-		<tr>
-			<th>序号</th>
-			<th>提交时间</th>
-			<th>物资类型</th>
-			<th>审批结果</th>
-		</tr>		
-		{% for data in datas:%}
-		<tr>
-			<td>{{ loop.index }}</td>
-			<td>{{data.apply_time.strftime('%Y-%m-%d %H:%M')}}</td>
-			<td>{{types[data.__tablename__[9:]][1]}}</td>
-			<td>{{results[data.result]}}</td>
-			<td>				
-				<button id="download" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="download($(this).attr('mtype'),$(this).attr('uid'))">下载</button>
+	<div id="content-top">
+	<ul>
+		<li><a status="012">所&ensp;&ensp;有</a></li>
+		<li><a status="0">审&ensp;批&ensp;中</a></li>
+		<li><a status="2">未&ensp;通&ensp;过</a></li>
+		<li><a status="1">已&ensp;通&ensp;过</a></li>
+		<li><a status="12">已&ensp;审&ensp;批</a></li>
+	</ul>
+	<label for="type-filter">物资类型</label>
+	<select id="type-filter" onchange="filter()">
+		<option selected="selected" value="all">所&ensp;&ensp;有</option>
+		{% for key,value in types.items()%}
+			<option value="{{key}}">{{value[1]}}</option>
+		{% endfor %}
+	</select>
+	<span id="time-clear" onclick="timeClear()">×</span>
+	<label for="time-filter">申请时间</label>
+	<input type="text" id="time-filter" onchange="$('#time-clear').css('display','inline');filter()">
+	</div>
+	<table id="content-middle">
+		<tr class="table-top">
+			<td style="width:6%;">序&ensp;号</td>
+			<td style="width:13%;">提交时间</td>
+			<td style="width:10%;">物资类型</td>
+			<td style="width:10%;">审核结果</td>
+			<td style="width:10%;">审核进度</td>
+			<td style="width:13%;">审批时间</td>
+			<td style="width:15%;">审核意见</td>
+			<td style="width:18%;" colspan="3">操&ensp;&ensp;&ensp;&ensp;作</td>
+		</tr>
+		{% for data in datas %}
+		<tr class="table-content" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" result="{{data.result}}">
+			<td class="index">{{loop.index}}</td>
+			<td class="apply-time">{{data.apply_time.strftime('%Y-%m-%d %H:%M')}}</td>
+			<td class="material-type">{{types[data.__tablename__[9:]][1]}}</td>
+			<td class="result">{{results[data.result]}}</td>
+			<td class="status">
+			{% if data.result == '0' and data.pre_verify == None %}
+			初审中
+			{% elif data.result == '0' and data.pre_verify != None%}
+			初审通过
+			{% else %}
+			{{results[data.result]}}
+			{% endif %}
 			</td>
-			<td>
-				<button id="delete" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="theDeleteModal($(this))">删除</button>
+			<td class="approve-time">
+			{% if data.approve_time == None %}
+			暂无
+			{% else %}
+			{{data.approve_time.strftime('%Y-%m-%d %H:%M')}}
+			{% endif %}
 			</td>
-			<td>
-				<button mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" onclick="getModal($(this))">查看</button>
+			<td class="advice">
+				{% if data.advice == None %}
+				暂无
+				{% else %}
+				{{data.advice}}
+				{% endif %}
 			</td>
-			<td>
-				<button mtype="{{data.__tablename__[9:]}}" class="modify-button" uid="{{data.id}}" onclick="modify($(this))">修改</button>
-			</td>
-			<br/>
-		</tr>	
-		{% endfor %}		
+			<td class="td-btn"><button class="btn-view" onclick="viewModal($(this))">查看</button></td>
+			<td class="td-btn"><button class="btn-modify" onclick="modify($(this))">修改</button></td>
+			{% if data.result == '0' %}
+			<td class="td-btn"><button class="btn-cancel" onclick="confirmDelete($(this))">撤销</button></td>
+			{% else %}
+			<td class="td-btn"><button class="btn-delete" onclick="confirmDelete($(this))">删除</button></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
 	</table>
 
-	<form id="form" method="post" action="">
-		<input type="hidden" id="type" name="type" value=""/>
-		<input type="hidden" id="id" name="id" value=""/>
-	</form>
-  </body>  
-</html>
+<script type="text/javascript" src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('material.static',filename='js/status.js')}}"></script>
+
+{% endblock %}

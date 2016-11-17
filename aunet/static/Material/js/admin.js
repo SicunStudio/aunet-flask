@@ -1,5 +1,7 @@
 $(document).ready(function(){
-
+	$("body").css({
+		"min-width":window.screen.width,
+	});
 	$(".item").each(
 		function(){
 			var result = {
