@@ -36,8 +36,8 @@ app.register_blueprint(admin,url_prefix='/admin')
 from .Home import home
 app.register_blueprint(home)
 
-from .Material import material
-app.register_blueprint(material)
+# from .Material import material
+# app.register_blueprint(material)
 
 
 from . import models,views
