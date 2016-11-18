@@ -8,6 +8,20 @@ import json
 
 from . import home
 from .models import News,Category, Tag, SilderShow,news_category
+from aunet import app
+
+@app.template_filter('time')
+def time_filter(s):
+	if isinstance(s,datetime) is True:
+		now=datetime.now()
+		utc_now=datetime.utcnow()
+		return (s-(utc_now-now)).strftime('%Y %b %d %H:%M')
+	elif (isinstance(s,str) ):
+		now=datetime.now()
+		utc_now=datetime.utcnow()
+		s=datetime.strptime(s,"%Y-%m-%d %H:%M:%S")
+		s=s-(utc_now-now)
+		return s.strftime("%Y %b %d %H:%M")
 
 @home.route('/',methods=["POST","GET"])
 @home.route('/index',methods=["POST","GET"])
@@ -30,7 +44,7 @@ def index():
 @home.route('/news/<int:id>',methods=["POST","GET"])
 def show_News(id):
 	news=News.query.filter(News.id==id).first()
-	return render_template("Home/news/index.html",news=news)
+	return render_template("Home/news/detail.html",news=news)
 
 @home.route('/news',methods=["POST","GET"])
 def indexNews():
@@ -57,12 +71,14 @@ def news2Json(news,length,page,news_number):
 	newsJson['length']=length
 	newsJson['news_number']=news_number
 	newsJson['current_page']=str(page)
+	newsJson['id']=list()
 	i=0
 	for new in news:
 		newsJson['title'].append(dict({i:new.title}))
 		newsJson['outline'].append(dict({i:new.outline}))
 		newsJson['img_url'].append(dict({i:new.img_url}))
 		newsJson['post_time'].append(dict({i:new.post_time.strftime('%Y-%m-%d %H:%M:%S')}))
+		newsJson['id'].append(dict({i:new.id}))
 		i=i+1
 	return newsJson   		
 	
