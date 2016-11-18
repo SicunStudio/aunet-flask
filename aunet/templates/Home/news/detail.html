@@ -32,8 +32,11 @@
 			<a href=""><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
 		</div>
 		<div id="news_container"><div id="news_detail">
-			<div class="title"><span>{{NewsYuLan.title}}</span><span>{{NewsYuLan.post_time}}</span></div>
-			<div class="container">{{NewsYuLan.detail}}</div>
+			<div>
+				<div class="title"><span>{{news.title}}</span><span>{{news.post_time|time}}</span></div>
+				<div class="container"></div>
+				<div class="hide" style="display: none">{{news.detail}}</div>
+			</div>	
 		</div></div>
 		<div id="bottom_menu">
 			<span>友情链接</span>
@@ -54,11 +57,6 @@
 	</body>
 	
 	<script src="../../../static/Home/index_API.js"></script>
-	<script>
-		window.onload=function()
-		{
-			InitHeader();
-		}
-	</script>
+	<script src="../../../static/Home/news_detail.js"></script>
 	
 </html>
