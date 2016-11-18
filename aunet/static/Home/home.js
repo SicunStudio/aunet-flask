@@ -25,22 +25,23 @@ window.onload=function()
 		hot_new_left_width = document.getElementById("hot_news").getElementsByClassName("left")[0].clientWidth;
 		var hot_new_right_width = 0;
 		//hot_new_right_width = document.getElementById("hot_news").getElementsByClassName("right")[0].clientWidth;
-		if(1)//winWidth >= 950
+		document.getElementById("hot_news").getElementsByClassName("left")[0].style.marginLeft = 0;
+		if(winWidth >= 719)//winWidth >= 950
 		{
-			document.getElementById("hot_news").getElementsByClassName("left")[0].style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -20) / 2 + "px";
+			document.getElementById("hot_news").getElementsByClassName("left")[0].style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -0) / 2 + "px";
 			//document.getElementById("hot_news").getElementsByClassName("right")[0].style.marginRight = (winWidth - (hot_new_left_width+hot_new_right_width) - 30) / 2 + "px";
 			document.getElementById("news_").style.width = (hot_new_left_width+hot_new_right_width) + "px";
-			document.getElementById("news_").style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -30) / 2 + "px";
+			document.getElementById("news_").style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -0) / 2 + "px";
 			document.getElementById("star_").style.width = (hot_new_left_width+hot_new_right_width) + "px";
-			document.getElementById("star_").style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -30) / 2 + "px";
+			document.getElementById("star_").style.marginLeft = (winWidth - (hot_new_left_width+hot_new_right_width) -0) / 2 + "px";
 		}
 		else
 		{
-			document.getElementById("hot_news").getElementsByClassName("left")[0].style.marginLeft = 0;
+			
 			document.getElementById("news_").style.width = (hot_new_left_width) + "px";
-			document.getElementById("news_").style.marginLeft = (winWidth - (hot_new_left_width) - 30) / 2 + "px";
+			document.getElementById("news_").style.marginLeft = (winWidth - (hot_new_left_width) - 0) / 2 + "px";
 			document.getElementById("star_").style.width = (hot_new_left_width) + "px";
-			document.getElementById("star_").style.marginLeft = (winWidth - (hot_new_left_width) - 30)/ 2 + "px";
+			document.getElementById("star_").style.marginLeft = (winWidth - (hot_new_left_width) - 0)/ 2 + "px";
 		} 
 		if(winWidth < 1200)
 			document.getElementsByClassName("news_3")[0].getElementsByTagName("span")[0].innerHTML = "<br>";
