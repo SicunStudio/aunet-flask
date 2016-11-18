@@ -74,11 +74,12 @@ def news2Json(news,length,page,news_number):
 	newsJson['id']=list()
 	i=0
 	for new in news:
+		now=datetime.now()
+		utc_now=datetime.utcnow()
 		newsJson['title'].append(dict({i:new.title}))
 		newsJson['outline'].append(dict({i:new.outline}))
-		newsJson['img_url'].append(dict({i:new.img_url}))
-		newsJson['post_time'].append(dict({i:new.post_time.strftime('%Y-%m-%d %H:%M:%S')}))
-		newsJson['id'].append(dict({i:new.id}))
+		newsJson['img_url'].append(dict({i:new.img_url}))		
+		newsJson['post_time'].append(dict({i:(new.post_time-(utc_now-now)).strftime('%Y %b %d %H:%M')}))
 		i=i+1
 	return newsJson   		
 	
