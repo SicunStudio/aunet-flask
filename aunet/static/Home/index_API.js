@@ -34,9 +34,8 @@ function GetImg()
 			wid = 235;
 		else 
 			wid = 174;
-		
 		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
-		document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+		document.getElementById("picture_title").innerHTML = this.alt + this.getAttribute("data-outline");//替换标题
 	}
 }
 
@@ -79,7 +78,7 @@ function _GetImg(m , order)
 			wid = 174;		
 		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
 		if(m)
-			document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+			document.getElementById("picture_title").innerHTML = m.alt + m.getAttribute("data-outline");//替换标题
 	}
 }
 function LoopNews()
@@ -153,7 +152,7 @@ function DisplayNews(json_data)
 	var input_0 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	var all_pages = GetAllNewsPage(parseInt(page["news_number"]));
 	//alert(JSON.stringify(page))
-	var news = document.getElementsByClassName("news_2_x");
+	var news = document.getElementsByClassName("news_2_x_con");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
 	input_1.setAttribute("min",1 + "");
