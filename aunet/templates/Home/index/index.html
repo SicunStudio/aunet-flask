@@ -47,8 +47,8 @@
 					<div class="title" id="picture_title"></div>	
 				</div>
 				<div class="preview">
-				{%for News in silde_show%}
-					<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="{{News.title}}"></a></div>
+				{%for News in SilderShow%}
+					<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="{{News.title}}" data-link="{{News.link}}"></a></div>
 				{%endfor%}
 				</div>
 			</div>
@@ -129,7 +129,7 @@
 					</div>	
 				</a>
 				
-				<a href="/Material/">
+				<a href="/Material/pages">
 					<div class="menu">
 						<img src="../../../static/Home/40799.png" alt="">
 						<div>资源申请</div>

@@ -22,11 +22,12 @@ function GetImg()
 			if(news[loop].id == "on")
 				break;
 		var order = loop;
+		//clientWidth have different means at differnt explores
 		var wid;
 		if(parseInt(document.body.clientWidth) > 1199)
 			wid = 404;
 		else if(parseInt(document.body.clientWidth) > 950)
-			wid = 334;
+			wid = 335;
 		else if(parseInt(document.body.clientWidth) >= 720)
 			wid = 410;
 		else if(parseInt(document.body.clientWidth) >= 415)
@@ -43,8 +44,13 @@ function InitImgSrc()
 {
 	var img_1 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByTagName("img");
 	var img_2 = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("preview")[0].getElementsByTagName("img");
+	var img_href = document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("img")[0].getElementsByTagName("a");
 	for(var loop = 0 ; loop < img_2.length ; loop ++)
+	{
 		img_1[loop].src = img_2[loop].src;
+		img_href[loop].href = img_2[loop].getAttribute("data-link");
+
+	}
 }
 /*******
 循环预览图片
@@ -139,7 +145,7 @@ function DisplayNews(json_data)
 	var input_1 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1];
 	var input_0 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	var all_pages = GetAllNewsPage(parseInt(page["news_number"]));
-	//alert(JSON.stringify(news))
+	//alert(JSON.stringify(page))
 	var news = document.getElementsByClassName("news_2_x");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
