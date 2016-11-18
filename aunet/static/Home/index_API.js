@@ -153,7 +153,7 @@ function DisplayNews(json_data)
 	var input_0 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	var all_pages = GetAllNewsPage(parseInt(page["news_number"]));
 	//alert(JSON.stringify(page))
-	var news = document.getElementsByClassName("news_2_x");
+	var news = document.getElementsByClassName("news_2_x_con");
 	for(var loop = 0;loop < news.length;loop++)
 		news[loop].setAttribute("style","display:none");
 	input_1.setAttribute("min",1 + "");
