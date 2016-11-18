@@ -76,21 +76,21 @@
 			<div class="news_1">
 				{%for PinPai in NewsPinPai%}
 				<div class="news_1_1">
-					<div class="title">品 牌 活 动</div><div class="hr"><a href="">更 多></a></div>
+					<div class="title">品 牌 活 动</div><div class="hr"><a href="./news/{{PinPai.id}}">更 多></a></div>
 					<div><img src="{{PinPai.img_url}}" alt=""></div>
 					<div class="text">{{PinPai.outline}}</div>
 				</div>
 				{%endfor%}
 				{%for CharmHust in NewsCharmHust%}
 				<div class="news_1_2">
-					<div class="title">魅 力 华 科</div><div class="hr"><a href="">更 多></a></div>
+					<div class="title">魅 力 华 科</div><div class="hr"><a href="./news/{{CharmHust.id}}">更 多></a></div>
 					<div><img src="{{CharmHust.img_url}}" alt=""></div>
 				</div>
 				{%endfor%}
 			</div>
 			<div class="news_2">
 				<div class="title">新 闻 预 览</div>
-				<div class="hr"><a href="">更 多></a></div>
+				<div class="hr"><a href="../news">更 多></a></div>
 				<br><br>
 				{%for NewsYuLans in NewsYuLan%}
 				<div class="news_2_x">
