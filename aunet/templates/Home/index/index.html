@@ -60,13 +60,17 @@
 			<div class="star_2">
 				<div class="star_2_1">
 					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
-					<div>{{LatestAdvanceNotice[0].detail}}</div>
-					<a href="">更 &nbsp;&nbsp; 多</a>
+					{%for AdNotices in LatestAdvanceNotice%}
+					<div>{{AdNotices.outline}}</div>
+					<a href="../news/{{AdNotices.id}}">更 &nbsp;&nbsp; 多</a>
+					{%endfor%}
 				</div>
 				<div class="star_2_2">
 					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新通知</div>
-					<div>{{LatestNotice[0].detail}}</div>
-					<a href="">更 &nbsp;&nbsp; 多</a>
+					{%for Notices in LatestNotice%}
+					<div>{{Notices.outline}}</div>
+					<a href="../news/{{Notices.id}}">更 &nbsp;&nbsp; 多</a>
+					{%endfor%}
 				</div>
 			</div>
 		</div>
@@ -74,19 +78,23 @@
 
 		<div id="news_">
 			<div class="news_1">
+				{%for PinPai in NewsPinPai%}
 				<div class="news_1_1">
-					<div class="title">品 牌 活 动</div><div class="hr"><a href="">更 多></a></div>
-					<div><img src="{{NewsPinPai[0].img_url}}" alt=""></div>
-					<div class="text">{{NewsPinPai[0].outline}}</div>
+					<div class="title">品 牌 活 动</div><div class="hr"><a href="../news/{{PinPai.id}}">更 多></a></div>
+					<div><img src="{{PinPai.img_url}}" alt=""></div>
+					<div class="text">{{PinPai.outline}}</div>
 				</div>
+				{%endfor%}
+				{%for CharmHust in NewsCharmHust%}
 				<div class="news_1_2">
-					<div class="title">魅 力 华 科</div><div class="hr"><a href="">更 多></a></div>
-					<div><img src="{{NewsCharmHust[0].img_url}}" alt=""></div>
+					<div class="title">魅 力 华 科</div><div class="hr"><a href="../news/{{CharmHust.id}}">更 多></a></div>
+					<div><img src="{{CharmHust.img_url}}" alt=""></div>
 				</div>
+				{%endfor%}
 			</div>
 			<div class="news_2">
 				<div class="title">新 闻 预 览</div>
-				<div class="hr"><a href="">更 多></a></div>
+				<div class="hr"><a href="../news">更 多></a></div>
 				<br><br>
 				{%for NewsYuLans in NewsYuLan%}
 				<div class="news_2_x">
@@ -98,8 +106,8 @@
 						</div>
 					</div>
 					<div>
-						<span class="time">{{NewsYuLans.post_time}}</span>
-						<span class="detail"><a href="./news/{{NewsYuLans.id}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
+						<span class="time">{{NewsYuLans.post_time|time}}</span>
+						<span class="detail"><a href="../news/{{NewsYuLans.id}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
 					</div>
 				</div>
 				<br><br><br><br><hr><br>

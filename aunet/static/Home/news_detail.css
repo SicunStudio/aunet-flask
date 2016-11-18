@@ -10,6 +10,17 @@
 	padding: 15px 15px;
 	box-shadow: 2px 2px 2px #dcdcdc;
 }
+#news_detail .title span:first-child
+{
+	font-size: 2em;
+	color:#193b19;
+}
+#news_detail .title span:last-child
+{
+	margin-left: 20px;
+	font-size: 0.7em;
+	color:#193b19;
+}
 
 @media screen and (max-width: 900px){
 #news_container{
