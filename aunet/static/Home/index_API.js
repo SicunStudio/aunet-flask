@@ -133,9 +133,9 @@ function GetAllNewsPage(number)
 	else 
 		return parseInt(number);
 }
-function DisplayNews(news)
+function DisplayNews(json_data)
 {
-	var page = news;
+	var page = json_data;
 	var input_1 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1];
 	var input_0 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	var all_pages = GetAllNewsPage(parseInt(page["news_number"]));
@@ -169,6 +169,7 @@ function DisplayNews(news)
 		news[loop].getElementsByClassName("news_title")[0].innerHTML = page["title"][loop][loop+""];
 		news[loop].getElementsByClassName("article")[0].innerHTML = page["outline"][loop][loop+""];
 		news[loop].getElementsByTagName("img")[0].setAttribute("src",page["img_url"][loop][loop+""]);
+		news[loop].getElementsByTagName("a")[0].setAttribute("href","./news/" + page["id"][loop][loop+""]);
 		news[loop].getElementsByClassName("time")[0].innerHTML = page["post_time"][loop][loop+""];
 	}
 }
