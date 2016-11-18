@@ -31,8 +31,8 @@ def index():
 	# StarAssociation1=getStarAssociation("StarAssociationer")
 	# StarAssociation2=getStarAssociation("StarAUer")
 	# StarAssociation3=getStarAssociation("StarTeacher")
-	LatestNotice=getNews(5,"notice")
-	LatestAdvanceNotice=getNews(5,"advance_notice")
+	LatestNotice=getNews(1,"notice")
+	LatestAdvanceNotice=getNews(1,"advance_notice")
 	NewsPinPai=getNews(1,"pin_pai")
 	NewsCharmHust=getNews(1,"charm_hust")
 	NewsYuLan=getNews(2,"news")
@@ -80,6 +80,7 @@ def news2Json(news,length,page,news_number):
 		newsJson['outline'].append(dict({i:new.outline}))
 		newsJson['img_url'].append(dict({i:new.img_url}))		
 		newsJson['post_time'].append(dict({i:(new.post_time-(utc_now-now)).strftime('%Y %b %d %H:%M')}))
+		newsJson['id'].append(dict({i:new.id}))
 		i=i+1
 	return newsJson   		
 	
