@@ -130,7 +130,11 @@ function _menu(){
 
 
 
-
+function Loading()
+{
+	document.getElementById("load").style.display="block";
+	document.getElementById("main").style.display="none";
+}
 function GetAllNewsPage(number)
 {
 	number /= 10;
@@ -142,6 +146,9 @@ function GetAllNewsPage(number)
 function DisplayNews(json_data)
 {
 	var page = json_data;
+	clearTimeout(time_out);
+	document.getElementById("load").style.display="none";
+	document.getElementById("main").style.display="block";
 	var input_1 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[1];
 	var input_0 = document.getElementsByClassName("goto")[0].getElementsByTagName("input")[0];
 	var all_pages = GetAllNewsPage(parseInt(page["news_number"]));
@@ -273,6 +280,7 @@ function GetSearchPart()
 /******获取所有需要传递的值********/
 function GetAllOn()
 {
+	time_out = setTimeout("Loading" , 500);
 	var on = document.getElementsByClassName("search_option")[0].getElementsByTagName("li");
 	var loop = 0;
 	var jsonData = {};
@@ -352,7 +360,14 @@ function GetWinWidth()
 		return document.body.clientWidth;
 	
 }
-
+function GetWinHeight()
+{
+	if (window.innerHeight)
+		return window.innerHeight;
+	else if ((document.body) && (document.body.clientHeight))
+		return document.body.clientHeight;
+	
+}
 
 
 function getTop(e)

@@ -9,174 +9,177 @@
 		<title>华中科技大学社团网</title>
 	</head>
 	<body>
-		<div id="top_menu">
-			<img src="../../../static/Home/au_logo.png" alt="" class="logo">
-			<span class="top_menu_title">
-				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
-				<div>华中科技大学学生社团联合会</div>
-			</span>
-			<ul id="top_menu_menu">
-				<a href=""><li id="on">首&nbsp;页</li></a>
-				<a href="../news"><li>新&nbsp;闻</li></a>
-				<a href=""><li>社&nbsp;团</li></a>
-				<a href=""><li>社&nbsp;联</li></a>
-				<a href=""><li>管&nbsp;理</li></a>
-				<a href=""><li>其&nbsp;他</li></a>
-			</ul>
-			<div id="menu_bottom_line"></div>
-			<div class="menu">
-				<div class="icon"></div>
-				<div class="icon"></div>
-				<div class="icon"></div>
+		<div id="load"></div>
+		<div id="main">
+			<div id="top_menu">
+				<img src="../../../static/Home/au_logo.png" alt="" class="logo">
+				<span class="top_menu_title">
+					<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
+					<div>华中科技大学学生社团联合会</div>
+				</span>
+				<ul id="top_menu_menu">
+					<a href=""><li id="on">首&nbsp;页</li></a>
+					<a href="../news"><li>新&nbsp;闻</li></a>
+					<a href=""><li>社&nbsp;团</li></a>
+					<a href=""><li>社&nbsp;联</li></a>
+					<a href=""><li>管&nbsp;理</li></a>
+					<a href=""><li>其&nbsp;他</li></a>
+				</ul>
+				<div id="menu_bottom_line"></div>
+				<div class="menu">
+					<div class="icon"></div>
+					<div class="icon"></div>
+					<div class="icon"></div>
+				</div>
+				<a href="../../Admin"><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
 			</div>
-			<a href=""><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
-		</div>
 
 
-		<div id="hot_news">
-			<div class="left">
-				<div class="picture">
-					<div class="img">
-						<a href=""><img src="" id="show_"></a>
-						<a href=""><img src="" id="show_"></a>
-						<a href=""><img src="" id="show_"></a>
-						<a href=""><img src="" id="show_"></a>
-						<a href=""><img src="" id="show_"></a>
+			<div id="hot_news">
+				<div class="left">
+					<div class="picture">
+						<div class="img">
+							<a href=""><img src="" id="show_"></a>
+							<a href=""><img src="" id="show_"></a>
+							<a href=""><img src="" id="show_"></a>
+							<a href=""><img src="" id="show_"></a>
+							<a href=""><img src="" id="show_"></a>
+						</div>
+						<div class="background"></div>
+						<div class="title" id="picture_title"></div>	
 					</div>
-					<div class="background"></div>
-					<div class="title" id="picture_title"></div>	
+					<div class="preview">
+					{%for News in SilderShow%}
+						<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="{{News.title}}" data-link="{{News.link}}"></a></div>
+					{%endfor%}
+					</div>
 				</div>
-				<div class="preview">
-				{%for News in SilderShow%}
-					<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="{{News.title}}" data-link="{{News.link}}"></a></div>
-				{%endfor%}
+
+			</div>
+			
+		
+			<div id="star_">
+				<div class="star_2">
+					<div class="star_2_1">
+						<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
+						{%for AdNotices in LatestAdvanceNotice%}
+						<div>{{AdNotices.outline}}</div>
+						<a href="../news/{{AdNotices.id}}">更 &nbsp;&nbsp; 多</a>
+						{%endfor%}
+					</div>
+					<div class="star_2_2">
+						<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新通知</div>
+						{%for Notices in LatestNotice%}
+						<div>{{Notices.outline}}</div>
+						<a href="../news/{{Notices.id}}">更 &nbsp;&nbsp; 多</a>
+						{%endfor%}
+					</div>
 				</div>
 			</div>
+			
 
-		</div>
-		
-	
-		<div id="star_">
-			<div class="star_2">
-				<div class="star_2_1">
-					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新预告</div>
-					{%for AdNotices in LatestAdvanceNotice%}
-					<div>{{AdNotices.outline}}</div>
-					<a href="../news/{{AdNotices.id}}">更 &nbsp;&nbsp; 多</a>
+			<div id="news_">
+				<div class="news_1">
+					{%for PinPai in NewsPinPai%}
+					<div class="news_1_1">
+						<div class="title">品 牌 活 动</div><div class="hr"><a href="../news/{{PinPai.id}}">更 多></a></div>
+						<div><img src="{{PinPai.img_url}}" alt=""></div>
+						<div class="text">{{PinPai.outline}}</div>
+					</div>
+					{%endfor%}
+					{%for CharmHust in NewsCharmHust%}
+					<div class="news_1_2">
+						<div class="title">魅 力 华 科</div><div class="hr"><a href="../news/{{CharmHust.id}}">更 多></a></div>
+						<div><img src="{{CharmHust.img_url}}" alt=""></div>
+					</div>
 					{%endfor%}
 				</div>
-				<div class="star_2_2">
-					<div class="title"><img src="../../../static/Home/tz_logo.png" alt="">最新通知</div>
-					{%for Notices in LatestNotice%}
-					<div>{{Notices.outline}}</div>
-					<a href="../news/{{Notices.id}}">更 &nbsp;&nbsp; 多</a>
-					{%endfor%}
-				</div>
-			</div>
-		</div>
-		
-
-		<div id="news_">
-			<div class="news_1">
-				{%for PinPai in NewsPinPai%}
-				<div class="news_1_1">
-					<div class="title">品 牌 活 动</div><div class="hr"><a href="../news/{{PinPai.id}}">更 多></a></div>
-					<div><img src="{{PinPai.img_url}}" alt=""></div>
-					<div class="text">{{PinPai.outline}}</div>
-				</div>
-				{%endfor%}
-				{%for CharmHust in NewsCharmHust%}
-				<div class="news_1_2">
-					<div class="title">魅 力 华 科</div><div class="hr"><a href="../news/{{CharmHust.id}}">更 多></a></div>
-					<div><img src="{{CharmHust.img_url}}" alt=""></div>
-				</div>
-				{%endfor%}
-			</div>
-			<div class="news_2">
-				<div class="title">新 闻 预 览</div>
-				<div class="hr"><a href="../news">更 多></a></div>
-				<br><br>
-				{%for NewsYuLans in NewsYuLan%}
-				<div class="news_2_x">
-					<img src="{{NewsYuLans.img_url}}" alt="">
-					<div>
-						<div class="news_title">{{NewsYuLans.title}}</div>
-						<div class="article">
-						{{NewsYuLans.outline}}
+				<div class="news_2">
+					<div class="title">新 闻 预 览</div>
+					<div class="hr"><a href="../news">更 多></a></div>
+					<br><br>
+					{%for NewsYuLans in NewsYuLan%}
+					<div class="news_2_x">
+						<img src="{{NewsYuLans.img_url}}" alt="">
+						<div>
+							<div class="news_title">{{NewsYuLans.title}}</div>
+							<div class="article">
+							{{NewsYuLans.outline}}
+							</div>
+						</div>
+						<div>
+							<span class="time">{{NewsYuLans.post_time|time}}</span>
+							<span class="detail"><a href="../news/{{NewsYuLans.id}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
 						</div>
 					</div>
-					<div>
-						<span class="time">{{NewsYuLans.post_time|time}}</span>
-						<span class="detail"><a href="../news/{{NewsYuLans.id}}">&nbsp;&nbsp;<img src="../../../static/Home/xq.png" alt="">详情</a></span>
-					</div>
+					<br><br><br><br><hr><br>
+				{%endfor%}	
+
 				</div>
-				<br><br><br><br><hr><br>
-			{%endfor%}	
-
+				<br><br>
+				<div class="news_3">
+					<a href="">
+						<div class="menu">
+							<img src="../../../static/Home/1075519.png" alt="">
+							<div>资料下载</div>
+						</div>
+					</a>
+					<a href="">
+						<div class="menu">
+							<img src="../../../static/Home/1181722.png" alt="">
+							<div>设计委任</div>
+						</div>	
+					</a>
+					
+					<a href="/Material">
+						<div class="menu">
+							<img src="../../../static/Home/40799.png" alt="">
+							<div>资源申请</div>
+						</div>
+					</a>
+					<span></span>
+					<a href="">
+						<div class="menu">
+							<img src="../../../static/Home/562067.png" alt="">
+							<div>评分系统</div>
+						</div>
+					</a>
+					
+					<a href="">
+						<div class="menu">
+							<img src="../../../static/Home/1204364.png" alt="">
+							<div>社团卡</div>
+						</div>
+					</a>
+					
+					<a href="">
+						<div class="menu">
+							<img src="../../../static/Home/1127035.png" alt="">
+							<div>菜单</div>
+						</div>
+					</a>
+					
+				</div>
 			</div>
-			<br><br>
-			<div class="news_3">
-				<a href="">
-					<div class="menu">
-						<img src="../../../static/Home/1075519.png" alt="">
-						<div>资料下载</div>
-					</div>
-				</a>
-				<a href="">
-					<div class="menu">
-						<img src="../../../static/Home/1181722.png" alt="">
-						<div>设计委任</div>
-					</div>	
-				</a>
-				
-				<a href="/Material/pages">
-					<div class="menu">
-						<img src="../../../static/Home/40799.png" alt="">
-						<div>资源申请</div>
-					</div>
-				</a>
-				<span></span>
-				<a href="">
-					<div class="menu">
-						<img src="../../../static/Home/562067.png" alt="">
-						<div>评分系统</div>
-					</div>
-				</a>
-				
-				<a href="">
-					<div class="menu">
-						<img src="../../../static/Home/1204364.png" alt="">
-						<div>社团卡</div>
-					</div>
-				</a>
-				
-				<a href="">
-					<div class="menu">
-						<img src="../../../static/Home/1127035.png" alt="">
-						<div>菜单</div>
-					</div>
-				</a>
-				
-			</div>
-		</div>
-		
+			
 
-		<div id="bottom_menu">
-			<span>友情链接</span>
-			<span>
-				<ul>
-					<li><a href="http://www.hust.edu.cn/">华中科技大学</a></li>
-					<li><a href="http://www.ehust.net/">学工在线</a></li>
-					<li><a href="http://youth.hust.edu.cn">校团委</a></li>
-					<li><a href="http://www.zuiwan.net/">醉晚亭</a></li>
-				</ul>
-			</span>
-			<span>
-				<img src="../../../static/Home/1479310722.png" alt="">
-			</span>
+			<div id="bottom_menu">
+				<span>友情链接</span>
+				<span>
+					<ul>
+						<li><a href="http://www.hust.edu.cn/">华中科技大学</a></li>
+						<li><a href="http://www.ehust.net/">学工在线</a></li>
+						<li><a href="http://youth.hust.edu.cn">校团委</a></li>
+						<li><a href="http://www.zuiwan.net/">醉晚亭</a></li>
+					</ul>
+				</span>
+				<span>
+					<img src="../../../static/Home/1479310722.png" alt="">
+				</span>
+			</div>
+			<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
 		</div>
 
-		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
 	</body>
 	
 	<script src="../../../static/Home/index_API.js"></script>
