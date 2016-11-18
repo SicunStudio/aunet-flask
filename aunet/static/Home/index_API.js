@@ -34,9 +34,8 @@ function GetImg()
 			wid = 235;
 		else 
 			wid = 174;
-		
 		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
-		document.getElementById("picture_title").innerHTML = this.alt;//替换标题
+		document.getElementById("picture_title").innerHTML = this.alt + this.getAttribute("data-outline");//替换标题
 	}
 }
 
@@ -79,7 +78,7 @@ function _GetImg(m , order)
 			wid = 174;		
 		document.getElementById("hot_news").getElementsByClassName("left")[0].getElementsByClassName("picture")[0].getElementsByClassName("img")[0].style.bottom=order*wid+"px";
 		if(m)
-			document.getElementById("picture_title").innerHTML = m.alt;//替换标题
+			document.getElementById("picture_title").innerHTML = m.alt + m.getAttribute("data-outline");//替换标题
 	}
 }
 function LoopNews()

@@ -50,7 +50,7 @@
 					</div>
 					<div class="preview">
 					{%for News in SilderShow%}
-						<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="{{News.title}}" data-link="{{News.link}}"></a></div>
+						<div class="preview_x"><a><img class="news" id="" src="{{News.img_url}}" alt="[{{News.title}}]:" data-link="{{News.link}}" data-outline = "{{News.outline}}"></a></div>
 					{%endfor%}
 					</div>
 				</div>
