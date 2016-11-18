@@ -235,8 +235,9 @@ def status():
         data = db_type[0].query.all()
         if data is None: continue
         datas.extend(data)
+    data={'association':'status'}
     return render_template('/pages/status.html',\
-        datas=datas,types=types,results=results)
+        datas=datas,types=types,results=results,data=data)
 
 
 

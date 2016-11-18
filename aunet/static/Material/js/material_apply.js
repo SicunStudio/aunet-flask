@@ -1,4 +1,9 @@
-//据material_type显示
+$(document).ready(function(){
+	$("body").css({
+		"width":window.screen.width,
+		"position":"absolute"
+	});
+})
 
 
 

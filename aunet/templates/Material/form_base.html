@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-	<link rel="stylesheet" type="text/css" href="../../../static/Home/header_footer.css">
-	<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css">
+	<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/header_footer.css')}}">
+<!-- 	<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css"> -->
 	<link href="{{url_for('material.static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
 	<link href="{{url_for('material.static',filename='css/apply.css')}}" rel="stylesheet">
 	<link href="{{url_for('material.static',filename='css/sidebar.css')}}" rel="stylesheet">
@@ -17,14 +17,14 @@
 		<title>华中科技大学社团网</title>
 	</head>
 	<body>
-		<div id="top_menu">
+		<div id="top_menu" style="height:88px">
 			<img src="../../../static/Home/au_logo.png" alt="" class="logo">
 			<span class="top_menu_title">
 				<div>社&ensp;&ensp;&ensp;团&ensp;&ensp;&ensp;网</div>
 				<div>华中科技大学学生社团联合会</div>
 			</span>
 			<ul id="top_menu_menu">
-				<a href=""><li id="on">首&nbsp;页</li></a>
+				<a href="/"><li id="on">首&nbsp;页</li></a>
 				<a href=""><li>新&nbsp;闻</li></a>
 				<a href=""><li>社&nbsp;团</li></a>
 				<a href=""><li>社&nbsp;联</li></a>
@@ -37,7 +37,8 @@
 				<div class="icon"></div>
 				<div class="icon"></div>
 			</div>
-			<a href=""><button>登&ensp;&ensp;录</button></a>
+			<div style="position:absolute;right:6%;top:1.5%;">{{current_user.userName}}</div>
+			<a href="/admin/logout"><button>注&ensp;&ensp;销</button></a>
 		</div>
 
 	<div class="middle-content" style="margin-top:5px;margin-bottom:60px;">
@@ -83,7 +84,7 @@
 			</a>
 		</div>
 
-		<div class="content">
+		<div class="content" style="width:100%;padding-right:3%">
 			{% block form %}
 			{% endblock %}
 		</div>
@@ -93,18 +94,18 @@
 	</div>
 
 		<div id="bottom_menu">
-			<span>友情链接</span>
-			<span>
+			<div id="friendship-link">友情链接</div>
+			<div id="friendship-list">
 				<ul>
 					<li><a href="">华中科技大学</a></li>
 					<li><a href="">学工在线</a></li>
 					<li><a href="">校团委</a></li>
 					<li><a href="">醉晚亭</a></li>
 				</ul>
-			</span>
-			<span>
+			</div>
+			<div id="two-dimension">
 				<img src="" alt="">
-			</span>
+			</div>
 		</div>
 
 		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
@@ -123,7 +124,7 @@
 
 
 <script type="text/javascript">
-if("{{data.association}}"!="procedure"){
+if("{{data.association}}"!="procedure" && "{{data.association}}" !="status"){
 	addmonth1();
 	var idInput = "<input type='hidden' name='uid' value=" + "'{{data.id}}'" + "/>" ;
 	$("#form1").append($(idInput));
