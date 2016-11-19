@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/static/Admin/css/simditor.css" />
 
     <script src="/static/Admin/js/jquery.min.js"></script>
-    <!--script src="/static/js/vue.min.js"></script-->
+    <script src="/static/Admin/js/vue.min.js"></script>
     <script src="/static/Admin/js/page.js"></script>
 
     <script src="/static/Admin/js/module.js"></script>
@@ -45,21 +45,36 @@
         </div>
     </header>
 
+    <div class="modal uk-flex uk-flex-middle uk-flex-center" v-bind:class="{'modal-open': state.loggingIn}">
+        <div class="modal-dialog">
+            <div class="modal-dialog-wrapper">
+                <h2 class="uk-h3 uk-text-bold uk-text-center">登录</h2>
+                <p class="uk-text-center">登录到社团联合会后台</p>
+                <input type="text" class="uk-width-1-1" placeholder="用户名" autofocus="" v-model="LOGIN.userName" />
+                <input type="password" class="uk-width-1-1" placeholder="密码" v-model="LOGIN.password" v-on:change="state.loggingInError = false"/>
+                <p class="uk-text-danger" v-show="state.loggingInError">用户名或密码不正确。</p>
+            </div>
+            <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
+                <a v-on:click="login()" class="modal-dialog-button uk-width-1-1">确认</a>
+            </div>
+        </div>
+    </div>
+
     <div class="main">
         <div class="uk-grid uk-grid-collapse">
             <div class="menu uk-width-medium-2-10" v-bind:class="{'active': MENU.active}">
                 <div class="menu-block">
                     <ul class="menu-items">
-                        <li class="menu-items-item" v-on:click="page('/profile')" v-bind:class="{'active': view[0] === 'profile'}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/profile')" v-bind:class="{'active': view[0] === 'profile'}">
                             <h1 class="menu-subtitle uk-padding-remove">登录为</h1>
-                            <h2 class="uk-h2 uk-margin-remove" style="line-height: 2;">Benjamin Shi</h2>
+                            <h2 class="uk-h2 uk-margin-remove" style="line-height: 2;">{{ session.userName }}</h2>
                         </li>
                     </ul>
                 </div>
                 <div class="menu-block">
                     <h2 class="menu-subtitle">页面</h2>
                     <ul class="menu-items">
-                        <li class="menu-items-item" v-bind:class="{'active': view === 'page'}">
+                        <li class="menu-items-item" v-bind:class="{'active': view[0] === 'site'}" v-on:click="page('/dashboard/site')">
                             首页管理
                         </li>
                     </ul>
@@ -67,16 +82,16 @@
                 <div class="menu-block">
                     <h2 class="menu-subtitle">文章</h2>
                     <ul class="menu-items">
-                        <li class="menu-items-item" v-on:click="page('/posts')" v-bind:class="{'active': view[0] === 'posts' && view[1] === undefined}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/posts')" v-bind:class="{'active': view[0] === 'posts' && view[1] === undefined}">
                             所有文章
                         </li>
-                        <li class="menu-items-item" v-on:click="page('/posts/compose')" v-bind:class="{'active': view[0] === 'posts' && view[1] === 'compose'}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/posts/compose')" v-bind:class="{'active': view[0] === 'posts' && view[1] === 'compose'}">
                             写文章
                         </li>
-                        <li class="menu-items-item" v-on:click="page('/posts/columns')" v-bind:class="{'active': view[0] === 'posts' && view[1] === 'columns'}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/posts/columns')" v-bind:class="{'active': view[0] === 'posts' && view[1] === 'columns'}">
                             栏目管理
                         </li>
-                        <li class="menu-items-item" v-on:click="page('/posts/tags')" v-bind:class="{'active': view[0] === 'posts' && view[1] === 'tags'}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/posts/tags')" v-bind:class="{'active': view[0] === 'posts' && view[1] === 'tags'}">
                             标签管理
                         </li>
                     </ul>
@@ -84,14 +99,14 @@
                 <div class="menu-block">
                     <h2 class="menu-subtitle">用户</h2>
                     <ul class="menu-items">
-                        <li class="menu-items-item" v-on:click="page('/users')" v-bind:class="{'active': view[0] === 'users' && view[1] === undefined}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/users')" v-bind:class="{'active': view[0] === 'users' && view[1] === undefined}">
                             所有用户
                         </li>
-                        <li class="menu-items-item" v-on:click="page('/users/nodes')" v-bind:class="{'active': view[0] === 'users' && view[1] === 'nodes'}">
-                            节点
-                        </li>
-                        <li class="menu-items-item" v-on:click="page('/users/roles')" v-bind:class="{'active': view[0] === 'users' && view[1] === 'roles'}">
+                        <li class="menu-items-item" v-on:click="page('/dashboard/users/roles')" v-bind:class="{'active': view[0] === 'users' && view[1] === 'roles'}">
                             角色
+                        </li>
+                        <li class="menu-items-item" v-on:click="page('/dashboard/users/nodes')" v-bind:class="{'active': view[0] === 'users' && view[1] === 'nodes'}">
+                            节点
                         </li>
                     </ul>
                 </div>
@@ -104,6 +119,15 @@
     </div>
 </body>
 <script>
+    requestJSON = function(url, method="get", data="") {
+        return $.ajax({
+            url: url,
+            type: method,
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+        });
+    };
 
     Vue.component("PROFILE", function(resolve, reject) {
         $.ajax("/templates/Admin/profile.html").done(function(data) {
@@ -111,6 +135,12 @@
                 template: data,
                 data: function() {
                     return app.$data;
+                },
+                methods: {
+                    logout: function() {
+                        requestJSON("/api/Login", "delete");
+                        location.reload();
+                    },
                 }
             });
         }).fail(function(xhr) {
@@ -126,7 +156,9 @@
                     return app.$data;
                 },
                 ready: function() {
-                    app.pullPosts();
+                    retrievePosts();
+                    retrieveTags();
+                    retrieveColumns();
 
                     editor = new Simditor({
                         textarea: $("#textarea"),
@@ -149,20 +181,108 @@
                     app.localSave();
                 },
                 methods: $.extend(app.$options.methods, {
-                    onTagSelected: function() {
-                        app.POSTS.filterByTags.push(app.POSTS.tagSelected);
-                        app.POSTS.tagSelected = "";
-                    },
-                    addTag: function() { //添加
-                        var text = app.POSTS.COMPOSE.tag.trim();
-                        if(app.POSTS.COMPOSE.tags.indexOf(text) === -1 && text !== "") {
-                            app.POSTS.COMPOSE.tags.push(text);
-                            app.POSTS.COMPOSE.tag = "";
+                    addTag: function(text) { // 编辑界面添加tag
+                        i = app.tags.filter(function(x) { // tag是否是钦定的tags中的tag
+                            if(x.name === text) {
+                                return true;
+                            }
+                        })[0];
+                        if(app.post.tags.indexOf(i.name) === -1) {
+                            app.post.tags.push(i.name);
+                            app.post.tag = "";
                         }
                     },
-                    removeTag: function(i) { //删除COMPOSE界面的tag
-                        app.POSTS.COMPOSE.tags.splice(i, 1);
+                    removeTag: function(i) { // 删除编辑界面的tag
+                        app.post.tags.splice(i, 1);
                     },
+                    onTagSelected: function(text) { // 文章列表界面的筛选tag
+                        i = app.tags.filter(function(x) {
+                            if(x.name === text) {
+                                return true;
+                            }
+                        })[0];
+                        if(app.POSTS.filterByTags.indexOf(i) === -1) {
+                            app.POSTS.filterByTags.push(i.name);
+                            app.POSTS.tag = "";
+                        }
+                    },
+
+                    // 栏目
+                    createColumn: function() {
+                        var n = {
+                            name: "",
+                        };
+                        app.columns.push(n);
+                        app.POSTS.COLUMNS.new.push(n);
+                    },
+                    commitColumns: function() {
+                        app.state.edittingColumns = false;
+                        for(i of app.POSTS.COLUMNS.new) {
+                            createColumn(i);
+                        }
+                        for(i of app.POSTS.COLUMNS.dirty) {
+                            updateColumn(i);
+                        }
+                        for(i of app.POSTS.COLUMNS.deleted) {
+                            deleteColumn(i);
+                        }
+                        app.POSTS.COLUMNS.new = [];
+                        app.POSTS.COLUMNS.dirty = [];
+                        app.POSTS.COLUMNS.deleted = [];
+
+                        retrieveColumns();
+                    },
+                    deleteColumn: function(column) {
+                        app.columns.splice(app.columns.indexOf(column), 1);
+                        if(app.POSTS.COLUMNS.new.indexOf(column) === -1) { // 未提交的栏目不加入deleted序列
+                            app.POSTS.COLUMNS.deleted.push(column);
+                        }
+                        app.POSTS.COLUMNS.new.splice(app.POSTS.COLUMNS.new.indexOf(column, 1)) // 从new中删除
+                    },
+                    markColumnDirty: function(column) {
+                        if((app.POSTS.COLUMNS.dirty.indexOf(column) === -1) && (app.POSTS.COLUMNS.new.indexOf(column) === -1)) { // 此前不在dirty也不在new里
+                            app.POSTS.COLUMNS.dirty.push(column);
+                        }
+                    },
+
+                    // 标签
+                    createTag: function() {
+                        var n = {
+                            name: "",
+                        };
+                        app.tags.push(n);
+                        app.POSTS.TAGS.new.push(n);
+                    },
+                    commitTags: function() {
+                        app.state.edittingTags = false;
+                        for(i of app.POSTS.TAGS.new) {
+                            createTag(i);
+                        }
+                        for(i of app.POSTS.TAGS.dirty) {
+                            updateTag(i);
+                        }
+                        for(i of app.POSTS.TAGS.deleted) {
+                            deleteTag(i);
+                        }
+                        app.POSTS.TAGS.new = [];
+                        app.POSTS.TAGS.dirty = [];
+                        app.POSTS.TAGS.deleted = [];
+
+                        retrieveTags();
+                    },
+                    deleteTag: function(tag) {
+                        app.tags.splice(app.tags.indexOf(tag), 1);
+                        if(app.POSTS.TAGS.new.indexOf(tag) === -1) { // 未提交的栏目不加入deleted序列
+                            app.POSTS.TAGS.deleted.push(tag);
+                        }
+                        app.POSTS.TAGS.new.splice(app.POSTS.TAGS.new.indexOf(tag, 1))
+                    },
+                    markTagDirty: function(tag) {
+                        if((app.POSTS.TAGS.dirty.indexOf(tag) === -1) && (app.POSTS.TAGS.new.indexOf(tag) === -1)) { // 此前不在dirty也不在new里
+                            app.POSTS.TAGS.dirty.push(tag);
+                        }
+                    },
+
                 }),
                 filters: {
                     postFilter: function(i) {
@@ -198,7 +318,219 @@
                 template: data,
                 data: function() {
                     return app.$data;
-                }
+                },
+                ready: function() {
+                    retrieveUsers();
+                    retrieveNodes();
+                    retrieveRoles();
+                },
+                methods: $.extend(app.$options.methods, {
+                    toggleBannedUser: function(user) {
+                        user.status = !user.status;
+                        this.markDirtyUser(user);
+                    },
+                    markDeletedUser: function(user) {
+                        app.users.splice(app.users.indexOf(user), 1);
+                        if(app.USERS.new.indexOf(user) === -1) { // 不是新添加的
+                            app.USERS.deleted.push(user);
+                            return
+                        }
+                        app.USERS.new.splice(app.users.indexOf(user), 1);
+                    },
+                    markDirtyUser: function(user) {
+                        if(app.USERS.dirty.indexOf(user) === -1) {
+                            app.USERS.dirty.push(user);
+                        }
+                    },
+                    commitUsers: function() {
+                        app.state.edittingUsers = false;
+                        for(i of app.USERS.new) {
+                            createUser(i);
+                        }
+                        for(i of app.USERS.dirty) {
+                            updateUser(i);
+                        }
+                        for(i of app.USERS.deleted) {
+                            deleteUser(i);
+                        }
+                        retrieveUsers();
+                    },
+                    createUser: function() {
+                        var n = {
+                            userName: "",
+                            email: "",
+                            roles: [],
+                            status: true,
+                        };
+                        app.users.unshift(n);
+                        app.USERS.new.push(n);
+                    },
+                    removeRoleOfUser: function(user, role){
+                        user.roles.splice(user.roles.indexOf(role), 1);
+                        this.markDirtyUser(user);
+                    },
+                    addRoleOfUser: function(user, roleName) {
+                        var role = app.roles.filter(function(x) {
+                            if(x.roleName === roleName) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        })[0];
+                        user.roles.push(JSON.parse(JSON.stringify(role)));
+                        this.markDirtyUser(user);
+                    },
+
+                    // role
+                    removeNodeOfRole: function(role, nodeName) {
+                        role.nodes.splice(role.nodes.indexOf(node), 1);
+                        udpateRole(role);
+                        retrieveRoles();
+                    },
+
+                    addNodeOfRole: function(role, nodeName) {
+                        var node = app.nodes.filter(function(x) {
+                            if(x.nodeName === nodeName) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        })[0];
+                        role.nodes.push(JSON.parse(JSON.stringify(node)));
+                        udpateRole(role);
+                        retrieveRoles();
+                    },
+
+                    deleteRole: function(role) {
+                        if(!("id" in role)) { // 如果是新建的
+                            app.roles.splice(app.roles.indexOf(role), 1);
+                            return;
+                        }
+                        if(confirm("真的要删除角色'" + role.roleName + "'吗？")) {
+                            deleteRole(role);
+                        }
+                        retrieveNodes();
+                    },
+
+                    toggleBannedRole: function(role) {
+                        role.status = !role.status;
+                        udpateRole(role);
+                        retrieveRoles();
+                    },
+
+                    createRole: function() {
+                        var n = {
+                            roleName: "",
+                            nodes: [],
+                            status: true,
+                        };
+                        app.roles.push(n);
+                    },
+
+                    changeRoleNameOfRole: function(role) {
+                        if("id" in role) { // 已有角色
+                            udpateRole(role);
+                        }
+                        createRole(role);
+                        retrieveRoles();
+                    },
+
+                    // node
+
+                    changeNodeNameOfNode: function(node) {
+                        if("id" in node) { // 已有节点
+                            udpateNode(node);
+                        }
+                        createNode(node);
+                        retrieveNodes();
+                    },
+
+                    toggleBannedNode: function(node) {
+                        node.state = !node.status;
+                        updateNode(node);
+                        retrieveNodes();
+                    },
+
+                    deleteNode: function(node) {
+                        if(confirm("真的要删除节点'" + node.nodeName + "'吗？")) {
+                            deleteNode(node);
+                        }   
+                    },
+
+                    changeLevelOfNode: function(node) {
+                        if("id" in node) { // 已有节点
+                            udpateNode(node);
+                        }
+                        createNode(node);
+                        retrieveNodes();
+                    },
+
+                    createNode: function() {
+                        var n = {
+                            nodeName: "",
+                            status: true,
+                            level: 0,
+                        };
+                        app.nodes.push(n);
+                    },
+                })
+            });
+        }).fail(function(xhr) {
+            reject();
+        });
+    });
+
+    Vue.component("SITE", function(resolve, reject) {
+        $.ajax("/templates/Admin/site.html").done(function(data) {
+            resolve({
+                template: data,
+                data: function() {
+                    return app.$data;
+                },
+                ready: function() {
+                    retrieveSlideshows();
+                },
+                methods: $.extend(app.$options.methods, {
+                    commitSlideshows: function() {
+                        app.state.edittingSlideshows = false;
+                        for(i of app.SITE.new) {
+                            createSlideshow(i);
+                        }
+                        for(i of app.SITE.dirty) {
+                            updateSlideshow(i);
+                        }
+                        for(i of app.SITE.deleted) {
+                            deleteSlideshow(i);
+                        }
+                        app.SITE.dirty = [];
+                        app.SITE.new = [];
+                        app.SITE.deleted = [];
+                        retrieveSlideshows();
+                    },
+                    markDirty: function(i) {
+                        if(app.SITE.dirty.indexOf(i) === -1) {
+                            app.SITE.dirty.push(i);
+                        }
+                    },
+                    createSlideshow: function() {
+                        var n = {
+                            title: "",
+                            imgUrl: "",
+                            outline: "",
+                            link: "",
+                        };
+                        app.slideshows.unshift(n);
+                        app.SITE.new.push(n);
+                    },
+                    deleteSlideshow: function(i) {
+                        app.slideshows.splice(app.slideshows.indexOf(i), 1);
+                        if(app.SITE.new.indexOf(i) === -1) { // 未提交的轮播图不加入deleted序列
+                            app.SITE.deleted.push(i);
+                        }
+                        app.SITE.new.splice(app.SITE.new.indexOf(i), 1);
+                    },
+
+                }),
             });
         }).fail(function(xhr) {
             reject();
@@ -206,6 +538,217 @@
     });
 
     $(document).ready(function() {
+        restoreSession = function() { // 恢复登录状态，免去输入密码
+            return requestJSON("/api/Login").done(function(data) {
+                app.session = data;
+            }).fail(function(status, xhr) {
+                app.state.loggingIn = true;
+            });
+        };
+
+        login = function() { // 登录
+            return requestJSON("/api/Login", "post", JSON.stringify(app.LOGIN)).done(function(data) {
+                app.session = data;
+                app.state.loggingIn = false;
+            }).fail(function(status, xhr) {
+                app.state.loggingInError = true;
+            });
+        };
+
+        logout = function() {
+            return requestJSON("/api/Login", "delete");
+        };
+
+        // slideshow
+
+        retrieveSlideshows = function() {
+            return requestJSON("/api/News/SliderShow").done(function(data) {
+                app.slideshows = data;
+            })
+        };
+
+        createSlideshow = function(slideshow) {
+            return requestJSON("/api/News/SliderShow", "post", slideshow);
+        };
+
+        updateSlideshow = function(slideshow) {
+            return requestJSON("/api/News/SliderShow/" + slideshow.id, "put", slideshow);
+        };
+
+        deleteSlideshow = function(slideshow) {
+            return requestJSON("/api/News/SliderShow/" + slideshow.id, "delete");
+        };
+
+        // tags
+
+        retrieveTags = function() {
+            return requestJSON("/api/News/Tags").done(function(data) {
+                app.tags = data;
+            });
+        };
+
+        createTag = function(tag) {
+            return requestJSON("/api/News/Tags", "post", tag);
+        };
+
+        updateTag = function(tag) {
+            return requestJSON("/api/News/Tags/" + tag.id, "put", tag);
+        };
+
+        deleteTag = function(tag) {
+            return requestJSON("/api/News/Tags/" + tag.id, "delete");
+        };
+
+        // columns
+        columnBaseURL = "/api/News/Categorys";
+        retrieveColumns = function() {
+            return requestJSON(columnBaseURL).done(function(data) {
+                app.columns = data;
+            });
+        };
+
+        createColumn = function(column) {
+            return requestJSON(columnBaseURL, "post", column);
+        };
+
+        updateColumn = function(column) {
+            return requestJSON(columnBaseURL + "/" + column.id, "put", column);
+        };
+
+        deleteColumn = function(column) {
+            return requestJSON(columnBaseURL + "/" + column.id, "delete");
+        };
+
+        // posts
+        postBaseURL = "/api/News"
+        retrievePosts = function() {
+            return requestJSON(postBaseURL).done(function(data) {
+                app.posts = [];
+                for(i of data) {
+                    app.posts.push({
+                        id: i.id,
+                        author: i.author,
+                        title: i.title,
+                        outline: i.outline,
+                        column: i.category,
+                        tags: i.tags,
+                        lastModificationTime: i.postTime,
+                        editable: i.editable
+                    })
+                }
+            });
+        };
+
+        retrievePost = function(post) {
+            return requestJSON(postBaseURL + "/" + post.id).done(function(data) {
+                app.post = {
+                    id: data.id,
+                    author: data.author,
+                    title: data.title,
+                    outline: data.outline,
+                    column: data.category,
+                    tags: data.tags,
+                    lastModificationTime: data.postTime,
+                    content: data.detail,
+                    editable: data.editable
+                };
+            })
+        }
+
+        createPost = function(post) {
+            return requestJSON(postBaseURL, "post", JSON.stringify({
+                category: post.column,
+                tags: post.tags,
+                title: post.title,
+                detail: post.content,
+            }));
+        };
+
+        updatePost = function(post) {
+            return requestJSON(postBaseURL + "/" + post.id, "put", JSON.stringify({
+                category: post.column,
+                tags: post.tags,
+                title: post.title,
+                detail: post.content,
+            }));
+        };
+
+        deletePost = function(post) {
+            return requestJSON(postBaseURL + "/" + post.id, "delete");
+        };
+
+
+        // Users
+        userBaseURL = "/api/User/Users"
+
+        retrieveUsers = function() {
+            return requestJSON(userBaseURL).done(function(data) {
+                app.users = data;
+            });
+        };
+
+        retrieveUser = function(user) {
+            return requestJSON(userBaseURL + "/" + user.id).done(function(data) {
+                app.user = data;
+            });
+        };
+
+        createUser = function(user) {
+            return requestJSON(userBaseURL, "post", user);
+        };
+
+        updateUser = function(user) {
+            return requestJSON(userBaseURL + "/" + user.id);
+        };
+
+        deleteUser = function(user) {
+            return requestJSON(userBaseURL + "/" + user.id, "delete");
+        };
+
+        // Nodes
+
+        nodeBaseURL = "/api/User/Nodes"
+
+        retrieveNodes = function() {
+            return requestJSON(nodeBaseURL).done(function(data) {
+                app.nodes = data;
+            });
+        };
+
+        updateNode = function(node) {
+            return requestJSON(nodeBaseURL + "/" + node.id, "put", node);
+        };
+
+        createNode = function(node) {
+            return requestJSON(nodeBaseURL, "post", node);
+        };
+
+        deleteNode = function(node) {
+            return requestJSON(nodeBaseURL + "/" + node.id, "delete");
+        };
+
+        // Roles
+
+        roleBaseURL = "/api/User/Roles"
+
+        retrieveRoles = function() {
+            return requestJSON(roleBaseURL).done(function(data) {
+                app.roles = data;
+            });
+        };
+
+        createRole = function(role) {
+            return requestJSON(roleBaseURL, "post", role);
+        };
+
+        udpateRole = function(role) {
+            return requestJSON(roleBaseURL + "/" + role.id, "put", role);
+        };
+
+        deleteRole = function(role) {
+            return requestJSON(roleBaseURL + "/" + role.id, "delete");
+        };
+
         app = new Vue({
             el: "#app",
             data: {
@@ -228,20 +771,49 @@
                 },
 
                 view: ["profile"], // view chain
-                session: {
-                    username: "Benjamin Shi",
-                    lastLoginTime: new Date(),
-                    tags: ["管理员", "读写", "长者", "希拉里支持者"]
+                session: { // 登录信息
                 },
                 state: {
+                    loggingIn: false,
+                    loggingInError: false,
                     changingPasswords: false,
-                    changingEmail: false
+                    changingEmail: false,
+                    edittingSlideshows: false,
+                    edittingColumns: false,
+                    edittingTags: false,
+                    edittingUsers: false,
+                    edittingRoles: false,
+                    edittingNodes: false,
                 },
+
+                // posts
                 posts: [],
-                columns: ["希拉里", "川普", "希拉里去死", "川普去死", "Everyone Sucks"],
-                tags: ["希拉里", "川普", "希拉里去死", "川普去死", "Everyone Sucks"],
+                post: {
+                    column: "",
+                    tags: [],
+                    lastModificationTime: 0,
+                    title: "",
+                    content: "",
+
+                }, // temporary post
+                columns: [],
+                tags: [],
+
+                // site
+                slideshows: [],
+
+
+                // users
+                users: [],
+                user: {},
+                nodes: [],
+                roles: [],
 
                 // view labels and properties
+                LOGIN: {
+                    userName: "",
+                    password: "",
+                },
                 HEADER: {
                     CONTENT: {
                         heading: "我",
@@ -253,161 +825,98 @@
                 },
                 PROFILE: {
                 },
+                SITE: {
+                    new: [],
+                    dirty: [],
+                    deleted: [],
+                },
                 POSTS: {
                     tag: "",
-                    COMPOSE: {
-                        title: "",
-                        content: "",
-                        column: "",
-                        tags: [],
-                        lastModificationTime: 0,
-                    },
                     orderBy: "lastModificationTime",
                     order: 1, // 1(true) for small to big; 0(false) for big to small
                     filterByColumn: "",
-                    filterByTags: []
+                    filterByTags: [],
+                    COLUMNS: {
+                        new: [],
+                        dirty: [],
+                        deleted: [],
+                    },
+                    TAGS: {
+                        new: [],
+                        dirty: [],
+                        deleted: [],
+                    },
                 },
                 USERS: {
+                    new: [],
+                    dirty: [],
+                    deleted: [],
+
+                    NODES: {
+                        new: [],
+                        dirty: [],
+                        deleted: [],
+                    },
+
+                    ROLES: {
+                        new: [],
+                        dirty: [],
+                        deleted: [],
+                    },
                 }
             },
             methods: {
                 page: page,
-                pullPosts: function() {
-                    $.ajax({
-                        url: "/api/News",
-                        contentType: "application/json",
-                        dataType: "json",
-                    }).done(function(data) {
-                        //data = JSON.parse(data);
-                        console.log(data);
-                        app.posts = [];
-                        for(i of data) {
-                            app.posts.push({
-                                id: i.id,
-                                author: i.author,
-                                title: i.title,
-                                outline: i.outline,
-                                column: i.category,
-                                tags: i.tags,
-                                lastModificationTime: i.postTime,
-                                editable: i.editable
-                            })
-                        }
-                    })
+                login: function() {
+                    login();
                 },
-                createPost: function() {
-                    $.ajax({
-                        url: "/api/News",
-                        type: "post",
-                        data: json.stringify({
-                            category: app.POSTS.COMPOSE.column,
-                            tags: app.POSTS.COMPOSE.tags,
-                            title: app.POSTS.COMPOSE.title,
-                            detail: app.POSTS.COMPOSE.content
-                        })
-                    }).fail(function(status, xhr) {
-                        alert("未成功。");
-                    });
+                logout: function() {
+                    logout();
                 },
-                pushPost: function(id) {
-                    app.localSave();
-                    i = app.POSTS.COMPOSE;
-                    $.ajax({
-                        url: "/api/News/" + id,
-                        type: "put",
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: {
-                            category: i.column,
-                            tags: i.tags,
-                            title: i.title,
-                            detail: i.content,
-                        }
-                    }).fail(function(status, xhr) {
-                        alert("未成功。")
-                    })
-                },
-                pullPost: function(id) {
-                    $.ajax({
-                        url: "/api/News" + id,
-                        contentType: "application/json",
-                        dataType: "json",
-                    }).done(function(data) {
-                        //data = JSON.parse(data);
-                        var i = data;
-                        return {
-                            id: i.id,
-                            author: i.author,
-                            title: i.title,
-                            outline: i.outline,
-                            column: i.category,
-                            tags: i.tags,
-                            lastModificationTime: i.postTime,
-                            editable: i.editable
-                        }
-                    })
-                },
-                deletePost: function(id) {
-                    $.ajax({
-                        url: "/api/News/" + id,
-                        type: "delete",
-                        contentType: "application/json",
-                        dataType: "json",
-                    }).fail(function(status, xhr) {
-                        alert("未成功。")
-                    })
-                },
-                pullTags: function() {
-                    $.ajax({
-                        url: "/api/News/Tags",
-                        contentType: "application/json",
-                        dataType: "json",
-                    }).done(function(data) {
-                        app.tags = [];
-                        for(i of data) {
-                            app.tags.push(i.name);
-                        }
-                    });
-                },
-                postTag: function(item, name) {
-                    $.ajax({
-                        url: "/api/News/Tags",
-                        contentType: "application/json",
-                        dataType: "json",
-                    }).done(function(data) {
-                        var tags = data;
-                        tags.filter(function(x) {
-                            if(x.name === item) {
-                                $.ajax({
-                                    url: "/api/News/Tags/" + x.id,
-                                    contentType: "application/json",
-                                    dataType: "json",
-                                    data: {
-                                        name: name,
-                                    }
-                                }).done(function(data) {
-                                });
-                            }
-                        })
-                    });
-                };
-                restoreSave: function() {
-                    app.POSTS.COMPOSE = JSON.parse(localStorage["/posts/compose"]);
-                    editor.setValue(app.POSTS.COMPOSE.content);
-                },
-                localSave: function() { // 保存草稿至LocalStorage
-                    app.POSTS.COMPOSE.lastModificationTime = Date.now() / 1000;
-                    app.POSTS.COMPOSE.content = editor.getValue();
-                    localStorage["/posts/compose"] = JSON.stringify(app.POSTS.COMPOSE);
-                },
-                localEdit: function(i) { // 从文章列表里选择编辑一篇文章
-                    if(app.POSTS.COMPOSE.content) {
-                        if(confirm("您有未发布的文章。是否放弃草稿？")) {
-                            post = app.pullPost(i.id);
-                            app.POSTS.COMPOSE = post;
-                        }
+                deletePost: function(post) { // 删除文章
+                    if(confirm("删除题为'" + post.title + "'的文章吗？")) {
+                        deletePost(post);
+                        retrievePosts();
                     }
                 },
+                restoreSave: function() { // 从localstorage中读取草稿
+                    app.post = JSON.parse(localStorage["/posts/compose"]);
+                    editor.setValue(app.post.content);
+                },
+                localSave: function() { // 保存草稿至LocalStorage
+                    app.post.lastModificationTime = Date.now() / 1000; // python校准
+                    app.post.content = editor.getValue();
+                    localStorage["/posts/compose"] = JSON.stringify(app.post);
+                },
+                localEdit: function(post) { // 从文章列表里选择编辑一篇文章
+                    if(app.post.content) {
+                        if(confirm("您有未发布的文章。是否放弃草稿？") === false) {
+                            return;
+                        }
+                    }
+                    retrievePost(post).done(function(data) {
+                        editor.setValue(app.post.content);
+                    });
+                    page("/dashboard/posts/compose");
+                },
+                localClear: function() {
+                    if(confirm("真的要放弃草稿？") === false) {
+                        return;
+                    }
+                    app.post = {
+                        column: "",
+                        tags: [],
+                        title: "",
+                        content: "",
+                        lastModificationTime: app.post.lastModificationTime,
+                    };
+                    editor.setValue("");
+                },
+                // site
+                
+            },
+            ready: function() {
+                restoreSession();
             },
         });
 
@@ -416,13 +925,18 @@
             next();
         });
 
-        page("/dashboard/", function(ctx, next) {
-            page("/profile");
+        page("/dashboard", function(ctx, next) {
+            page("/dashboard/profile");
         });
 
         page("/dashboard/profile", function(ctx, next) {
             app.view = ["profile"];
             app.HEADER.CONTENT.heading = "我";
+        });
+
+        page("/dashboard/site", function(ctx, next) {
+            app.view = ["site"];
+            app.HEADER.CONTENT.heading = "首页管理";
         });
 
         page("/dashboard/posts", function(ctx, next) {
@@ -437,6 +951,7 @@
 
         page("/dashboard/users", function(ctx, next) {
             app.view = ["users"];
+            app.HEADER.CONTENT.heading = "用户";
         });
 
         page("/dashboard/users/:v", function(ctx, next) {

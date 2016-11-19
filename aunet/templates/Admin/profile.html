@@ -2,13 +2,13 @@
     <div class="menu-block">
         <ul class="menu-items">
             <li class="menu-items-item" style="padding-top: 20px;">
-                <h1 class="uk-h2">{{ session.username }} <i class="fa fa-pencil"></i></h1>
+                <h1 class="uk-h2">{{ session.userName }} <i class="fa fa-pencil"></i></h1>
                 <div>
-                    <span class="badge" v-for="i of session.tags">
-                        {{ i }}
+                    <span class="badge" v-for="i of session.roles">
+                        {{ i.roleName }}
                     </span>
                 </div>
-                <p>最近登录时间 {{ session.lastLoginTime }}</p>
+                <p>最近登录时间 {{ new Date(session.loginTime*1000) }} 于 {{ session.loginIp }}</p>
             </li>
         </ul>
     </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="menu-block">
         <ul class="menu-items">
-            <li class="menu-items-item">
+            <li class="menu-items-item" v-on:click="logout()">
                 <span class="uk-text-danger">注销</span>
             </li>
         </ul>
