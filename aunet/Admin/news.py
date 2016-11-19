@@ -50,7 +50,10 @@ parser_spec.add_argument('name',type=str,location='json')
 
 class CategoryItem(fields.Raw):
     def format(self,category):
-        return category[0].name
+        if len(category)==0:
+            return None
+        else:   
+            return category[0].name
 class TagItem(fields.Raw):
     def format(self,news_tag):
         tags=list()
@@ -303,12 +306,12 @@ class Categorys(Resource):
     def get(self):
         categorys=Category.query.all()
         datas=list()
-        data=dict()
         for category in categorys:
+            data=dict()
             data['name']=category.name
             data['id']=category.id
             datas.append(data)
-        return data
+        return datas
        
 
     def post(self):
@@ -341,7 +344,7 @@ class Category1(Resource):
         abort_if_not_exist(category,"category")
         args=parser_spec.parse_args()
         name=args['name']
-        if name!=None:
+        if name!=None and name!=category.name:
             c=Category.query.filter(Category.name==name).first()
             abort_if_exist(c,"category")
             category.name=name
@@ -362,8 +365,8 @@ class Tags(Resource):
     def get(self):
         tags=Tag.query.all()
         datas=list()
-        data=dict()
         for tag in tags:
+            data=dict()
             data['name']=tag.name
             data['id']=tag.id
             datas.append(data)
@@ -399,7 +402,7 @@ class Tag1(Resource):
         abort_if_not_exist(tag,"tag")
         args=parser_spec.parse_args()
         name=args['name']
-        if name!=None:
+        if name!=None and name!=tag.name:
             t=Tag.query.filter(Tag.name==name).first()
             abort_if_exist(t,"tag")
             tag.name=name

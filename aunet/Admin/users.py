@@ -199,8 +199,11 @@ class UserSpec(Resource):
 		passWord=args['passWord']
 		roleName=args['roleName']
 		userName=args['userName']
-		user1=User.query.filter(User.userName==userName).first()
-		abort_if_exist(user1,"userName")
+		if userName!=None and userName!=user.userName:
+			user1=User.query.filter(User.userName==userName).first()
+			abort_if_exist(user1,"userName")
+			user.userName=userName
+		
 		if status!=None and permission.can():
 			user.status=status
 		if email!=None:
@@ -330,7 +333,7 @@ class RoleSpec(Resource):
 		roleName=args['roleName']
 		nodeName=args['nodeName']
 		status=args['status']
-		if roleName!=None:
+		if roleName!=None and roleName!=role.roleName:
 			r=Role.query.filter_by(roleName=roleName).first()
 			abort_if_exist(r,"rolename")
 			role.roleName=roleName
