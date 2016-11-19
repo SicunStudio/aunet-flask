@@ -11,6 +11,7 @@ from flask import abort
 from .news import SilderShow1,SliderShowSpec,News1,NewsSpec,NewsSpecDetail,Tags,Tag1,Categorys,Category1
 from .users import Users,UserSpec,Roles,RoleSpec,Nodes,NodeSpec,CurrentUser
 from .search import SearchNews
+from .login import Login
 
 
 from aunet import lm,app,api,db
@@ -130,13 +131,14 @@ def logout():
 def getHtml(path):
     # path=request.args.get("path","templates/Home/index/index.html")
     #return "dg"
-    path=os.path.join(app.config['BASEDIR'],'aunet/templates/Admin/',path)
+    path=os.path.join('/home/lyjdwh/Documents/aunet-flask','aunet/templates/Admin/',path)
     path=str(path)
     try:
         f=open(path)
-        text=f.read()
-        res = make_response(text)
-        return res
+        # text=f.read()
+        # res = make_response(text)
+        # return res
+        return f.read()
     except:
         return "not found" ,404
 
@@ -190,16 +192,16 @@ api.add_resource(Users, '/api/User/Users')
 api.add_resource(UserSpec,"/api/User/Users/<string:id>")
 api.add_resource(Nodes,"/api/User/Nodes")
 api.add_resource(NodeSpec,"/api/User/Nodes/<string:id>")
-api.add_resource(Roles,"/api/User/Role")
-api.add_resource(RoleSpec,"/api/User/Role/<string:id>")
+api.add_resource(Roles,"/api/User/Roles")
+api.add_resource(RoleSpec,"/api/User/Roles/<string:id>")
 
 
 #News 模块
 
-api.add_resource(SilderShow1,"/api/News/SilderShow")
-api.add_resource(SliderShowSpec,"/api/News/SilderShow/<string:id>")
+api.add_resource(SilderShow1,"/api/News/SliderShow")
+api.add_resource(SliderShowSpec,"/api/News/SliderShow/<string:id>")
 api.add_resource(News1,"/api/News/News")
-api.add_resource(NewsSpec,"/api/News/News/<string:id>")
+api.add_resource(NewsSpec,"/api/News/News/<string:id>")                 #gai
 api.add_resource(NewsSpecDetail,"/api/News/News/<string:id>/Detail")
 api.add_resource(Tags,"/api/News/Tags")
 api.add_resource(Tag1,"/api/News/Tags/<string:id>")
@@ -209,3 +211,5 @@ api.add_resource(Category1,"/api/News/Categorys/<string:id>")
 #Search 模块
 
 api.add_resource(SearchNews,"/api/Search/News")
+
+api.add_resource(Login,"/api/Login")
