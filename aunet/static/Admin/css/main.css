@@ -1,4 +1,4 @@
-h1, h2, h3, h4, h5, h6, html {
+h1, h2, h3, h4, h5, h6, html, input, p, textarea {
     font-family: -apple-system, "Open Sans", "Helvetica", "黑体", Sans;
 }
 
@@ -15,7 +15,17 @@ input {
     background-color: transparent;
     border: none;
     border-radius: 3px;
-    padding: 7px;
+    padding: 7px 0;
+}
+
+textarea {
+    border: none;
+    resize: none;
+    overflow: auto;
+}
+
+textarea[disabled] {
+    background: none;
 }
 
 input:focus {
@@ -48,10 +58,15 @@ select option {
     font-family: "FontAwesome"!important;
 }
 
+.blurred-self:not(.modal) {
+    filter: blur(3px);
+}
+
 .badge {
     padding: .3em .6em;
     margin-left: .3em;
     margin-right: .3em;
+    margin-top: .2em;
     background-color: rgba(0, 58, 255, .75);
     color: white;
     line-height: 1.6em;
@@ -215,7 +230,16 @@ select option {
     background-color: rgba(0, 0, 0, .15);
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
+    .content .uk-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .content .menu-items {
+        border-radius: 0px;
+    }
+
     .menu, .header-menu {
         background-color: rgb(243, 243, 243);
         z-index: 5;
@@ -230,15 +254,8 @@ select option {
     }
 }
 
-@media (min-width: 768px) {
-    .content .uk-container {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .content .menu-items {
-        border-radius: none;
-    }
+@media screen and (min-width: 768px) {
+    
 }
 
 .post-transitio+* {

@@ -5,9 +5,9 @@
                 <h2 class="menu-subtitle">
                     筛选: 
                     <span class="badge" style="background-color: #4CAF50;">
-                        <select v-model="POSTS.filterByColumn">
+                        <select v-model="POSTS.filterByColumn" v-on:change="onColumnSelected(POSTS.columnSelected)">
                             <option value="" selected>栏目</option>
-                            <option v-for="i of columns">{{ i }}</option>
+                            <option v-for="i of columns">{{ i.name }}</option>
                         </select>
                     </span>
 
@@ -15,9 +15,9 @@
                         <a v-on:click="POSTS.filterByTags.splice(POSTS.filterByTags.indexOf(i), 1)" style="color: inherit;">{{ i }} <i class="fa fa-times"></i></a>
                     </span>
                     <span class="badge">
-                        <select v-model="POSTS.tagSelected" v-on:change="onTagSelected">
+                        <select v-model="POSTS.tagSelected" v-on:change="onTagSelected(POSTS.tagSelected)">
                             <option value="" selected>标签</option>
-                            <option v-for="i of tags">{{ i }}</option>
+                            <option v-for="i of tags">{{ i.name }}</option>
                         </select>
                     </span>
                 </h2>
@@ -43,54 +43,66 @@
                         </div>
                         <div>最后更新 {{ new Date(i.lastModificationTime * 1000) }}</div>
                     </div>
-                    <div>
-                        <a class="uk-text-danger uk-display-inline-block uk-margin-right" v-on:click="delete(i)">删除</a>
+                    <div v-show="i.editable">
+                        <a class="uk-text-danger uk-display-inline-block uk-margin-right" v-on:click="deletePost(i)">删除</a>
                         <a class="uk-display-inline-block" v-on:click="localEdit(i)">编辑</a>
+                    </div>
+                    <div v-show="!i.editable">
+                        <span>您无权修改这篇文章</span>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
+
     <div v-show="view[1] === 'compose'">
         <div class="menu-block">
             <h2 class="menu-subtitle">标题</h2>
             <div class="menu-items">
                 <div class="menu-items-item">
-                    <input type="text" placeholder="标题" class="uk-width-1-1 uk-h2" v-model="POSTS.COMPOSE.title" />
+                    <input type="text" placeholder="标题" class="uk-width-1-1 uk-h2" v-model="post.title" />
                 </div>
             </div>
         </div>
         <div class="menu-block">
-            <textarea id="textarea" v-html="POSTS.COMPOSE.content" data-autosave="posts-compose-content">
+            <textarea id="textarea" v-html="post.content" data-autosave="posts-compose-content">
             </textarea>
-            <h2 class="menu-subtitle">已保存草稿于 {{ new Date(POSTS.COMPOSE.lastModificationTime * 1000) }}。<a class="uk-float-right" v-on:click="localSave">立即保存</a></h2>
+            <h2 class="menu-subtitle">已保存草稿于 {{ new Date(post.lastModificationTime * 1000) }}。<a class="uk-float-right" v-on:click="localSave">立即保存</a></h2>
         </div>
         <div class="menu-block">
             <h2 class="menu-subtitle">添加栏目</h2>
             <ul class="menu-items">
                 <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
-                    <select class="badge"v-model="POSTS.COMPOSE.column">
-                        <option v-for="i of columns" >{{ i }}</option>
+                    <select class="badge" v-model="post.column">
+                        <option v-for="i of columns" >{{ i.name }}</option>
                     </select>
                     <span>您只能添加一个栏目。</span>
                 </li>
             </ul>
         </div>
         <div class="menu-block">
-            <h2 class="menu-subtitle">添加标签<a class="uk-float-right" v-on:click="POSTS.COMPOSE.tags=[]">删除所有标签</a></h2>
+            <h2 class="menu-subtitle">添加标签<a class="uk-float-right" v-on:click="post.tags=[]">删除所有标签</a></h2>
             <ol class="menu-items">
-                <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" v-for="i of POSTS.COMPOSE.tags">
-                    <span class="badge" style="background-color: #4CAF50;">{{ i.name }}</span>
-                    <a v-on:click="removeTag($index)"><span class="uk-text-danger">删除</span></a>
+                <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" v-for="i of post.tags">
+                    <span class="badge" style="background-color: #4CAF50;">{{ i }}</span>
+                    <a v-on:click="removeTag(i)"><span class="uk-text-danger">删除</span></a>
                 </li>
                 <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
-                    <select class="badge" style="background-color: #4CAF50;" v-model="POSTS.COMPOSE.tag" v-on:change="addTag()">
+                    <select class="badge" style="background-color: #4CAF50;" v-model="post.tag" v-on:change="addTag(post.tag)">
                         <option v-for="j of tags">{{ j.name }}</option>
                     </select>
+                    <span v-show="post.tags.indexOf(post.tag) !== -1">您已经添加过这个标签了。</span>
                 </li>
             </ol>
         </div>
         <div class="menu-block">
+            <div class="menu-items">
+                <div class="menu-items-item uk-text-danger" v-on:click="localClear()">
+                    清空
+                </div>
+            </div>
+        </div>
+        <div>
             <div class="menu-items">
                 <div class="menu-items-item" v-on:click="commit()">
                     发布
@@ -98,27 +110,65 @@
             </div>
         </div>
     </div>
+
     <div v-show="view[1] === 'columns'">
+        <div class="menu-block">
+            <h1 class="menu-subtitle">编辑栏目</h1>
+            <ul class="menu-items">
+                <li class="menu-items-item" v-if="state.edittingColumns === false" v-on:click="state.edittingColumns = true">
+                    修改栏目
+                </li>
+                <li class="menu-items-item uk-text-danger" v-if="state.edittingColumns" v-on:click="commitColumns()">
+                    完成修改
+                </li>
+            </ul>
+        </div>
         <div class="menu-block">
             <h2 class="menu-subtitle">所有栏目</h2>
             <ul class="menu-items">
                 <li v-for="i of columns" class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
-                    <span class="badge" style="background-color: #4CAF50;">{{ i }}</span>
-                    <a v-on:click="deleteTag($index)"><span class="uk-text-danger">删除</span></a>
+                    <span class="badge" style="background-color: #4CAF50;" v-if="state.edittingColumns === false">{{ i.name }}</span>
+                    <span class="badge" style="background-color: #4CAF50;" v-if="state.edittingColumns">
+                        <input type="text" name="" v-model="i.name" style="color: white;" v-on:change="markColumnDirty(i)" />
+                    </span>
+                    <a v-on:click="deleteColumn(i)" v-show="state.edittingColumns"><span class="uk-text-danger">删除</span></a>
+                </li>
+                <li class="menu-items-item" v-on:click="createColumn()" v-if="state.edittingColumns">
+                    添加栏目
                 </li>
             </ul>
         </div>
     </div>
+
     <div v-show="view[1] === 'tags'">
+        <div class="menu-block">
+            <h1 class="menu-subtitle">编辑标签</h1>
+            <ul class="menu-items">
+                <li class="menu-items-item" v-if="state.edittingTags === false" v-on:click="state.edittingTags = true">
+                    修改标签
+                </li>
+                <li class="menu-items-item uk-text-danger" v-if="state.edittingTags" v-on:click="commitTags()">
+                    完成修改
+                </li>
+            </ul>
+        </div>
         <div class="menu-block">
             <h2 class="menu-subtitle">所有标签</h2>
             <ul class="menu-items">
-                <li v-for="i of tags" class="menu-items-item">
-                    <span class="badge">{{ i }}</span>
+                <li v-for="i of tags" class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between">
+                    <span class="badge" v-if="!state.edittingTags">{{ i.name }}</span>
+                    <span class="badge" v-if="state.edittingTags">
+                        <input type="text" name="" v-model="i.name" style="color: white;" v-on:change="markTagDirty(i)" />
+                    </span>
+                    <a v-on:click="deleteTag(i)"><span class="uk-text-danger" v-if="state.edittingTags">删除</span></a>
+                </li>
+                <li class="menu-items-item" v-on:click="createTag()" v-if="state.edittingTags">
+                    添加标签
                 </li>
             </ul>
         </div>
     </div>
+
 </div>
 
 <style>
