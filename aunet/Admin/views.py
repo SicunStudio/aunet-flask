@@ -4,7 +4,8 @@ from flask_login import current_user,login_user,logout_user,login_required
 from flask_principal import identity_loaded,RoleNeed,UserNeed,ActionNeed
 from flask_principal import Identity, AnonymousIdentity, \
      identity_changed,Permission
-import json,os
+# from flask_restful import abort
+import json,os,random
 from werkzeug.security import generate_password_hash
 from flask import abort
 from .news import SilderShow1,SliderShowSpec,News1,NewsSpec,NewsSpecDetail,Tags,Tag1,Categorys,Category1
@@ -12,7 +13,7 @@ from .users import Users,UserSpec,Roles,RoleSpec,Nodes,NodeSpec,CurrentUser
 from .search import SearchNews
 
 
-from aunet import lm,app,api
+from aunet import lm,app,api,db
 from .models import User,LoginLog
 from .models import EditUserPermission,EditUserNeed
 from .email import send_email
@@ -35,6 +36,9 @@ class EditUserPermission(Permission):
 def load_user(id):
     return User.query.get(int(id))
 
+# @lm.unauthorized_handler
+# def unauthorized_handle():
+#     return "good"
 
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
@@ -69,26 +73,45 @@ def index():
 @admin.route('/login',methods=["POST","GET"])
 def login():
     if request.method=="POST":
+        confirmCode=request.form['confirmCode']
         user=User.query.filter(User.userName==request.form['userName']).first()
         if user==None:
-            return "user doesn't existed"
+            confirmCode=random.randint(100, 999)
+            session['confirmCode']=confirmCode
+            error="用户不存在"
+            return render_template("Admin/login.html",confirmCode=confirmCode,error=error)
         elif user.verify_password(request.form['password']) is not True:
-            return "password error"
+            confirmCode=random.randint(100, 999)
+            session['confirmCode']=confirmCode
+            error="密码错误"
+            return render_template("Admin/login.html",confirmCode=confirmCode,error=error)
+        elif int(confirmCode)!=session['confirmCode']:
+            confirmCode=random.randint(100, 999)
+            session['confirmCode']=confirmCode
+            error="验证码错误"
+            return render_template("Admin/login.html",confirmCode=confirmCode,error=error)
         else:          
             login_user(user)
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
+            db.session.add(log)
+            db.session.commit()
             identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
             if user.userName=="association" or user.userName=="association_admin":
                 return redirect("/Material")
             else:
                 return redirect(request.args.get('next') or '/')
-    return render_template("Admin/index.html")
+    confirmCode=random.randint(100, 999)
+    session['confirmCode']=confirmCode
+    error=None 
+    return render_template("Admin/login.html",confirmCode=confirmCode,error=error)
 
-
+# @lm.unauthorized_handler
+# def unauthorized_handle():
+#     return "good"
 
 @app.route('/logout')
-@login_required
+# @login_required
 def logout():
     # Remove the user information from the session
     logout_user()
@@ -96,7 +119,7 @@ def logout():
     # Remove session keys set by Flask-Principal
     for key in ('identity.name', 'identity.auth_type'):
         session.pop(key, None)
-
+    # identity=AnonymousIdentity()
     # Tell Flask-Principal the user is anonymous
     # identity_changed.send(current_app._get_current_object(),
     #                       identity=AnonymousIdentity())
