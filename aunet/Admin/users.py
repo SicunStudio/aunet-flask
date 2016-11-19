@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 from flask_restful import reqparse, abort,Resource,fields,marshal_with
 from werkzeug.security import generate_password_hash
 from datetime import datetime
@@ -15,6 +15,7 @@ from flask_principal import Identity, AnonymousIdentity, \
 
 
 Node_fields={
+	"id":fields.Integer,
 	"nodeName":fields.String,
 	"status":fields.Boolean,
 	"level":fields.Integer
@@ -76,6 +77,7 @@ class Users(Resource):
 			data['userName']=user.userName
 			data['status']=user.status
 			data['email']=user.email
+			data['id']=user.id
 			data['roles']=list()
 			data['nodes']=list()
 			for role in user.roles:
@@ -84,8 +86,10 @@ class Users(Resource):
 					n['nodeName']=node.nodeName
 					n['status']=node.status
 					n['level']=node.level
+					n['id']=node.id
 					data['nodes'].append(n)
 				r=dict()
+				r['id']=role.id
 				r['roleName']=role.roleName
 				r['status']=role.status
 				data['roles'].append(r)
@@ -122,6 +126,7 @@ class CurrentUser(Resource):
 		else:
 			data['loginIp']=None
 			data['loginTime']=None
+		data['id']=user.id
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
@@ -130,11 +135,13 @@ class CurrentUser(Resource):
 		for role in user.roles:
 			for node in role.nodes:
 				n=dict()
+				n['id']=node.id
 				n['nodeName']=node.nodeName
 				n['status']=node.status
 				n['level']=node.level
 				data['nodes'].append(n)
 			r=dict()
+			r['id']=role.id
 			r['roleName']=role.roleName
 			r['status']=role.status
 			data['roles'].append(r)
@@ -153,6 +160,7 @@ class UserSpec(Resource):
 		else:
 			data['loginIp']=None
 			data['loginTime']=None
+		data['id']=user.id
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
@@ -161,11 +169,13 @@ class UserSpec(Resource):
 		for role in user.roles:
 			for node in role.nodes:
 				n=dict()
+				n['id']=node.id
 				n['nodeName']=node.nodeName
 				n['status']=node.status
 				n['level']=node.level
 				data['nodes'].append(n)
 			r=dict()
+			r['id']=role.id
 			r['roleName']=role.roleName
 			r['status']=role.status
 			data['roles'].append(r)
@@ -176,8 +186,8 @@ class UserSpec(Resource):
 		if current_user.is_anonymous==True:
 			abort_if_unauthorized("修改用户")
 		permission=Permission(ActionNeed("修改用户"))
-		
-		if (permission.can()is not True) and (permission1.can()is not True):
+		permission1=EditUserPermission(EditUserNeed(current_user.id))
+		if (permission.can()is not True)and (permission1.can()is not True):
 			abort_if_unauthorized("修改用户")
 
 		user=User.query.filter(User.id==id).first()
@@ -257,11 +267,13 @@ class Roles(Resource):
 		datas=list()
 		for role in roles:
 			data=dict()
+			data['id']=role.id
 			data['roleName']=role.roleName
 			data['status']=role.status
 			data['nodes']=list()
 			for node in role.nodes:
 				n=dict()
+				n['id']=node.id
 				n['nodeName']=node.nodeName
 				n['status']=node.status
 				n['level']=node.level
@@ -296,9 +308,11 @@ class RoleSpec(Resource):
 		data=dict()
 		data['roleName']=role.roleName
 		data['status']=role.status
+		data['id']=role.id
 		data['nodes']=list()
 		for node in role.nodes:
 			n=dict()
+			n['id']=node.id
 			n['nodeName']=node.nodeName
 			n['status']=node.status
 			n['level']=node.level
