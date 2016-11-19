@@ -23,7 +23,7 @@ from . import ts
 from collections import namedtuple
 from functools import partial
 
-
+basedir=app.config['BASEDIR']
 #user has the permission of edit himself
 EditUserNeed=partial(namedtuple("user",['method','value']),'edit')
 
@@ -132,7 +132,8 @@ def getHtml(path):
     # path=request.args.get("path","templates/Home/index/index.html")
     #return "dg"
     # path=os.path.join('/home/lyjdwh/Documents/aunet-flask','aunet/templates/Admin/',path)
-    path=os.path.join('aunet/templates/Admin/',path)
+    path=os.path.join(basedir,'aunet/templates/Admin/',path)
+    # path=os.path.join('aunet/templates/Admin/',path)
     path=str(path)
     try:
         f=open(path)
