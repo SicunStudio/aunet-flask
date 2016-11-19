@@ -289,6 +289,7 @@ a:hover{opacity: 0.7}
 	margin-left:8%;
 	text-align: center;
 	padding: 30px 6px;
+	padding-top: 50px;
 	box-shadow: 2px 1px 1px #ccc;
 }
 #news_ .hr{
@@ -320,7 +321,7 @@ a:hover{opacity: 0.7}
 #news_ .news_1_2 .hr{background: #e93944;}
 #news_ .news_1 img{
 	width:200px;
-	height:150px;
+	height:113px;
 	float: left;
 	margin: 30px 10px;
 }
@@ -356,6 +357,7 @@ a:hover{opacity: 0.7}
 	height:150px;
 	float: left;
 	margin: 10px 100px;
+	margin-bottom: 70px;
 }
 #news_ .news_2 img{
 	width:200px;
@@ -1154,7 +1156,7 @@ a:hover{opacity: 0.7}
 	width:98%;
 	margin: 10px 0;
 	text-align: center;
-	padding: 10px 5px;
+	padding: 30px 5px;
 	box-shadow: 2px 1px 1px #ccc;
 }
 #news_ .hr{
@@ -1185,7 +1187,7 @@ a:hover{opacity: 0.7}
 #news_ .news_1_2 .hr{background: #e93944;}
 #news_ .news_1 img{
 	width:200px;
-	height:150px;
+	height:113px;
 	margin:5px 20px;
 }
 #news_ .hr a{
@@ -1227,6 +1229,10 @@ a:hover{opacity: 0.7}
 	height:120px;
 	float:left;
 	margin: 10px 20px; 
+}
+#news_ .news_2 .news_2_x
+{
+	margin-bottom: 40px;
 }
 #news_ .news_2 .article{
 	word-wrap: break-word;
@@ -1286,7 +1292,7 @@ a:hover{opacity: 0.7}
 	width:98%;
 	margin:10px 0;
 	text-align: center;
-	padding: 20px 5px;
+	padding: 40px 5px;
 	box-shadow: 2px 1px 1px #ccc;
 }
 #news_ .hr{
@@ -1318,7 +1324,7 @@ a:hover{opacity: 0.7}
 #news_ .news_1_2 .hr{background: #e93944;}
 #news_ .news_1 img{
 	width:200px;
-	height:150px;
+	height:113px;
 	float: left;
 	margin: 30px 10px;
 }
