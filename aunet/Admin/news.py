@@ -360,6 +360,7 @@ class Category1(Resource):
         category=Category.query.filter(Category.id==id).first()
         abort_if_not_exist(category,"category")
         db.session.delete(category)
+        db.session.commit()
 
 class Tags(Resource):
     def get(self):
@@ -417,5 +418,6 @@ class Tag1(Resource):
         tag=Tag.query.filter(Tag.id==id).first()
         abort_if_not_exist(tag,"tag")
         db.session.delete(tag)
+        db.session.commit()
         
 

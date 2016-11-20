@@ -142,12 +142,11 @@ def getHtml(path):
 
 @app.route("/dashboard", methods=["GET"])
 @app.route("/dashboard/<path:path>", methods=["GET"])
-def app(path=None):
+def getApp(path=None):
     path=os.path.join(basedir,'aunet/templates/Admin/app.html')
     with open(path,'r', encoding='utf-8') as f:
         return f.read()
-    #return render_template('Admin/app.html')
-    # return url_for(static,"Admin/app.html")
+
 
 
 
