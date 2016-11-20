@@ -25,7 +25,7 @@ principals=Principal(app)
 
 lm=LoginManager()
 lm.init_app(app)
-lm.login_view='admin.login'
+lm.login_view='getApp'
 
 mail=Mail(app)
 
