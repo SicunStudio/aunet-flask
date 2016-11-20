@@ -36,11 +36,11 @@
     <div class="modal-dialog">
         <div class="modal-dialog-wrapper">
             <h2 class="uk-h3 uk-text-bold uk-text-center">修改密码</h2>
-            <p class="uk-text-center">输入 {{ session.username }} 的新密码</p>
-            <input type="password" class="uk-width-1-1" placeholder="新密码" autofocus="" />
+            <p class="uk-text-center">输入 {{ session.userName }} 的新密码</p>
+            <input type="password" class="uk-width-1-1" placeholder="新密码" autofocus="" v-model="session.passWord"/>
         </div>
         <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
-            <a v-on:click="changePasswords" class="modal-dialog-button">确认</a>
+            <a v-on:click="changePassword()" class="modal-dialog-button">确认</a>
             <a v-on:click="state.changingPasswords = false" class="uk-text-bold modal-dialog-button">取消</a>
         </div>
     </div>
@@ -50,11 +50,11 @@
     <div class="modal-dialog">
         <div class="modal-dialog-wrapper">
             <h2 class="uk-h3 uk-text-bold uk-text-center">修改验证邮箱</h2>
-            <p class="uk-text-center">输入 {{ session.username }} 的新邮箱</p>
-            <input type="email" class="uk-width-1-1" placeholder="新邮箱地址" autofocus="" />
+            <p class="uk-text-center">输入 {{ session.userName }} 的新邮箱</p>
+            <input type="email" class="uk-width-1-1" placeholder="新邮箱地址" autofocus="" v-model="session.email"/>
         </div>
         <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
-            <a v-on:click="changeEmail" class="modal-dialog-button">确认</a>
+            <a v-on:click="changeEmail()" class="modal-dialog-button">确认</a>
             <a v-on:click="state.changingEmail = false" class="uk-text-bold modal-dialog-button">取消</a>
         </div>
     </div>

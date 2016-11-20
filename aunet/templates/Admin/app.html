@@ -125,13 +125,13 @@
     </div>
 </body>
 <script>
-    requestJSON = function(url, method="get", obj={}) {
+    requestJSON = function(url, method="get", obj=null) {
         return $.ajax({
             url: url,
             type: method,
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(obj),
+            data: obj !== null ? JSON.stringify(obj) : "",
         });
     };
 
@@ -146,6 +146,12 @@
                     logout: function() {
                         requestJSON("/api/Login", "delete");
                         location.reload();
+                    },
+                    changePassword: function() {
+                        updateUser(app.session);
+                    },
+                    changeEmail: function() {
+                        updateUser(app.session);
                     },
                 }
             });
@@ -360,6 +366,12 @@
                             deleteUser(i);
                         }
                         retrieveUsers();
+                        this.clearUserTrack();
+                    },
+                    clearUserTrack: function() {
+                        for(i of ["new", "deleted", "dirty"]) {
+                            app.USERS[i] = [];
+                        }
                     },
                     createUser: function() {
                         var n = {
@@ -388,10 +400,17 @@
                     },
 
                     // role
-                    removeNodeOfRole: function(role, nodeName) {
-                        role.nodes.splice(role.nodes.indexOf(node), 1);
-                        updateRole(role);
+                    commitRole: function(role) {
+                        if("id" in role) { // 已有角色
+                            updateRole(role);
+                        } else { // 新建角色
+                            createRole(role);
+                        }
                         retrieveRoles();
+                    },
+                    removeNodeOfRole: function(role, node) {
+                        role.nodes.splice(role.nodes.indexOf(node), 1);
+                        this.commitRole(role);
                     },
 
                     addNodeOfRole: function(role, nodeName) {
@@ -403,8 +422,7 @@
                             }
                         })[0];
                         role.nodes.push(JSON.parse(JSON.stringify(node)));
-                        updateRole(role);
-                        retrieveRoles();
+                        this.commitRole(role);
                     },
 
                     deleteRole: function(role) {
@@ -415,13 +433,12 @@
                         if(confirm("真的要删除角色'" + role.roleName + "'吗？")) {
                             deleteRole(role);
                         }
-                        retrieveNodes();
+                        retrieveRoles();
                     },
 
                     toggleBannedRole: function(role) {
                         role.status = !role.status;
-                        updateRole(role);
-                        retrieveRoles();
+                        this.commitRole(role);
                     },
 
                     createRole: function() {
@@ -434,41 +451,37 @@
                     },
 
                     changeRoleNameOfRole: function(role) {
-                        if("id" in role) { // 已有角色
-                            updateRole(role);
-                        }
-                        createRole(role);
-                        retrieveRoles();
+                        this.commitRole(role);
                     },
 
                     // node
-
-                    changeNodeNameOfNode: function(node) {
-                        if("id" in node) { // 已有节点
+                    commitNode: function(node) {
+                        if("id" in node) { // 已有角色
                             updateNode(node);
+                        } else { // 新建角色
+                            createNode(node);
                         }
-                        createNode(node);
                         retrieveNodes();
                     },
 
+                    changeNodeNameOfNode: function(node) {
+                        this.commitNode(node);
+                    },
+
                     toggleBannedNode: function(node) {
-                        node.state = !node.status;
-                        updateNode(node);
-                        retrieveNodes();
+                        node.status = !node.status;
+                        this.commitNode(node);
                     },
 
                     deleteNode: function(node) {
                         if(confirm("真的要删除节点'" + node.nodeName + "'吗？")) {
                             deleteNode(node);
-                        }   
+                            retrieveNodes();
+                        }
                     },
 
                     changeLevelOfNode: function(node) {
-                        if("id" in node) { // 已有节点
-                            updateNode(node);
-                        }
-                        createNode(node);
-                        retrieveNodes();
+                        this.commitNode(node);
                     },
 
                     createNode: function() {
@@ -479,6 +492,7 @@
                         };
                         app.nodes.push(n);
                     },
+
                 })
             });
         }).fail(function(xhr) {
@@ -704,7 +718,7 @@
         };
 
         updateUser = function(user) {
-            return requestJSON(userBaseURL + "/" + user.id);
+            return requestJSON(userBaseURL + "/" + user.id, "put", user);
         };
 
         deleteUser = function(user) {
@@ -909,6 +923,9 @@
                     if(confirm("真的要放弃草稿？") === false) {
                         return;
                     }
+                    clearEdit();
+                },
+                clearEdit: function() {
                     app.post = {
                         column: "",
                         tags: [],
@@ -918,7 +935,19 @@
                     };
                     editor.setValue("");
                 },
-                // site
+                commitEdit: function() {
+                    if("id" in app.post) { // 编辑已有文章
+                        updatePost(app.post);
+                    } else {
+                        createPost(app.post);
+                    }
+                },
+                pushEdit: function() {
+                    if(confirm("要发布吗？")) {
+                        this.commitEdit();
+                        this.clearEdit();
+                    }
+                },
                 
             },
             ready: function() {
