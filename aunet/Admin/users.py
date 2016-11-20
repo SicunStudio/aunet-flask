@@ -12,7 +12,7 @@ from flask_login import current_user
 from flask_principal import RoleNeed,UserNeed,ActionNeed
 from flask_principal import Identity, AnonymousIdentity, \
      identity_changed,Permission
-
+import json
 
 Node_fields={
 	"id":fields.Integer,
@@ -27,7 +27,7 @@ User_parser.add_argument('passWord',type=str,required =True,location="json",help
 User_parser.add_argument('email',type=str,location="json",help="email is needed",required=True)
 User_parser.add_argument('roleName',type=str,required =True,location="json",action="append",help="roleName is needed")
 
-User1_parser=reqparse.RequestParser()			#User1 zhong method post de parser
+User1_parser=reqparse.RequestParser()		#User1 zhong method post de parser
 User1_parser.add_argument('email',type=str,location="json")
 User1_parser.add_argument('passWord',type=str,location="json")
 User1_parser.add_argument('roleName',type=str,location="json",action="append")
@@ -40,11 +40,11 @@ NodeSpec_parser.add_argument('status',type=int,help="status type is int")
 
 Role_parser=reqparse.RequestParser()
 Role_parser.add_argument('roleName',type=str,location="json",required=True,help="roleName is needed")
-Role_parser.add_argument("nodeName",type=str,location="json",required=True,action="append",help="remark is needed")
+Role_parser.add_argument("nodeName",type=str,location="json",action="append",required=True,help="remark is needed")
 
 RoleSpec_parser=reqparse.RequestParser()
 RoleSpec_parser.add_argument('roleName',type=str,location="json")
-RoleSpec_parser.add_argument('nodeName',type=str,action="append",location="json")
+RoleSpec_parser.add_argument('nodeName',action="append",type=str,location="json")
 RoleSpec_parser.add_argument('status',type=bool,location="json")
 
 
@@ -100,6 +100,10 @@ class Users(Resource):
 		if permission.can()is not True:
 			abort_if_unauthorized("添加用户")
 		args=User_parser.parse_args()
+		try:
+			args['roleName']=list(eval(args['roleName'][0]))
+		except:
+			pass
 		userName=args['userName']
 		passWord=args['passWord']
 		email=args['email']
@@ -211,6 +215,10 @@ class UserSpec(Resource):
 		if passWord!=None:
 			user.passWord=generate_password_hash(passWord)
 		if roleName!=None and permission.can():
+			try:
+				roleName=list(eval(roleName[0]))
+			except:
+				pass
 			r=list()
 			for name in roleName:
 				role=Role.query.filter(Role.roleName==name).first()
@@ -290,7 +298,11 @@ class Roles(Resource):
 			abort_if_unauthorized("添加角色")
 		args=Role_parser.parse_args()
 		roleName=args['roleName']
-		nodeName=args['nodeName']
+		try:
+			nodeName=list(eval(args['nodeName'][0]))
+		except:
+			nodeName=args['nodeName']
+		
 		role1=Role.query.filter(Role.roleName==roleName).first()
 		abort_if_exist(role1,"roleName")
 		role=Role(roleName)
@@ -326,7 +338,7 @@ class RoleSpec(Resource):
 		permission=Permission(ActionNeed('修改角色'))
 		if permission.can()is not True:
 			abort_if_unauthorized("修改角色")
-	
+		
 		role=Role.query.filter(Role.id==id).first()
 		abort_if_not_exist(role,"role")
 		args=RoleSpec_parser.parse_args()
@@ -340,6 +352,10 @@ class RoleSpec(Resource):
 		if status!=None:
 			role.status=status
 		if nodeName!=None:
+			try:
+				nodeName=list(eval(nodeName[0]))
+			except:
+				pass
 			n=list()
 			for name in nodeName:
 				node=Node.query.filter(Node.nodeName==name).first()
