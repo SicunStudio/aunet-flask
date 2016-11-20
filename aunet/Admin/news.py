@@ -142,7 +142,7 @@ class SliderShowSpec(Resource):
         if outline!=None:
             silder_show.outline=outline
         if editable!=None:
-            silder_show.editable=status
+            silder_show.editable=editable
         if link!=None:
             silder_show.link=link
         db.session.add(silder_show)
