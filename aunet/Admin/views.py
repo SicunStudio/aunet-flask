@@ -131,7 +131,7 @@ def getHtml(path):
     # path=os.path.join('aunet/templates/Admin/',path)
     path=str(path)
     try:
-        f=open(path)
+        f=open(path,'r', encoding='utf-8')
         # text=f.read()
         # res = make_response(text)
         # return res
@@ -141,11 +141,13 @@ def getHtml(path):
 
 
 @app.route("/dashboard", methods=["GET"])
-@app.route("/dashboard/<string:path>", methods=["GET"])
-def app():
+@app.route("/dashboard/<path:path>", methods=["GET"])
+def app(path=None):
     path=os.path.join(basedir,'aunet/templates/Admin/app.html')
-    with open(path) as f:
+    with open(path,'r', encoding='utf-8') as f:
         return f.read()
+    #return render_template('Admin/app.html')
+    # return url_for(static,"Admin/app.html")
 
 
 
