@@ -620,7 +620,7 @@
         };
 
         // posts
-        postBaseURL = "/api/News"
+        postBaseURL = "/api/News/News";
         retrievePosts = function() {
             return requestJSON(postBaseURL).done(function(data) {
                 app.posts = [];
@@ -919,42 +919,44 @@
                 restoreSession();
             },
         });
+    
+        baseViewURL = "/dashboard";
 
         page("*", function(ctx, next) {
             app.MENU.active = false;
             next();
         });
 
-        page("/dashboard", function(ctx, next) {
+        page(baseViewURL, function(ctx, next) {
             page("/dashboard/profile");
         });
 
-        page("/dashboard/profile", function(ctx, next) {
+        page(baseViewURL + "/profile", function(ctx, next) {
             app.view = ["profile"];
             app.HEADER.CONTENT.heading = "我";
         });
 
-        page("/dashboard/site", function(ctx, next) {
+        page(baseViewURL + "/site", function(ctx, next) {
             app.view = ["site"];
             app.HEADER.CONTENT.heading = "首页管理";
         });
 
-        page("/dashboard/posts", function(ctx, next) {
+        page(baseViewURL + "/posts", function(ctx, next) {
             app.view = ["posts"];
             app.HEADER.CONTENT.heading = "文章";
         });
 
-        page("/dashboard/posts/:v", function(ctx, next) {
+        page(baseViewURL + "/posts/:v", function(ctx, next) {
             app.view = ["posts", ctx.params.v];
             app.HEADER.CONTENT.heading = app.views.posts[ctx.params.v];
         });
 
-        page("/dashboard/users", function(ctx, next) {
+        page(baseViewURL + "/users", function(ctx, next) {
             app.view = ["users"];
             app.HEADER.CONTENT.heading = "用户";
         });
 
-        page("/dashboard/users/:v", function(ctx, next) {
+        page(baseViewURL + "/users/:v", function(ctx, next) {
             app.view = ["users", ctx.params.v]
             app.HEADER.CONTENT.heading = app.views.users[ctx.params.v];
         });
