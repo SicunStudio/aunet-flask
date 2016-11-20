@@ -51,7 +51,7 @@
                 <h2 class="uk-h3 uk-text-bold uk-text-center">登录</h2>
                 <p class="uk-text-center">登录到社团联合会后台</p>
                 <input type="text" class="uk-width-1-1" placeholder="用户名" autofocus="" v-model="LOGIN.userName" />
-                <input type="password" class="uk-width-1-1" placeholder="密码" v-model="LOGIN.password" v-on:change="state.loggingInError = false"/>
+                <input type="password" class="uk-width-1-1" placeholder="密码" v-model="LOGIN.password" v-on:change="state.loggingInError = false" v-on:keyup.enter="login()"/>
                 <p class="uk-text-danger" v-show="state.loggingInError">用户名或密码不正确。</p>
             </div>
             <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
@@ -110,6 +110,12 @@
                         </li>
                     </ul>
                 </div>
+                <div class="menu-block">
+                    <h2 class="menu-subtitle">其他</h2>
+                    <ul class="menu-items">
+                        <li class="menu-items-item" onclick="window.open('/Material')">物资系统</li>
+                    </ul>
+                </div>
             </div>
             <div class="content uk-width-medium-8-10 uk-width-1-1">
                 <div v-bind:is="view[0].toUpperCase()">
@@ -119,13 +125,13 @@
     </div>
 </body>
 <script>
-    requestJSON = function(url, method="get", data="") {
+    requestJSON = function(url, method="get", obj={}) {
         return $.ajax({
             url: url,
             type: method,
             contentType: "application/json",
             dataType: "json",
-            data: data,
+            data: JSON.stringify(obj),
         });
     };
 
@@ -384,7 +390,7 @@
                     // role
                     removeNodeOfRole: function(role, nodeName) {
                         role.nodes.splice(role.nodes.indexOf(node), 1);
-                        udpateRole(role);
+                        updateRole(role);
                         retrieveRoles();
                     },
 
@@ -397,7 +403,7 @@
                             }
                         })[0];
                         role.nodes.push(JSON.parse(JSON.stringify(node)));
-                        udpateRole(role);
+                        updateRole(role);
                         retrieveRoles();
                     },
 
@@ -414,7 +420,7 @@
 
                     toggleBannedRole: function(role) {
                         role.status = !role.status;
-                        udpateRole(role);
+                        updateRole(role);
                         retrieveRoles();
                     },
 
@@ -429,7 +435,7 @@
 
                     changeRoleNameOfRole: function(role) {
                         if("id" in role) { // 已有角色
-                            udpateRole(role);
+                            updateRole(role);
                         }
                         createRole(role);
                         retrieveRoles();
@@ -439,7 +445,7 @@
 
                     changeNodeNameOfNode: function(node) {
                         if("id" in node) { // 已有节点
-                            udpateNode(node);
+                            updateNode(node);
                         }
                         createNode(node);
                         retrieveNodes();
@@ -459,7 +465,7 @@
 
                     changeLevelOfNode: function(node) {
                         if("id" in node) { // 已有节点
-                            udpateNode(node);
+                            updateNode(node);
                         }
                         createNode(node);
                         retrieveNodes();
@@ -547,7 +553,7 @@
         };
 
         login = function() { // 登录
-            return requestJSON("/api/Login", "post", JSON.stringify(app.LOGIN)).done(function(data) {
+            return requestJSON("/api/Login", "post", app.LOGIN).done(function(data) {
                 app.session = data;
                 app.state.loggingIn = false;
             }).fail(function(status, xhr) {
@@ -656,21 +662,21 @@
         }
 
         createPost = function(post) {
-            return requestJSON(postBaseURL, "post", JSON.stringify({
+            return requestJSON(postBaseURL, "post", {
                 category: post.column,
                 tags: post.tags,
                 title: post.title,
                 detail: post.content,
-            }));
+            });
         };
 
         updatePost = function(post) {
-            return requestJSON(postBaseURL + "/" + post.id, "put", JSON.stringify({
+            return requestJSON(postBaseURL + "/" + post.id, "put", {
                 category: post.column,
                 tags: post.tags,
                 title: post.title,
                 detail: post.content,
-            }));
+            });
         };
 
         deletePost = function(post) {
@@ -741,7 +747,7 @@
             return requestJSON(roleBaseURL, "post", role);
         };
 
-        udpateRole = function(role) {
+        updateRole = function(role) {
             return requestJSON(roleBaseURL + "/" + role.id, "put", role);
         };
 
