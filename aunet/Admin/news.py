@@ -142,7 +142,7 @@ class SliderShowSpec(Resource):
         if outline!=None:
             silder_show.outline=outline
         if editable!=None:
-            silder_show.editable=status
+            silder_show.editable=editable
         if link!=None:
             silder_show.link=link
         db.session.add(silder_show)
@@ -173,6 +173,10 @@ class News1(Resource):
         detail=args['detail']
         title=args['title']
         tags=args['tags']
+        try:
+            tags=list(eval(tags[0]))
+        except:
+            pass
         soup=BeautifulSoup(detail,"html.parser")
         k=0
         for img  in soup.find_all('img'):
@@ -234,6 +238,10 @@ class NewsSpec(Resource):
         title=args['title']
         editable=args['editable']
         tags=args['tags']
+        try:
+            tags=list(eval(tags[0]))
+        except:
+            pass
         if category!=None:
             news.category=[]
             news.addCategory(category)

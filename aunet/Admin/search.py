@@ -25,6 +25,10 @@ class SearchNews(Resource):
 		start=args['start']
 		end=args['end']
 		tags=args['tags']
+		try:
+			tags=list(eval(tags[0]))
+		except:
+			pass
 		start=float(start)
 		end=float(end)
 		start=datetime.fromtimestamp(start)
