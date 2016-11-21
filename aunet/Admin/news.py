@@ -76,7 +76,17 @@ News_fields={
     "editable":fields.Integer(attribute="editable"),
     "author":fields.String
 }
-  
+NewsSpec_fields={
+    "id":fields.Integer(attribute="id"),
+    "category":CategoryItem,
+    "tags":TagItem,
+    "postTime":PostTimeItem(attribute="post_time"),
+    "title":fields.String(attribute="title"),
+    "outline":fields.String(attribute="outline"),
+    "editable":fields.Integer(attribute="editable"),
+    "author":fields.String,
+    "detail":fields.String
+}
 SilderShow_fields={
     "id":fields.Integer,
     "postTime":PostTimeItem(attribute="post_time"),
@@ -169,6 +179,7 @@ class News1(Resource):
         if permission.can()is not True:
             abort_if_unauthorized("添加新闻")
         args=News_parser.parse_args()
+        print (args)
         category=args['category']
         detail=args['detail']
         title=args['title']
@@ -203,7 +214,7 @@ class News1(Resource):
             else:
                 imgUrlFirst="static/Uploads/News/"+filename
         if k==0:
-            imgUrlFirst="static/uploads/News/1.jpg"
+            imgUrlFirst="static/Uploads/News/1.jpg"
         # return imgUrlFirst
         outline=soup.get_text()[:100]
         news=News(soup.prettify(),title,outline,imgUrlFirst)
@@ -220,7 +231,7 @@ class News1(Resource):
 
 
 class NewsSpec(Resource):
-    @marshal_with(News_fields)
+    @marshal_with(NewsSpec_fields)
     def get(self,id):
         news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
