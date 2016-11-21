@@ -653,7 +653,7 @@
                         column: i.category,
                         tags: i.tags,
                         lastModificationTime: i.postTime,
-                        editable: i.editable
+                        editable: i.editable,
                     })
                 }
             });
@@ -923,7 +923,7 @@
                     if(confirm("真的要放弃草稿？") === false) {
                         return;
                     }
-                    clearEdit();
+                    this.clearEdit();
                 },
                 clearEdit: function() {
                     app.post = {
@@ -936,11 +936,13 @@
                     editor.setValue("");
                 },
                 commitEdit: function() {
+                    this.localSave();
                     if("id" in app.post) { // 编辑已有文章
                         updatePost(app.post);
                     } else {
                         createPost(app.post);
                     }
+                    page("/dashboard/posts/compose"); // 发布完成后转到文章界面
                 },
                 pushEdit: function() {
                     if(confirm("要发布吗？")) {
