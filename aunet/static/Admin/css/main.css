@@ -80,6 +80,7 @@ select option {
 
 .header {
     background-color: rgba(255, 255, 255, .4);
+    -webkit-backdrop-filter: blur(15px);    
     backdrop-filter: blur(15px);
     position: fixed;
     width: 100vw;
@@ -158,6 +159,7 @@ select option {
 .content {
     padding: 20px 0;
     height: 100vh;
+    -webkit-overflow-scrolling: touch;
     overflow: auto;
 }
 
@@ -246,7 +248,7 @@ select option {
         position: absolute;
         transform: translateX(-100%);
 
-        transition: all 476ms cubic-bezier(0, 0, 0, 1);
+        transition: transform 476ms cubic-bezier(0.214536, 0.19725, 0.266786, 1);
     }
 
     .menu.active, .header-menu.active {
