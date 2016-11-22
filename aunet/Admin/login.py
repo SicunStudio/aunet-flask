@@ -57,6 +57,7 @@ class Login(Resource):
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
+		data['phone']=user.phone
 		data['roles']=list()
 		data['nodes']=list()
 		for role in user.roles:
