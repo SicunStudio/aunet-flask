@@ -25,14 +25,17 @@ User_parser=reqparse.RequestParser()			# User zhong method post de parser
 User_parser.add_argument('userName',type=str,required =True,location="json",help="userName is needed")
 User_parser.add_argument('passWord',type=str,required =True,location="json",help="passWord is needed")
 User_parser.add_argument('email',type=str,location="json",help="email is needed",required=True)
+User_parser.add_argument('phone',type=str,location="json",help="phone is needed",required=True)
 User_parser.add_argument('roleName',type=str,required =True,location="json",action="append",help="roleName is needed")
 
 User1_parser=reqparse.RequestParser()		#User1 zhong method post de parser
 User1_parser.add_argument('email',type=str,location="json")
+User1_parser.add_argument('phone',type=str,location="json")
 User1_parser.add_argument('passWord',type=str,location="json")
 User1_parser.add_argument('roleName',type=str,location="json",action="append")
 User1_parser.add_argument('userName',type=str,location="json")
 User1_parser.add_argument('status',type=bool,location="json")
+
 
 
 NodeSpec_parser=reqparse.RequestParser()
@@ -75,6 +78,7 @@ class Users(Resource):
 				data['loginIp']=None
 				data['loginTime']=None
 			data['userName']=user.userName
+			data['phone']=user.phone
 			data['status']=user.status
 			data['email']=user.email
 			data['id']=user.id
@@ -108,9 +112,10 @@ class Users(Resource):
 		passWord=args['passWord']
 		email=args['email']
 		roleName=args['roleName']
+		phone=args['phone']
 		user1=User.query.filter(User.userName==userName).first()
 		abort_if_exist(user1,"userName")
-		user=User(userName,passWord,email)
+		user=User(userName,passWord,email,phone)
 		for name in roleName:
 			role=Role.query.filter(Role.roleName==name).first()
 			abort_if_not_exist(role,"role")
@@ -134,6 +139,7 @@ class CurrentUser(Resource):
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
+		data['phone']=user.phone
 		data['roles']=list()
 		data['nodes']=list()
 		for role in user.roles:
@@ -168,6 +174,7 @@ class UserSpec(Resource):
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
+		data['phone']=user.phone
 		data['roles']=list()
 		data['nodes']=list()
 		for role in user.roles:
@@ -200,6 +207,7 @@ class UserSpec(Resource):
 		# userId=args['userId']
 		status=args['status']
 		email=args['email']
+		phone=args['phone']
 		passWord=args['passWord']
 		roleName=args['roleName']
 		userName=args['userName']
@@ -212,6 +220,8 @@ class UserSpec(Resource):
 			user.status=status
 		if email!=None:
 			user.email=email
+		if phone!=None:
+			user.phone=phone
 		if passWord!=None:
 			user.passWord=generate_password_hash(passWord)
 		if roleName!=None and permission.can():

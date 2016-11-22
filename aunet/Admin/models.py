@@ -38,6 +38,7 @@ class User(db.Model,UserMixin):
 	email=db.Column(db.String(40))
 	status=db.Column(db.Boolean)
 	remark=db.Column(db.String(20))
+	phone=db.Column(db.String(20))
 	roles=db.relationship("Role",secondary=user_role,backref=db.backref('users',lazy="dynamic"))
 
 
@@ -62,11 +63,12 @@ class User(db.Model,UserMixin):
 		self.roles.append(r)
 
     
-	def __init__(self,userName,passWord,email):
+	def __init__(self,userName,passWord,email,phone):
 		self.userName = userName
 		self.passWord = generate_password_hash(passWord)
 		self.email=email
 		self.status=True
+		self.phone=phone
 
     	#self.role=Role.query.filter(Role.roleName==roleName).first()
 
