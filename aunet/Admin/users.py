@@ -67,9 +67,9 @@ def abort_if_unauthorized(message):
 class Users(Resource):
 	def get(self):
 		datas=list()
-		data=dict()
 		users=User.query.all()
 		for user in users:
+			data=dict()
 			log=LoginLog.query.filter(LoginLog.userName==user.userName).order_by(LoginLog.id.desc()).first()
 			if log !=None:
 				data['loginIp']=log.loginIp
@@ -234,7 +234,7 @@ class UserSpec(Resource):
 				role=Role.query.filter(Role.roleName==name).first()
 				abort_if_not_exist(role,"role")
 				r.append(role)
-			user.role=r
+			user.roles=r
 		if userName!=None:
 			user.userName=userName
 		db.session.add(user)
