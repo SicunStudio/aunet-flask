@@ -148,10 +148,14 @@
                         location.reload();
                     },
                     changePassword: function() {
-                        updateUser(app.session);
+                        updateUser(app.session).done(function(data) {
+                            app.state.changingPasswords = false;
+                        });
                     },
                     changeEmail: function() {
-                        updateUser(app.session);
+                        updateUser(app.session).done(function(data) {
+                            app.state.changingEmail = false;
+                        });
                     },
                 }
             });
@@ -350,7 +354,7 @@
                         app.USERS.new.splice(app.users.indexOf(user), 1);
                     },
                     markDirtyUser: function(user) {
-                        if(app.USERS.dirty.indexOf(user) === -1) {
+                        if((app.USERS.dirty.indexOf(user) === -1) && (app.USERS.new.indexOf(user) === -1)) { // 第一次修改且不是新添加的
                             app.USERS.dirty.push(user);
                         }
                     },
@@ -401,12 +405,14 @@
 
                     // role
                     commitRole: function(role) {
-                        if("id" in role) { // 已有角色
-                            updateRole(role);
-                        } else { // 新建角色
-                            createRole(role);
+                        if(role.roleName) { // name填写了才会commit
+                            if("id" in role) { // 已有角色
+                                updateRole(role);
+                            } else { // 新建角色
+                                createRole(role);
+                            }
+                            retrieveRoles();
                         }
-                        retrieveRoles();
                     },
                     removeNodeOfRole: function(role, node) {
                         role.nodes.splice(role.nodes.indexOf(node), 1);
@@ -456,12 +462,15 @@
 
                     // node
                     commitNode: function(node) {
-                        if("id" in node) { // 已有角色
-                            updateNode(node);
-                        } else { // 新建角色
-                            createNode(node);
+                        if(node.nodeName) { // name填写了
+                            if("id" in node) { // 已有角色
+                                 // 所有字段都填写了
+                                updateNode(node);
+                            } else { // 新建角色
+                                createNode(node);
+                            }
+                            retrieveNodes();
                         }
-                        retrieveNodes();
                     },
 
                     changeNodeNameOfNode: function(node) {
@@ -491,6 +500,9 @@
                             level: 0,
                         };
                         app.nodes.push(n);
+                    },
+                    debug: function(text) {
+                        console.log(text);
                     },
 
                 })
@@ -714,11 +726,29 @@
         };
 
         createUser = function(user) {
-            return requestJSON(userBaseURL, "post", user);
+            return requestJSON(userBaseURL, "post", {
+                userName: user.userName,
+                passWord: user.passWord,
+                email: user.email,
+                phone: user.phone,
+                roleName: $.map(user.roles, function(x) {
+                    return(x.roleName);
+                }),
+                status: user.status,
+            });
         };
 
         updateUser = function(user) {
-            return requestJSON(userBaseURL + "/" + user.id, "put", user);
+            return requestJSON(userBaseURL + "/" + user.id, "put", {
+                userName: user.userName,
+                passWord: user.passWord,
+                email: user.email,
+                phone: user.phone,
+                roleName: $.map(user.roles, function(x) {
+                    return(x.roleName);
+                }),
+                status: user.status,
+            });
         };
 
         deleteUser = function(user) {
@@ -758,11 +788,23 @@
         };
 
         createRole = function(role) {
-            return requestJSON(roleBaseURL, "post", role);
+            return requestJSON(roleBaseURL, "post", {
+                roleName: role.roleName,
+                nodeName: $.map(role.nodes, function(x) {
+                    return(x.nodeName); // 文档如是说
+                }),
+                status: role.status,
+            });
         };
 
         updateRole = function(role) {
-            return requestJSON(roleBaseURL + "/" + role.id, "put", role);
+            return requestJSON(roleBaseURL + "/" + role.id, "put", {
+                roleName: role.roleName,
+                nodeName: $.map(role.nodes, function(x) {
+                    return(x.nodeName); // 文档如是说
+                }),
+                status: role.status,
+            });
         };
 
         deleteRole = function(role) {
