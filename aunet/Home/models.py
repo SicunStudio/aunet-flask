@@ -24,7 +24,7 @@ class News(db.Model):
 	day=db.Column(db.Integer)
 	post_time=db.Column(db.DateTime)
 	#news_Comments=db.Column(db.Text)
-	detail=db.Column(db.UnicodeText)
+	detail=db.Column(db.Text)
 	title=db.Column(db.String(80))
 	outline=db.Column(db.Text)
 	img_url=db.Column(db.String(50))
