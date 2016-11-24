@@ -24,12 +24,12 @@
 				<div>华中科技大学学生社团联合会</div>
 			</span>
 			<ul id="top_menu_menu">
-				<a href="/"><li id="on">首&nbsp;页</li></a>
-				<a href=""><li>新&nbsp;闻</li></a>
+				<a href="/index"><li>首&nbsp;页</li></a>
+				<a href="/news"><li>新&nbsp;闻</li></a>
 				<a href=""><li>社&nbsp;团</li></a>
 				<a href=""><li>社&nbsp;联</li></a>
 				<a href=""><li>管&nbsp;理</li></a>
-				<a href=""><li>其&nbsp;他</li></a>
+				<a href=""><li id="on">其&nbsp;他</li></a>
 			</ul>
 			<div id="menu_bottom_line"></div>
 			<div class="menu">
@@ -41,7 +41,7 @@
 			<a href="/admin/logout"><button>注&ensp;&ensp;销</button></a>
 		</div>
 
-	<div class="middle-content" style="margin-top:5px;margin-bottom:60px;">
+	<div class="middle-content" style="margin:0 15px;margin-top:25px;margin-bottom:60px;">
 	<div class="left">
 		<div class="material">
 			<div class="greenhead">物 资 借 用</div>
@@ -65,9 +65,8 @@
 
 	<div class="right">
 
-		<div class="tag">
-			<div class="tagarea" style="width:50%;margin-left:0;
-	text-align:left;padding-left:2%">当前处于: 
+		<div class="tag" style="width:90%;margin:0 5%;padding: 0 50px">
+			<div class="tagarea" style="padding:0 10px;margin:0 15px">当前处于: 
 				{% if apply_type=='物资借用' %}
 				物资借用 /
 				{% elif not apply_type %}
@@ -77,14 +76,14 @@
 				{% endif %}
 				{{apply_type}}</div>
 			<a href="{{url_for('material.procedure')}}">
-			<div class="tagarea" style="width:25%;position:relative;left:2.5%">场地物资申请流程</div>
+			<div class="tagarea" style="padding:0 10px;margin:0 15px">场地物资申请流程</div>
 			</a>
 			<a href="{{url_for('material.status')}}">
-			<div class="tagarea" style="width:15%;position:relative;left:5%">状态查询</div>
+			<div class="tagarea" style="padding:0 10px;margin:0 15px">状态查询</div>
 			</a>
 		</div>
 
-		<div class="content" style="width:100%;padding-right:3%">
+		<div class="content" style="width:96%;margin:15px 2%">
 			{% block form %}
 			{% endblock %}
 		</div>
