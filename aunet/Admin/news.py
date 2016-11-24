@@ -148,7 +148,7 @@ class SliderShowSpec(Resource):
         if title!=None:
             silder_show.title=title
         if imgUrl!=None:
-            silder_show.img_Url=imgUrl
+            silder_show.img_url=imgUrl
         if outline!=None:
             silder_show.outline=outline
         if editable!=None:
@@ -179,7 +179,6 @@ class News1(Resource):
         if permission.can()is not True:
             abort_if_unauthorized("添加新闻")
         args=News_parser.parse_args()
-        print (args)
         category=args['category']
         detail=args['detail']
         title=args['title']
