@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="refresh" content = "3;url=../Home/index">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="../../static/Home/header_footer.css">
+		<title>华中科技大学社团网</title>
+	</head>
+	<style>
+		#info p{
+			text-align: center;
+		}
+		#info a
+		{
+			color:initial
+		}
+	</style>
+	<body>
+		<div id="top_menu">
+			<img src="../../static/Home/au_logo.png" alt="" class="logo">
+			<span class="top_menu_title">
+				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
+				<div>华中科技大学学生社团联合会</div>
+			</span>
+			<ul id="top_menu_menu">
+				<a href="/index"><li id="on">首&nbsp;页</li></a>
+				<a href="/news"><li>新&nbsp;闻</li></a>
+				<a href=""><li>社&nbsp;团</li></a>
+				<a href=""><li>社&nbsp;联</li></a>
+				<a href=""><li>管&nbsp;理</li></a>
+				<a href=""><li>其&nbsp;他</li></a>
+			</ul>
+			<div id="menu_bottom_line"></div>
+			<div class="menu">
+				<div class="icon"></div>
+				<div class="icon"></div>
+				<div class="icon"></div>
+			</div>
+			<a href="../../dashboard"><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
+		</div>
+		<div id="info">
+			<br><br><br>
+			<p>当前功能正在建设中...</p>
+			<p><span></span>秒后自动跳转至首页</p>
+			<p>跳转失败请点击<a href="../Home/index">这里</a></p>
+			<br><br><br><br><br>
+		</div>
+		<div id="bottom_menu">
+			<span>友情链接</span>
+			<span>
+				<ul>
+					<li><a href="http://www.hust.edu.cn/">华中科技大学</a></li>
+					<li><a href="http://student.hust.edu.cn/">学工在线</a></li>
+					<li><a href="http://youth.hust.edu.cn">校团委</a></li>
+					<li><a href="http://www.zuiwan.net/">醉晚亭</a></li>
+				</ul>
+			</span>
+			<span>
+				<img src="" alt="">
+			</span>
+		</div>
+
+		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
+	</body>
+	
+	<script src="../../static/Home/index_API.js"></script>
+	<script>
+		window.onload=function()
+		{
+			InitHeader();
+		}
+		document.getElementById("info").getElementsByTagName("span")[0].innerHTML="3";
+		time = 2;
+		function delay()
+		{
+			document.getElementById("info").getElementsByTagName("span")[0].innerHTML=time+"";
+			time--;
+		}
+		setInterval(delay,1000);
+
+	</script>
+	
+</html>
