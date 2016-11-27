@@ -1,12 +1,13 @@
 #-*-coding:utf-8-*-
 # 导入各扩展
-from flask import Flask
+from flask import Flask,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_restful import Api,Resource
 from flask_login import LoginManager
 from flask_principal import Principal
 import pymysql
+from datetime import timedelta
 
 
 # from .Api.common.common import errors
@@ -26,6 +27,11 @@ principals=Principal(app)
 lm=LoginManager()
 lm.init_app(app)
 lm.login_view='getApp'
+
+#设置flask的session和cookit的过期时间
+app.permanent_session_lifetime = timedelta(hours=6)
+lm.remember_cookie_duration=timedelta(hours=6)
+
 
 mail=Mail(app)
 
