@@ -89,7 +89,7 @@ class LoginLog(db.Model):
 	def __init__(self,userName,loginIp):
 		self.userName=userName
 		self.loginTime=datetime.utcnow()
-		self.loginIP=loginIp
+		self.loginIp=loginIp
 	def __str__(self):
 		return self.userName
 	__repr__ = __str__
