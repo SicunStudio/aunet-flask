@@ -10,9 +10,13 @@ MAIL=app.config['MAIL']
 def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
-
-def send_email(subject, sender, recipients, text_body):
+#subject:主题,recipients:收件人列表list type，text_body：内容；sender:发件人，默认为配置中的发件人
+def send_email(subject, recipients, text_body,sender=MAIL):
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
+
+
+
+
