@@ -2,10 +2,10 @@
 from flask_restful import reqparse, abort,Resource,fields,marshal_with
 from werkzeug.security import generate_password_hash
 from datetime import datetime
-
+from flask import request
 from aunet.Admin.models import User,Node,Role,LoginLog
 from aunet import db
-from .models import EditUserPermission,EditUserNeed
+from .models import EditUserPermission,EditUserNeed,LoginLog
 
 from flask_login import current_user
 
@@ -66,10 +66,13 @@ def abort_if_unauthorized(message):
 
 class Users(Resource):
 	def get(self):
+		permission=Permission(ActionNeed(('查看用户')))
+		if permission.can() is not True:
+			abort_if_unauthorized("查看用户")
 		datas=list()
-		data=dict()
 		users=User.query.all()
 		for user in users:
+			data=dict()
 			log=LoginLog.query.filter(LoginLog.userName==user.userName).order_by(LoginLog.id.desc()).first()
 			if log !=None:
 				data['loginIp']=log.loginIp
@@ -234,7 +237,7 @@ class UserSpec(Resource):
 				role=Role.query.filter(Role.roleName==name).first()
 				abort_if_not_exist(role,"role")
 				r.append(role)
-			user.role=r
+			user.roles=r
 		if userName!=None:
 			user.userName=userName
 		db.session.add(user)
@@ -255,7 +258,10 @@ class UserSpec(Resource):
 
 class Nodes(Resource):	
 	@marshal_with(Node_fields)
-	def get(self):						
+	def get(self):
+		permission=Permission(ActionNeed(('查看权限节点')))
+		if permission.can() is not True:
+			abort_if_unauthorized("查看权限节点")						
 		nodes=Node.query.all()
 		return nodes
 
@@ -263,7 +269,9 @@ class Nodes(Resource):
 class NodeSpec(Resource):
 	@marshal_with(Node_fields)
 	def get(self,id):
-
+		permission=Permission(ActionNeed(('查看权限节点')))
+		if permission.can() is not True:
+			abort_if_unauthorized("查看权限节点")	
 		node=Node.query.filter(Node.id==id).first()
 		abort_if_not_exist(node,"node")
 		return node
@@ -284,6 +292,9 @@ class NodeSpec(Resource):
 
 class Roles(Resource):
 	def get(self):
+		permission=Permission(ActionNeed(('查看角色')))
+		if permission.can() is not True:
+			abort_if_unauthorized("查看角色")
 		roles=Role.query.all()
 		datas=list()
 		for role in roles:
@@ -327,7 +338,9 @@ class Roles(Resource):
 
 class RoleSpec(Resource):
 	def get(self,id):
-
+		permission=Permission(ActionNeed(('查看角色')))
+		if permission.can() is not True:
+			abort_if_unauthorized("查看角色")
 		role=Role.query.filter(Role.id==id).first()
 		abort_if_not_exist(role,"role")
 		data=dict()

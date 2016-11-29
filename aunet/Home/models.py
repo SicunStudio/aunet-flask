@@ -25,11 +25,11 @@ class News(db.Model):
 	post_time=db.Column(db.DateTime)
 	#news_Comments=db.Column(db.Text)
 	detail=db.Column(db.Text)
-	title=db.Column(db.String(60))
+	title=db.Column(db.String(80))
 	outline=db.Column(db.Text)
-	img_url=db.Column(db.String(40))
+	img_url=db.Column(db.String(50))
 	editable=db.Column(db.Boolean)
-	author=db.Column(db.String(20))
+	author=db.Column(db.String(40))
 	category=db.relationship("Category",secondary=news_category,backref=db.backref('news',lazy="dynamic"))
 	tags=db.relationship("Tag",secondary=news_tag,backref=db.backref('news',lazy="dynamic"))
 
@@ -69,8 +69,8 @@ class News(db.Model):
 class Category(db.Model):
 	__tablename__="category"
 	id=db.Column(db.Integer,primary_key=True)
-	name=db.Column(db.String(20),unique=True)
-	remark=db.Column(db.String(20))
+	name=db.Column(db.String(30),unique=True)
+	remark=db.Column(db.String(30))
 
 	def __init__(self,name):
 		self.name=name
@@ -83,7 +83,7 @@ class Category(db.Model):
 class Tag(db.Model):
 	__tablename__="tag"
 	id=db.Column(db.Integer,primary_key=True)
-	name=db.Column(db.String(20),unique=True)
+	name=db.Column(db.String(30),unique=True)
 	#remark=db.Column(db.String(20))
 	def __init__(self,name):
 		self.name=name
@@ -96,11 +96,11 @@ class Tag(db.Model):
 
 class SilderShow(db.Model):
 	id=db.Column(db.Integer,primary_key=True)
-	title=db.Column(db.String(60))
-	img_url=db.Column(db.String(40))
+	title=db.Column(db.String(80))
+	img_url=db.Column(db.String(80))
 	outline=db.Column(db.Text)
 	post_time=db.Column(db.DateTime)
-	link=db.Column(db.String(30))
+	link=db.Column(db.String(80))
 	editable=db.Column(db.Boolean)
 
 	def __init__(self,title,img_Url,outline,link):

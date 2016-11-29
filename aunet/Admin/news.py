@@ -110,6 +110,9 @@ def abort_if_unauthorized(message):
 class SilderShow1(Resource):
     @marshal_with(SilderShow_fields)
     def get(self):
+        permission=Permission(ActionNeed(('查看新闻')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻")
         silder_shows=SilderShow.query.all()
         return silder_shows
 
@@ -129,6 +132,9 @@ class SilderShow1(Resource):
 class SliderShowSpec(Resource):
     @marshal_with(SilderShow_fields)
     def get(self,id):
+        permission=Permission(ActionNeed(('查看新闻')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻")
         silder_show=SilderShow.query.filter(SilderShow.id==id).first()
         abort_if_not_exist(silder_show,"silder_show")
         return silder_show
@@ -148,7 +154,7 @@ class SliderShowSpec(Resource):
         if title!=None:
             silder_show.title=title
         if imgUrl!=None:
-            silder_show.img_Url=imgUrl
+            silder_show.img_url=imgUrl
         if outline!=None:
             silder_show.outline=outline
         if editable!=None:
@@ -170,6 +176,9 @@ class SliderShowSpec(Resource):
 class News1(Resource):
     @marshal_with(News_fields)
     def get(self):
+        permission=Permission(ActionNeed(('查看新闻')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻")
         news=News.query.all()
         return news
 
@@ -179,7 +188,6 @@ class News1(Resource):
         if permission.can()is not True:
             abort_if_unauthorized("添加新闻")
         args=News_parser.parse_args()
-        print (args)
         category=args['category']
         detail=args['detail']
         title=args['title']
@@ -233,6 +241,9 @@ class News1(Resource):
 class NewsSpec(Resource):
     @marshal_with(NewsSpec_fields)
     def get(self,id):
+        permission=Permission(ActionNeed(('查看新闻')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻")
         news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
         return news
@@ -322,7 +333,10 @@ class NewsSpecDetail(Resource):
 
 
 class Categorys(Resource):
-    def get(self):
+    def get(self):   
+        permission=Permission(ActionNeed(('查看新闻栏目')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻栏目")                                   
         categorys=Category.query.all()
         datas=list()
         for category in categorys:
@@ -347,7 +361,9 @@ class Categorys(Resource):
 
 class Category1(Resource):
     def get(self,id):
-    
+        permission=Permission(ActionNeed(('查看新闻栏目')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻栏目")    
         category=Category.query.filter_by(id=id).first()
         abort_if_not_exist(category,"category")
         data=dict()
@@ -383,6 +399,9 @@ class Category1(Resource):
 
 class Tags(Resource):
     def get(self):
+        permission=Permission(ActionNeed(('查看新闻标签')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻标签")
         tags=Tag.query.all()
         datas=list()
         for tag in tags:
@@ -407,6 +426,9 @@ class Tags(Resource):
 
 class Tag1(Resource):
     def get(self,id):
+        permission=Permission(ActionNeed(('查看新闻标签')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻标签")
         tag=Tag.query.filter_by(id=id).first()
         abort_if_not_exist(tag,"tag")
         data=dict()

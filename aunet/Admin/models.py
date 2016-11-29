@@ -84,12 +84,12 @@ class LoginLog(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	userName= db.Column(db.String(64))
 	loginTime=db.Column(db.DateTime)
-	loginIp=db.Column(db.String(20))
+	loginIp=db.Column(db.String(40))
 
 	def __init__(self,userName,loginIp):
 		self.userName=userName
 		self.loginTime=datetime.utcnow()
-		self.loginIP=loginIp
+		self.loginIp=loginIp
 	def __str__(self):
 		return self.userName
 	__repr__ = __str__
@@ -97,9 +97,9 @@ class LoginLog(db.Model):
 class Role(db.Model):
 	__tablename__="role"
 	id = db.Column(db.Integer, primary_key=True)
-	roleName=db.Column(db.String(20),unique=True)
+	roleName=db.Column(db.String(30),unique=True)
 	status=db.Column(db.Boolean)
-	remark=db.Column(db.String(20))
+	remark=db.Column(db.String(30))
 	nodes=db.relationship("Node",secondary=role_node,backref=db.backref('roles',lazy="dynamic"))
 
 	def addNode(self,nodeName):
@@ -120,8 +120,8 @@ class Role(db.Model):
 class Node(db.Model):
 	__tablename__="node"
 	id = db.Column(db.Integer, primary_key=True)
-	nodeName=db.Column(db.String(20),unique=True)
-	remark=db.Column(db.String(20))	
+	nodeName=db.Column(db.String(30),unique=True)
+	remark=db.Column(db.String(30))	
 	status=db.Column(db.Boolean)
 	level=db.Column(db.Integer)
 
