@@ -28,10 +28,10 @@ lm=LoginManager()
 lm.init_app(app)
 lm.login_view='getApp'
 
-#设置flask的session和cookit的过期时间		
-app.permanent_session_lifetime = timedelta(hours=6)		
-lm.remember_cookie_duration=timedelta(hours=6)		
-		
+#设置flask的session和cookit的过期时间
+app.permanent_session_lifetime = timedelta(hours=6)
+lm.remember_cookie_duration=timedelta(hours=6)
+
 
 mail=Mail(app)
 
@@ -47,3 +47,4 @@ app.register_blueprint(material)
 
 
 from . import models,views
+

@@ -22,4 +22,4 @@ MAIL_USE_SSL=True
 MAIL_USERNAME=''#如果是qq邮箱则为qq号，136邮箱同理
 MAIL_PASSWORD=''#客户端密码
 MAIL_USE_TLS = False
-MAIL=('sicun','1412511544@qq.com')
+MAIL=()#发件人如('sicun','1412511544@qq.com')
