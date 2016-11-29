@@ -323,7 +323,7 @@ a:hover{opacity: 0.7}
 	width:200px;
 	height:113px;
 	float: left;
-	margin: 30px 10px;
+	margin: 30px 0px;
 }
 #news_ .hr a{
 	float: right;
@@ -335,9 +335,11 @@ a:hover{opacity: 0.7}
 #news_ .news_2 .hr a{color: #227fde}
 #news_ .news_1 .text{
 	height:150px;
-	width:200px;
+	width:190px;
 	float:right;
-	margin: 10px 10px;
+	margin: 10px 0px;
+	margin-right: 2px;
+	text-align: initial;
 	word-wrap:break-word;
 }
 #news_ .news_2 .title{
@@ -1341,6 +1343,7 @@ a:hover{opacity: 0.7}
 	width:200px;
 	float:right;
 	margin: 10px 10px;
+	text-align: initial;
 	word-wrap:break-word;
 }
 #news_ .news_2 .title{
