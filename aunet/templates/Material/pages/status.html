@@ -1,0 +1,106 @@
+{% extends "form_base.html" %}
+{% block form %}
+<script src="{{url_for('material.static',filename='js/datedropper.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/datedropper.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('material.static',filename='css/status.css')}}">
+
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+	</div>
+	<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						删除
+					</h4>
+				</div>
+				<div class="modal-body">
+					确定要删除吗？(删除后不可恢复)
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="background:green;border:none;color:white">关闭
+					</button>
+					<button type="button" id="confirm-delete" class="btn btn-primary" style="background:red;border:none">
+						确定
+					</button>
+				</div>
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog-->
+	</div>
+	<div id="content-top">
+	<ul>
+		<li><a status="012">所&ensp;&ensp;有</a></li>
+		<li><a status="0">审&ensp;批&ensp;中</a></li>
+		<li><a status="2">未&ensp;通&ensp;过</a></li>
+		<li><a status="1">已&ensp;通&ensp;过</a></li>
+		<li><a status="12">已&ensp;审&ensp;批</a></li>
+	</ul>
+	<label for="type-filter">物资类型</label>
+	<select id="type-filter" onchange="filter()">
+		<option selected="selected" value="all">所&ensp;&ensp;有</option>
+		{% for key,value in types.items()%}
+			<option value="{{key}}">{{value[1]}}</option>
+		{% endfor %}
+	</select>
+	<span id="time-clear" onclick="timeClear()">×</span>
+	<label for="time-filter">申请时间</label>
+	<input type="text" id="time-filter" onchange="$('#time-clear').css('display','inline');filter()">
+	</div>
+	<table id="content-middle">
+		<tr class="table-top">
+			<td style="width:6%;">序&ensp;号</td>
+			<td style="width:13%;">提交时间</td>
+			<td style="width:10%;">物资类型</td>
+			<td style="width:10%;">审核结果</td>
+			<td style="width:10%;">审核进度</td>
+			<td style="width:13%;">审批时间</td>
+			<td style="width:15%;">审核意见</td>
+			<td style="width:18%;" colspan="3">操&ensp;&ensp;&ensp;&ensp;作</td>
+		</tr>
+		{% for data in datas %}
+		<tr class="table-content" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" result="{{data.result}}">
+			<td class="index">{{loop.index}}</td>
+			<td class="apply-time">{{data.apply_time.strftime('%Y-%m-%d %H:%M')}}</td>
+			<td class="material-type">{{types[data.__tablename__[9:]][1]}}</td>
+			<td class="result">{{results[data.result]}}</td>
+			<td class="status">
+			{% if data.result == '0' and data.pre_verify == None %}
+			初审中
+			{% elif data.result == '0' and data.pre_verify != None%}
+			初审通过
+			{% else %}
+			{{results[data.result]}}
+			{% endif %}
+			</td>
+			<td class="approve-time">
+			{% if data.approve_time == None %}
+			暂无
+			{% else %}
+			{{data.approve_time.strftime('%Y-%m-%d %H:%M')}}
+			{% endif %}
+			</td>
+			<td class="advice">
+				{% if data.advice == None %}
+				暂无
+				{% else %}
+				{{data.advice}}
+				{% endif %}
+			</td>
+			<td class="td-btn"><button class="btn-view" onclick="viewModal($(this))">查看</button></td>
+			<td class="td-btn"><button class="btn-modify" onclick="modify($(this))">修改</button></td>
+			{% if data.result == '0' %}
+			<td class="td-btn"><button class="btn-cancel" onclick="confirmDelete($(this))">撤销</button></td>
+			{% else %}
+			<td class="td-btn"><button class="btn-delete" onclick="confirmDelete($(this))">删除</button></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</table>
+
+<script type="text/javascript" src="{{url_for('material.static',filename='js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('material.static',filename='js/status.js')}}"></script>
+
+{% endblock %}

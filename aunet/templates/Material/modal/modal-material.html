@@ -1,0 +1,144 @@
+<!--物资申请表-->
+{% extends modal_type+"_modal.html" %}
+
+{% block table %}
+
+<div align="center">
+	<table style="border-collapse: collapse; border: none;" border="1" cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr style="height: 34.95pt;">
+				<td style="width: 90.45pt; border: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="121">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">协会名称</span></p>
+					</td>
+				<td style="width: 148.85pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="198">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 12.0pt; font-family: 宋体;">{{context['association']}}</span></p>
+					</td>
+				<td style="width: 92.15pt; border: solid windowtext 1.0pt; border-left: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动名称</span></p>
+					</td>
+				<td style="width: 192.8pt; border: solid windowtext 1.0pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="257">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['activity']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 34.95pt;">
+				<td style="width: 90.45pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="121">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动地点</span></p>
+					</td>
+				<td style="width: 148.85pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="198">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 12.0pt; font-family: 宋体;">{{context['site']}}</span></p>
+					</td>
+				<td style="width: 92.15pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">借用日期</span></p>
+					</td>
+				<td style="width: 192.8pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 34.95pt;" colspan="2" width="257">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['date']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 13.6pt;">
+				<td style="width: 524.25pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 13.6pt;" colspan="7" width="699">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 14.0pt; font-family: 宋体;">注：每张申请表只能借用一种物资</span></strong></p>
+					</td>
+				</tr>
+			<tr style="height: 52.05pt;">
+				<td style="width: 28.1pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 52.05pt;" rowspan="4" width="37">
+					<p style="text-align: center;" align="center"><strong><span style="font-size: 12.0pt; font-family: 宋体;">物资种类</span></strong></p>
+					</td>
+				<td style="width: 62.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 52.05pt;" width="83">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">投影仪</span></p>
+					</td>
+				<td style="width: 3.0cm; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 52.05pt;" width="113">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">台数</span></p>
+					</td>
+				<td style="width: 155.95pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 52.05pt;" colspan="2" width="208">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 12.0pt; font-family: 宋体;">{{context['projector_num']}}</span></p>
+					</td>
+				<td style="width: 92.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 52.05pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">归还日期</span></p>
+					</td>
+				<td style="width: 100.45pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 52.05pt;" width="134">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['projector_date']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 43.95pt;">
+				<td style="width: 62.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 43.95pt;" width="83">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">电力</span></p>
+					</td>
+				<td style="width: 3.0cm; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 43.95pt;" width="113">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">瓦数</span></p>
+					</td>
+				<td style="width: 348.75pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 43.95pt;" colspan="4" width="465">
+					<p style="text-align: center; word-break: break-all;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['electricity_num']}}</span><span style="font-family: 宋体;">（注：瓦数超过<span lang="EN-US">2000W</span>须要到主校区配电房签字）</span></p>
+					</td>
+				</tr>
+			<tr style="height: 42.4pt;">
+				<td style="width: 62.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.4pt;" width="83">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">大量桌椅</span></p>
+					</td>
+				<td style="width: 3.0cm; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.4pt;" width="113">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">数量</span></p>
+					</td>
+				<td style="width: 155.95pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.4pt;" colspan="2" width="208">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">桌子<span style="text-decoration: underline;"><span lang="EN-US">{{context['desk_num']}}</span></span>椅子<span style="text-decoration: underline;"><span lang="EN-US">{{context['chair_num']}}</span></span></span></p>
+					</td>
+				<td style="width: 92.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.4pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">归还日期</span></p>
+					</td>
+				<td style="width: 100.45pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 42.4pt;" width="134">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 12.0pt; font-family: 宋体;">{{context['chair_date']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 45.0pt;">
+				<td style="width: 62.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 45.0pt;" width="83">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">校车</span></p>
+					</td>
+				<td style="width: 3.0cm; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 45.0pt;" width="113">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">运送桌子数量</span></p>
+					</td>
+				<td style="width: 155.95pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 45.0pt;" colspan="2" width="208">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 12.0pt; font-family: 宋体;">{{context['trans_desk_num']}}</span></p>
+					</td>
+				<td style="width: 92.35pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 45.0pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">运送椅子数量</span></p>
+					</td>
+				<td style="width: 100.45pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: white; padding: 0cm 5.4pt 0cm 5.4pt; height: 45.0pt;" width="134">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-size: 12.0pt; font-family: 宋体;">{{context['trans_chair_num']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 51.7pt;">
+				<td style="width: 90.45pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 51.7pt;" colspan="2" width="121">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">活动负责人</span></p>
+					</td>
+				<td style="width: 148.85pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 51.7pt;" colspan="2" width="198">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['resp_person']}}</span></p>
+					</td>
+				<td style="width: 92.15pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 51.7pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">联系电话</span></p>
+					</td>
+				<td style="width: 192.8pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 51.7pt;" colspan="2" width="257">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['tel']}}</span></p>
+					</td>
+				</tr>
+			<tr style="height: 53.8pt;">
+				<td style="width: 90.45pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 53.8pt;" colspan="2" width="121">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">社</span><span style="font-size: 12.0pt; font-family: 宋体;">团意见</span></p>
+					</td>
+				<td style="width: 148.85pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 53.8pt;" colspan="2" width="198">
+					<p style="text-align: center;" align="center"><span lang="EN-US" style="font-family: 宋体;">{{context['opinion']}}</span></p>
+					</td>
+				<td style="width: 92.15pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 53.8pt;" width="123">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">社联意见</span></p>
+					</td>
+				<td style="width: 192.8pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 53.8pt;" colspan="2" width="257">&nbsp;</td>
+				</tr>
+			<tr style="height: 99.45pt;">
+				<td style="width: 90.45pt; border: solid windowtext 1.0pt; border-top: none; background: #BFBFBF; padding: 0cm 5.4pt 0cm 5.4pt; height: 99.45pt;" colspan="2" width="121">
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">共青团</span></p>
+					<p style="text-align: center;" align="center"><span style="font-size: 12.0pt; font-family: 宋体;">华中科技大学委员会意见</span></p>
+					</td>
+				<td style="width: 433.8pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 99.45pt;" colspan="5" width="578">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+{% endblock %}

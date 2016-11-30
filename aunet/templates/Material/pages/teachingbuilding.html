@@ -1,0 +1,274 @@
+{% extends "form_base.html" %}
+
+{% block form %}
+
+	<form id="form1" class="form-horizontal" role="form" action="{{url_for('material.submit')}}" method="POST" enctype="multipart/form-data">
+
+	  <div class="form-group asso">
+		  <div class="col-xs-2 col-lg-1 nopadding">
+				<label for="association" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">社团名称</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="association" name="association" value="{{data.association}}"placeholder="请输入社团名称">
+		  </div>
+
+		  <div class="col-xs-2 col-lg-1 nopadding">
+				<label for="activity" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动名称</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="activity" name="activity" value="{{data.activity}}"placeholder="请输入活动名称">
+		  </div>
+	  </div>
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="resp_person" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">申 请 人</label>
+		</div>
+		<div class="col-xs-4 col-lg-5" style="padding-left:0;">
+		  <input type="text" class="form-control" id="resp_person" name="resp_person" value="{{data.resp_person}}"placeholder="请输入申请人姓名">
+		</div>
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="person_type" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">申 请 人</br>类&ensp;&ensp;&ensp;&ensp;型</label>
+		</div>
+		<div class="col-xs-4 col-lg-5" style="padding-left:0;">
+				<select class="form-control" id="person_type" name="person_type">
+					<option value="" selected="selected">————</option>
+					<option value="研究生">研究生</option>
+					<option value="本科生">本科生</option>
+					<option value="主管">主管</option>
+					<option value="教师">教师</option>
+				</select>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		  <div class="col-xs-2 col-lg-1 nopadding">
+				<label for="tel" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">联系电话</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="tel" name="tel" value="{{data.tel}}"placeholder="请输入联系电话">
+		  </div>
+		  <div class="col-xs-2 col-lg-1 nopadding">
+				<label for="phone" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">办公电话</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="phone" name="phone" value="{{data.phone}}"placeholder="请输入联系电话">
+		  </div>
+	  </div>
+
+	  <div class="form-group">
+	    <div class="col-xs-2 col-lg-1 nopadding">
+			<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">教 学 楼</label>
+		</div>
+		<div class="col-xs-4 col-lg-5" style="padding-left:0;">
+				<select class="form-control" id="site" name="site">
+					<option value="西十二楼" selected="selected">西十二楼</option>
+					<option value="西五">西五</option>
+					<option value="东五">东五</option>
+					<option value="东九">东九</option>
+					<option value="东十二">东十二</option>
+				</select>
+		</div>
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">教室类型</label>
+		</div>
+		<div class="col-xs-4 col-lg-5" style="padding-left:0;">
+				<select class="form-control" id="function" name="function">
+					<option value="多媒体教室" selected="selected">多媒体教室</option>
+					<option value="普通教室">普通教室</option>
+					<option value="阶梯教室">阶梯教室</option>
+					<option value="联体教室">联体教室</option>
+				</select>
+		</div>
+	  </div>
+	  <div class="form-group ">
+			<div class="col-xs-2 col-lg-1 nopadding">
+				<label for="capacity" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">教室容量</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="capacity" name="capacity" value="{{data.capacity}}"placeholder="请输入教室容量">
+			</div>
+			<div class="col-xs-2 col-lg-1 nopadding">
+				<label for="number" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">参与人数</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="number" name="number" value="{{data.number}}"placeholder="请输入参与人数">
+			</div>
+		</div>
+	  <div class="form-group">
+		    <div class="col-xs-2 col-lg-1 nopadding">
+				<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动日期</label>
+			</div>
+			<div class="col-xs-4 col-sm-6" style="">
+				<div class="col-xs-4 col-sm-2">
+					<select class="form-control" id="year1" name="year1">
+						<option selected="selected">————</option>
+						<option value="2016">2016</option>
+						<option value="2017">2017</option>
+						<option value="2018">2018</option>
+					</select>
+				</div>
+				<div class="col-xs-1 col-txt-1"><p>年</p>
+				</div>
+				<div class="col-xs-2 col-sm-2">
+					<select class="form-control" id="month1" name="month1" onchange="adddate1()">
+						<option selected="selected">————</option>
+					</select>
+				</div>
+				<div class="col-xs-1 col-txt-1"><p>月</p>
+				</div>
+				<div class="col-xs-2 col-sm-2">
+					<select class="form-control" id="date1" name="date1">
+						<option selected="selected">————</option>
+					</select>
+				</div>
+				<div class="col-xs-1 col-txt-1"><p>日</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+				<div class="col-xs-2 col-lg-1 nopadding">
+					<label for="week" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">周&ensp;&ensp;&ensp;&ensp;次</label>
+				</div>
+				<div class="col-xs-4 col-lg-5">
+				  <input type="text" class="form-control" id="week" name="week" value="{{data.week}}"placeholder="请输入周次">
+				</div>
+		</div>
+
+		<div class="form-group" style="margin-bottom:0;">
+			<div class="col-xs-2 col-lg-1 nopadding">
+				<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">节&ensp;&ensp;&ensp;&ensp;次</label>
+			</div>
+			<div class="col-xs-4 col-lg-5" style="padding-left:0;">
+					<select class="form-control" id="section" name="section">
+						<option value="1-2节" selected="selected">1——2节</option>
+						<option value="3-4节">3——4节</option>
+						<option value="5-6节">5——6节</option>
+						<option value="7-8节">7——8节</option>
+						<option value="9-11节">9——11节</option>
+					</select>
+			</div>
+		</div>
+
+		<div class="form-group"><!--说&nbsp;&nbsp;&nbsp;&nbsp;明-->
+			<div class="col-xs-2 col-lg-1 nopadding">
+			</div>
+			<div class="col-xs-2 col-lg-1 nopadding">
+				<label class="col-xs-8 col-xs-offset-2 control-label" style="font-family:FangSong;">说&ensp;&ensp;明</label>
+			</div>
+			<div class="col-xs-8 col-lg-10" style="font-family:FangSong;font-color:#a5a5a5;text-align:left;">
+				节次说明：1——4节为上午；5——8节为下午；9——11节为晚上。<br/>
+				作息时间：秋、夏季1——4节：8:00——11:50；<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;秋季5——8节：14:00——17:30；<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;夏季5——8节：14:30——18:00；<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;秋季9——11节：18:30——21:50；<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;夏季9——11节：19:00——22:20；
+			</div>
+		</div>
+
+
+
+
+		<div class="form-group asso">
+		  	<div class="col-xs-2 col-lg-1 nopadding">
+				<label for="association" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动类型</label>
+			</div>
+			<div class="col-xs-4 col-lg-5" style="padding-left:0;">
+			<select id="activity_type" class="form-control" name="activity_type">
+				<option value="1" selected="selected">一般活动、会议</option>
+				<option value="2">授课、讲座</option>
+			</select>
+			</div>
+	  	</div>	
+	
+
+		<div class="form-group ">
+			<div class="col-xs-2 col-lg-1">
+				<label for="content" class="col-xs-11 col-xs-offset-1 col-md-offset-3 control-label" style="font-family:FangSong;font-color:#a5a5a5;">内&nbsp;&nbsp;容</label>
+			</div>
+			<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+			  <textarea class="form-control" id="content" name="content" placeholder="请输入活动、会议内容（目的，流程，安全负责人，主讲人简介等）">{{data.content}}</textarea>
+			</div>
+		</div>
+
+		<div class="form-group" >
+
+			<div class="col-xs-2 col-lg-1">
+				<label for="host" class="col-xs-12 control-label" style="font-family:FangSong;font-color:#a5a5a5;">主持人</label>
+			</div>
+			<div class="col-xs-2 col-lg-3" style="padding-left:0;">
+				<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+					<input class="form-control" id="host" name="host" value="{{data.host}}"></input>
+				</div>
+			</div>
+
+			<div class="col-xs-2 col-lg-1">
+				<label for="unit" class="col-xs-11 col-xs-offset-1 col-md-offset-3 control-label" style="font-family:FangSong;font-color:#a5a5a5;">单&nbsp;&nbsp;位</label>
+			</div>
+			<div class="col-xs-2 col-lg-3" style="padding-left:0;">
+				<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+					<input class="form-control" id="unit" name="unit" value="{{data.unit}}"></input>
+				</div>
+			</div>
+
+			<div class="col-xs-2 col-lg-1">
+				<label for="title" class="col-xs-12 control-label" style="font-family:FangSong;font-color:#a5a5a5;">&nbsp;职务(职称)</label>
+			</div>
+			<div class="col-xs-2 col-lg-3" style="padding-left:0;">
+				<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+					<input class="form-control" id="title" name="title" value="{{data.title}}" placeholder="请输入职务(职称)"></input>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form-group ">
+			<div class="col-xs-2 col-lg-1 nopadding">
+				<label for="signature" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">会长签字</label>
+			</div>
+			<div class="col-xs-4 col-lg-5">
+			  <input type="text" class="form-control" id="signature" name="signature" value="{{data.signature}}"placeholder="此项必填，等价于实际签字！">
+			</div>
+		</div>
+	  <div class="form-group" style="padding-right:15px;">
+		<div class="col-xs-2 col-lg-1 nopadding">
+				<label for="statement" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">策划提交</label>
+		</div>
+		<div class="col-sm-10" style="padding-left:0;">
+			<input type="text" class="form-control validFileType" id="statement" readonly="readonly">
+		</div>
+		<div class="col-sm-1">
+			<div class="col-sm-10">
+				<input type="file" name="file" class="btn btn-success btn-xs" id="state_choose" style="background-color:#ffffff;color:#000000;border:0;width:1px;" onchange="ale()"></input>
+			</div>
+			<label for="state_choose">
+				<div class="btn btn-success col-sm-12" style="position:absolute;left:0%;border-radius:0;border:0;">
+				<p style="margin:0;height:19px;line-height:80%;">选&nbsp;&nbsp;择</p>
+				</div>
+			</label>
+		</div>
+	  </div><!--以label套div定位后覆盖input #state_choose-->
+	  
+	  <div id="alert" class="alert alert-danger" role="alert"></div>
+	  
+	  <input type="submit" value="提&nbsp;&nbsp;&nbsp;&nbsp;交" class="btn btn-success btn-md submit" style="width:20.7%;border-radius:25px;border-color:#0bc7b4;background-color:#0bc7b4;font-size:20px;box-shadow:0 15px 15px #a7ebe4;" onclick="warns()"></input>
+
+	  <input type="hidden" name="type" value="teachingbuilding"/>
+
+	</form>
+<script>
+if ("{{data.association}}" != ""){
+		$("#time").val("{{data.time}}");
+		$("#person_type").val("{{data.person_type}}");
+		$("#site").val("{{data.site}}");
+		$("#function").val("{{data.function}}");
+		$("#section").val("{{data.section}}");
+		$("#activity_type").val("{{data.activity_type}}");
+	}
+</script>
+<style>
+input,select,textarea{
+	margin: 0 15px;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,138 @@
+body{
+	overflow-x: hidden;
+}
+#top_menu{
+	margin-bottom: 50px;
+}
+.goto input{
+	width:35px;
+	text-align: center;
+	padding: 4px 5px;
+	font-size: 1em;
+	margin: 0 5px;
+	border-radius: 2px 2px 2px 2px;
+	border: 0;
+	background: initial;
+}
+.goto a{
+	width:25px;
+	text-align: center;
+	padding: 5px 5px;
+	margin: 5px 5px;
+	font-size: 10px;
+	background: #bebebe;
+	border-radius: 5px 5px 5px 5px; 
+	cursor: pointer;
+}
+hr{
+	margin:0 15px;
+}
+@media screen and (min-width: 760px){
+#news_{
+	background: #f4f4f4;
+	width:90%;
+	margin: 5px 5%;
+	margin-top: 100px;
+	text-align: center;
+	padding: 20px 10px;
+}
+#search_ {
+	clear: left;
+}
+#search_ input[type="search"]{
+	width:50%;
+	margin: 20px 0;
+	padding: 2px 5px;
+	display: none;
+}
+#search_ input[type="submit"]{
+	background: #4caf50 url(../../static/Home/search.png);
+	border:0;
+	width:50px;
+	margin: 0 10px;
+	position: relative;
+	top:3px;
+	padding: 5px 15px;
+	border-radius: 5px 5px 5px 5px; 
+	cursor: pointer;
+	outline: none;
+	display: none;
+}
+
+#search_ li{
+	position: relative;
+	list-style: none;
+	margin:10px 5px;
+	line-height: 30px;
+	padding:0 0 ;}
+#search_ li{
+	padding:0 15px;
+	border:0;
+	display: inline-block;
+} 
+#search_ li:hover,#search_ li[class="on"]{
+	background: #4caf50;
+	color:#ddd;
+	border-radius: 10px 10px 10px 10px;
+}
+#search_ .search_option{
+	position: relative;
+	left:100px;
+	bottom: 0;
+	cursor: pointer;
+}
+}
+@media screen and (max-width: 759px){
+#news_{
+	background: #f4f4f4;
+	width:90%;
+	margin: 5px 5%;
+	margin-top: 50px;
+	text-align: center;
+	padding: 10px 0px;
+}
+#search_ {
+	clear: left;
+}
+/*#search_ {
+	text-align:center;
+}*/
+form{
+	display: block;
+}
+#search_ input[type="submit"]{
+	background: #4caf50 url(../../static/Home/search.png);
+	border:0;
+	width:50px;
+	position: relative;
+	top:3px;
+	padding: 5px 0px;
+	border-radius: 5px 5px 5px 5px; 
+	cursor: pointer;
+	outline: none;
+	display: none;
+}
+#search_ li{
+	position: relative;
+	list-style: none;
+	margin:5px 0px;
+	line-height: 25px;
+	padding:0 0 ;}
+#search_ li{
+	padding:0 5px;
+	margin:5px 0px;
+	border:0;
+	display: inline-block;
+} 
+#search_ li:hover,#search_ li[class="on"]{
+	background: #4caf50;
+	color:#ddd;
+	border-radius: 10px 10px 10px 10px;
+}
+#search_ .search_option{
+	position: relative;
+	bottom: 0px;
+	left:50px;
+	cursor: pointer;
+}
+}

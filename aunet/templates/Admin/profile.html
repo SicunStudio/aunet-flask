@@ -1,0 +1,61 @@
+<div class="profile uk-container uk-container-center uk-padding-remove">
+    <div class="menu-block">
+        <ul class="menu-items">
+            <li class="menu-items-item" style="padding-top: 20px;">
+                <h1 class="uk-h2">{{ session.userName }} <i class="fa fa-pencil"></i></h1>
+                <div>
+                    <span class="badge" v-for="i of session.roles">
+                        {{ i.roleName }}
+                    </span>
+                </div>
+                <p>最近登录时间 {{ new Date(session.loginTime*1000) }} 于 {{ session.loginIp }}</p>
+            </li>
+        </ul>
+    </div>
+    <div class="menu-block">
+        <h1 class="menu-subtitle">操作</h1>
+        <ul class="menu-items">
+            <li class="menu-items-item" v-on:click="state.changingPasswords = true">
+                修改密码
+            </li>
+            <li class="menu-items-item" v-on:click="state.changingEmail = true">
+                修改验证邮箱 <span style="color: rgba(0, 0, 0, 0.5)">当前邮箱 {{ session.email }}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="menu-block">
+        <ul class="menu-items">
+            <li class="menu-items-item" v-on:click="logout()">
+                <span class="uk-text-danger">注销</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal uk-flex uk-flex-middle uk-flex-center" v-bind:class="{'modal-open': state.changingPasswords}" v-on:click.self="state.changingPasswords = false">
+    <div class="modal-dialog">
+        <div class="modal-dialog-wrapper">
+            <h2 class="uk-h3 uk-text-bold uk-text-center">修改密码</h2>
+            <p class="uk-text-center">输入 {{ session.userName }} 的新密码</p>
+            <input type="password" class="uk-width-1-1" placeholder="新密码" autofocus="" v-model="session.passWord"/>
+        </div>
+        <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
+            <a v-on:click="changePassword()" class="modal-dialog-button">确认</a>
+            <a v-on:click="state.changingPasswords = false" class="uk-text-bold modal-dialog-button">取消</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal uk-flex uk-flex-middle uk-flex-center" v-bind:class="{'modal-open': state.changingEmail}" v-on:click.self="state.changingEmail = false">
+    <div class="modal-dialog">
+        <div class="modal-dialog-wrapper">
+            <h2 class="uk-h3 uk-text-bold uk-text-center">修改验证邮箱</h2>
+            <p class="uk-text-center">输入 {{ session.userName }} 的新邮箱</p>
+            <input type="email" class="uk-width-1-1" placeholder="新邮箱地址" autofocus="" v-model="session.email"/>
+        </div>
+        <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
+            <a v-on:click="changeEmail()" class="modal-dialog-button">确认</a>
+            <a v-on:click="state.changingEmail = false" class="uk-text-bold modal-dialog-button">取消</a>
+        </div>
+    </div>
+</div>
