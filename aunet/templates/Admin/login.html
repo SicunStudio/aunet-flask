@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录物资系统</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/Admin/css/uikit.min.css">
+    <style type="text/css">
+        * {
+            font-family: "Open Sans", "Helvetica", "Microsoft YaHei", "黑体", Sans!important;
+        }
+
+        input {
+            background-color: transparent;
+            border: none;
+            border-radius: 3px;
+            padding: 7px 0;
+        }
+
+        .modal {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            z-index: 100;
+        }
+
+        .modal.modal-open {
+            display: flex;
+        }
+
+        .modal.modal-open .modal-dialog {
+            animation: bounce-in .5s ease;
+        }
+
+        .modal-dialog {
+            background-color: white;
+            border-radius: 4px;
+            max-width: 400px;
+            max-height: 100%;
+            box-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-dialog>* {
+            background-color: white;
+        }
+
+        .modal-dialog-wrapper {
+            padding: 20px;
+        }
+
+        .modal-dialog-button {
+            text-align: center;
+            min-height: 40px;
+            line-height: 40px;
+        }
+
+        .modal-dialog-button:active {
+            background-color: rgba(0, 0, 0, .15);
+        }
+
+        @keyframes bounce-in {
+          0% {
+            transform: scale(0.5);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+    </style>
+</head>
+<body>
+<div class="modal uk-flex uk-flex-middle uk-flex-center modal-open">
+        <div class="modal-dialog">
+            <div class="modal-dialog-wrapper">
+                <h2 class="uk-h3 uk-text-bold uk-text-center">登录</h2>
+                <p class="uk-text-center">登录到社团联合会后台</p>
+                <form method="post" action="/admin/login" id="form">
+                    <input type="text" class="uk-width-1-1" placeholder="用户名" autofocus="" name="userName" />
+                    <input type="password" class="uk-width-1-1" placeholder="密码" name="password" />
+                    <p>验证码：{{ confirmCode }}</p>
+                    <input type="text" class="uk-width-1-1" placeholder="验证码" name="confirmCode" />
+                </form>
+                {% if error!=None%}
+                <span class="uk-text-danger">{{ error}}</span>
+                {% endif %}
+            </div>
+            <div class="uk-grid uk-grid-collapse uk-grid-width-1-2">
+                <a class="modal-dialog-button uk-width-1-1" onclick="document.getElementById('form').submit()">登录</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

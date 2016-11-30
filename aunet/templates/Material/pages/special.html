@@ -1,0 +1,186 @@
+{% extends "form_base.html" %}
+
+{% block form %}
+
+	<form id="form1" class="form-horizontal" role="form" action="{{url_for('material.submit')}}" method="POST" enctype="multipart/form-data">
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="association" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">协会名称</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+		  <input type="text" class="form-control" id="association" name="association" value="{{data.association}}"placeholder="请输入协会名称">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="activity" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动名称</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+		  <input type="text" class="form-control" id="activity" name="activity" value="{{data.activity}}"placeholder="请输入活动名称">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="number" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">参与人数</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+		  <input type="text" class="form-control" id="number" name="number" value="{{data.number}}"placeholder="请输入参与人数">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="content" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动内容</label>
+		</div>
+		<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+	        <textarea class="form-control" id="content" name="content" rows="4">{{data.content}}</textarea>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-11 col-xs-offset-1">
+			<label class="col-xs-12 control-label" style="font-family:FangSong;">注：必须包含主题、目的、流程、安全</label>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="site" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动地点</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+		  <input type="text" class="form-control" id="site" name="site" value="{{data.site}}"placeholder="请输入活动地点">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="is_query" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">是否经过系统查询</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+				<select class="form-control" id="is_query" name="is_query">
+					<option value="是">是</option>
+					<option selected="selected" value="否">否</option>
+				</select>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动日期</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+			<div class="col-xs-2 col-sm-3">
+				<select class="form-control" id="year1" name="year1">
+					<option selected="selected">————</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+				</select>
+			</div>
+			<div class="col-xs-1 col-txt-1"><p>年</p></div>
+			<div class="col-xs-2 col-sm-3">
+				<select class="form-control" id="month1" name="month1" onchange="adddate1()">
+					<option selected="selected">————</option>
+				</select>
+			</div>
+			<div class="col-xs-1 col-txt-1"><p>月</p></div>
+			<div class="col-xs-2 col-sm-3">
+				<select class="form-control" id="date1" name="date1">
+					<option selected="selected">————</option>
+				</select>
+			</div>
+			<div class="col-xs-1 col-txt-1"><p>日</p></div>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动时间</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+				<select class="form-control" id="time" name="time">
+					<option value="上午" selected="selected">上午</option>
+					<option value="下午">下午</option>
+					<option value="晚上">晚上</option>
+				</select>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="sponsor" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">赞助商及赞助方式</label>
+		</div>
+		<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+		  <textarea class="form-control" id="sponsor" name="sponsor" rows="4">{{data.sponsor}}</textarea>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-11 col-xs-offset-1">
+			<label class="col-xs-12 control-label" style="font-family:FangSong;">注：若无则不填</label>
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="resp_person" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">负&ensp;责&ensp;人</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+		  <input type="text" class="form-control" id="resp_person" name="resp_person" value="{{data.resp_person}}"placeholder="请输入活动负责人">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="tel" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">联系电话</label>
+		</div>
+		<div class="col-xs-4 col-lg-5">
+		  <input type="text" class="form-control" id="tel" name="tel" value="{{data.tel}}"placeholder="请输入联系电话">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<div class="col-xs-2 col-lg-1 nopadding">
+			<label for="opinion" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">社团意见</label>
+		</div>
+		<div class="col-xs-10 col-lg-11" style="padding-left:0;">
+			<textarea class="form-control" id="opinion" name="opinion" rows="4">{{data.opinion}}</textarea>
+		</div>
+	  </div>
+
+	  <div class="form-group" style="padding-right:15px;">
+		<div class="col-xs-2 col-lg-1 nopadding">
+				<label for="statement" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">策划提交</label>
+		</div>
+		<div class="col-xs-7 col-lg-10" style="padding-left:0;">
+			<input type="text" class="form-control validFileType" id="statement" readonly="readonly">
+		</div>
+		<div class="col-sm-1">
+			<div class="col-sm-10">
+				<input type="file" name="file" class="btn btn-success btn-xs" id="state_choose" style="background-color:#ffffff;color:#000000;border:0;width:1px;" onchange="ale()"></input>
+			</div>
+			<label for="state_choose">
+				<div class="btn btn-success col-sm-12" style="position:absolute;left:0%;border-radius:0;border:0;padding-left:4px;">
+				<p style="margin:0;height:19px;line-height:80%;">选择文件</p>
+				</div>
+			</label>
+		</div>
+	  </div><!--以label套div定位后覆盖input #state_choose-->
+	  
+	  <div id="alert" class="alert alert-danger" role="alert"></div>
+	  
+	  <input type="submit" value="提&nbsp;&nbsp;&nbsp;&nbsp;交" class="btn btn-success btn-md submit" style="width:20.7%;border-radius:25px;border-color:#0bc7b4;background-color:#0bc7b4;font-size:20px;box-shadow:0 15px 15px #a7ebe4;" onclick="warns()"></input>
+
+	  <input type="hidden" name="type" value="special"/>
+
+	</form>
+<script>
+if ("{{data.association}}" != ""){
+		$("#time").val("{{data.time}}");
+		$("#is_query").val("{{data.is_query}}");
+	}
+</script>
+{% endblock %}

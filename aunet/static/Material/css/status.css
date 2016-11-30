@@ -1,0 +1,95 @@
+<style type="text/css">
+#content-top{
+	height: 40px;
+}
+ul{
+	list-style: none;
+}
+#content-top li{
+	text-align: center;
+	width: 10%;
+	cursor: pointer;
+	float: left;
+}
+#content-top a{
+	color: black;
+	font-size: 16px;
+	display: block;
+	height: 25px;
+	width: 80%;
+	border-radius: 20px;
+}
+#content-top a:hover{
+	text-decoration:none; 
+	background-color: #214f21;
+	color: white;
+}
+label{
+	text-align: center;
+	float: left;
+	width: 10%;
+	font-size: 16px;
+}
+#type-filter{
+	text-align: center;
+	float: left;
+	width: 12%;
+	height: 25px;
+	font-size: 16px;
+}
+#time-filter{
+	font-size: 16px;
+	float: left;
+	width: 12%;
+	padding-left: 10px;
+	border: 1px solid;
+}
+#time-clear{
+	position: relative;
+	right: 4.2%;
+	bottom: 7%;
+	display: none;
+	cursor: pointer;
+}
+table{
+	width: 100%;
+}
+tr.table-top{
+	font-size: 23px;
+	height: 60px;
+}
+tr.table-top td{
+	text-align: center;
+}
+tr.table-content td{
+	text-align: center;
+	font-size: 17px;
+}
+.td-btn{
+	width: 6%;
+	padding-top:5px;
+	padding-bottom: 5px;
+}
+.btn-view,.btn-modify,.btn-delete,.btn-cancel{
+	color: white;
+	border-radius: 20px;
+	width: 90%;
+	border-style: none;
+	height: 25px;
+}
+.btn-view{
+	background-color: #3d913d;
+}
+.btn-modify{
+	background-color: #237fdd;
+}
+.btn-delete{
+	background-color:#e32835;
+}
+.btn-cancel{
+	background-color: #ef842a;
+}
+.dd-w .dd-n{
+	top:2px;
+}
+</style>

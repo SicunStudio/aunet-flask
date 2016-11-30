@@ -1,0 +1,41 @@
+{% extends "/Public/base.html" %}
+	{% block title %}
+		<title>华中科技大学社团网</title>
+	{% endblock %}
+	{% block link %}
+	<style>
+		#info p{
+			text-align: center;
+		}
+		#info a
+		{
+			color:initial
+		}
+	</style>
+	{% endblock %}
+	{% block content %}
+		<div id="info">
+			<br><br><br>
+			<p>当前功能正在建设中...</p>
+			<p><span></span>秒后自动跳转至首页</p>
+			<p>跳转失败请点击<a href="../Home/index">这里</a></p>
+			<br><br><br><br><br>
+		</div>
+	{% endblock %}
+	{% block script %}
+	<script>
+		window.onload=function()
+		{
+			InitHeader();
+		}
+		document.getElementById("info").getElementsByTagName("span")[0].innerHTML="3";
+		time = 2;
+		function delay()
+		{
+			document.getElementById("info").getElementsByTagName("span")[0].innerHTML=time+"";
+			time--;
+		}
+		setInterval(delay,1000);
+	</script>
+	{% endblock %}
+	
