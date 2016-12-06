@@ -131,6 +131,12 @@
         }
         if(obj === undefined) {
             var obj = null;
+        } else { // 因为学校运维问题，用requestMethod表示HTTP request method.
+            if(method === "PUT") {
+                obj["requestMethod"] = "PUT";
+            } else if(method === "DELETE") {
+                obj["requestMethod"] = "DELETE";
+            }
         }
         return $.ajax({
             url: url,
