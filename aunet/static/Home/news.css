@@ -2,7 +2,7 @@ body{
 	overflow-x: hidden;
 }
 #top_menu{
-	margin-bottom: 50px;
+	margin-bottom: 10px;
 }
 .goto input{
 	width:35px;
@@ -32,7 +32,7 @@ hr{
 	background: #f4f4f4;
 	width:90%;
 	margin: 5px 5%;
-	margin-top: 100px;
+	margin-top: 20px;
 	text-align: center;
 	padding: 20px 10px;
 }
@@ -87,7 +87,7 @@ hr{
 	background: #f4f4f4;
 	width:90%;
 	margin: 5px 5%;
-	margin-top: 50px;
+	margin-top: 10px;
 	text-align: center;
 	padding: 10px 0px;
 }
