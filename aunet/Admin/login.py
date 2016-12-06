@@ -13,6 +13,10 @@ login_parser=reqparse.RequestParser()
 login_parser.add_argument('userName',type=str,location="json",required=True)
 login_parser.add_argument('password',type=str,location="json",required=True)
 
+RequestMethod_parser=reqparse.RequestParser()
+RequestMethod_parser.add_argument('requestMethod',type=str,location='json')
+
+
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
 
@@ -82,28 +86,37 @@ class Login(Resource):
 		return data
 
 	def post(self):
-		args=login_parser.parse_args()
-		userName=args['userName']
-		password=args['password']
-		user=User.query.filter(User.userName==userName).first()
-		if user==None:
-			abort(401,message="userName error")
-		elif user.verify_password(password) is not True:
-			abort(401,message="password error")
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		if requestMethod==None:
+			args=login_parser.parse_args()
+			userName=args['userName']
+			password=args['password']
+			user=User.query.filter(User.userName==userName).first()
+			if user==None:
+				abort(401,message="userName error")
+			elif user.verify_password(password) is not True:
+				abort(401,message="password error")
+			else:
+				session.permanent=True
+				login_user(user)
+				ip=str(request.remote_addr)
+				log=LoginLog(current_user.userName,ip)
+				db.session.add(log)
+				db.session.commit()
+				identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
+		elif requestMethod=="DELETE":
+			# Remove the user information from the session
+			logout_user()
+			for key in ('identity.name', 'identity.auth_type'):
+				session.pop(key, None)
 		else:
-			session.permanent=True
-			login_user(user)
-			ip=str(request.remote_addr)
-			log=LoginLog(current_user.userName,ip)
-			db.session.add(log)
-			db.session.commit()
-			identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
+			abort(404,message="api not found")
 
-	def delete(self):
-		    # Remove the user information from the session
-    		logout_user()
-    		for key in ('identity.name', 'identity.auth_type'):
-		    	session.pop(key, None)
+    		
+    		
+
+
 		    
 		  
 
