@@ -49,7 +49,7 @@
         <div class="modal-dialog">
             <div class="modal-dialog-wrapper">
                 <h2 class="uk-h3 uk-text-bold uk-text-center">登录</h2>
-                <p class="uk-text-center">登录到社团联合会后台</p>
+                <p class="uk-text-center">登录到学生社团联合会后台</p>
                 <input type="text" class="uk-width-1-1" placeholder="用户名" autofocus="" v-model="LOGIN.userName" />
                 <input type="password" class="uk-width-1-1" placeholder="密码" v-model="LOGIN.password" v-on:change="state.loggingInError = false" v-on:keyup.enter="login()"/>
                 <p class="uk-text-danger" v-show="state.loggingInError">用户名或密码不正确。</p>
@@ -125,7 +125,19 @@
     </div>
 </body>
 <script>
-    requestJSON = function(url, method="get", obj=null) {
+    requestJSON = function(url, method, obj) {
+        if(method === undefined) {
+            var method = "get";
+        }
+        if(obj === undefined) {
+            var obj = null;
+        } else { // 因为学校运维问题，用requestMethod表示HTTP request method.
+            if(method === "PUT") {
+                obj["requestMethod"] = "PUT";
+            } else if(method === "DELETE") {
+                obj["requestMethod"] = "DELETE";
+            }
+        }
         return $.ajax({
             url: url,
             type: method,
@@ -142,10 +154,14 @@
                 data: function() {
                     return app.$data;
                 },
+                ready: function() {
+                    restoreSession();
+                },
                 methods: {
                     logout: function() {
-                        requestJSON("/api/Login", "delete");
-                        location.reload();
+                        requestJSON("/api/Login", "delete").complete(function() {
+                            location.href = "/admin/logout"; // 直接跳转到/admin/logout
+                        });
                     },
                     changePassword: function() {
                         updateUser(app.session).done(function(data) {
@@ -234,19 +250,20 @@
                     commitColumns: function() {
                         app.state.edittingColumns = false;
                         for(i of app.POSTS.COLUMNS.new) {
-                            createColumn(i);
+                            var a = createColumn(i);
                         }
                         for(i of app.POSTS.COLUMNS.dirty) {
-                            updateColumn(i);
+                            var b = updateColumn(i);
                         }
                         for(i of app.POSTS.COLUMNS.deleted) {
-                            deleteColumn(i);
+                            var c = deleteColumn(i);
                         }
-                        app.POSTS.COLUMNS.new = [];
-                        app.POSTS.COLUMNS.dirty = [];
-                        app.POSTS.COLUMNS.deleted = [];
-
-                        retrieveColumns();
+                        $.when(a, b, c).always(function() {
+                            app.POSTS.COLUMNS.new = [];
+                            app.POSTS.COLUMNS.dirty = [];
+                            app.POSTS.COLUMNS.deleted = [];
+                            retrieveColumns();
+                        });
                     },
                     deleteColumn: function(column) {
                         app.columns.splice(app.columns.indexOf(column), 1);
@@ -272,19 +289,20 @@
                     commitTags: function() {
                         app.state.edittingTags = false;
                         for(i of app.POSTS.TAGS.new) {
-                            createTag(i);
+                            var a = createTag(i);
                         }
                         for(i of app.POSTS.TAGS.dirty) {
-                            updateTag(i);
+                            var b = updateTag(i);
                         }
                         for(i of app.POSTS.TAGS.deleted) {
-                            deleteTag(i);
+                            var c = deleteTag(i);
                         }
-                        app.POSTS.TAGS.new = [];
-                        app.POSTS.TAGS.dirty = [];
-                        app.POSTS.TAGS.deleted = [];
-
-                        retrieveTags();
+                        $.when(a, b, c).always(function() {
+                            app.POSTS.TAGS.new = [];
+                            app.POSTS.TAGS.dirty = [];
+                            app.POSTS.TAGS.deleted = [];
+                            retrieveTags();
+                        });
                     },
                     deleteTag: function(tag) {
                         app.tags.splice(app.tags.indexOf(tag), 1);
@@ -361,16 +379,15 @@
                     commitUsers: function() {
                         app.state.edittingUsers = false;
                         for(i of app.USERS.new) {
-                            createUser(i);
+                            var a = createUser(i);
                         }
                         for(i of app.USERS.dirty) {
-                            updateUser(i);
+                            var b = updateUser(i);
                         }
                         for(i of app.USERS.deleted) {
-                            deleteUser(i);
+                            var c = deleteUser(i);
                         }
-                        retrieveUsers();
-                        this.clearUserTrack();
+                        $.when(a, b, c).done(this.clearUserTrack).always(retrieveUsers);
                     },
                     clearUserTrack: function() {
                         for(i of ["new", "deleted", "dirty"]) {
@@ -407,11 +424,11 @@
                     commitRole: function(role) {
                         if(role.roleName) { // name填写了才会commit
                             if("id" in role) { // 已有角色
-                                updateRole(role);
+                                var p = updateRole(role);
                             } else { // 新建角色
-                                createRole(role);
+                                var p = createRole(role);
                             }
-                            retrieveRoles();
+                            p.always(retrieveRoles);
                         }
                     },
                     removeNodeOfRole: function(role, node) {
@@ -437,9 +454,8 @@
                             return;
                         }
                         if(confirm("真的要删除角色'" + role.roleName + "'吗？")) {
-                            deleteRole(role);
+                            deleteRole(role).always(retrieveRoles);
                         }
-                        retrieveRoles();
                     },
 
                     toggleBannedRole: function(role) {
@@ -465,11 +481,11 @@
                         if(node.nodeName) { // name填写了
                             if("id" in node) { // 已有角色
                                  // 所有字段都填写了
-                                updateNode(node);
+                                var p = updateNode(node);
                             } else { // 新建角色
-                                createNode(node);
+                                var p = createNode(node);
                             }
-                            retrieveNodes();
+                            p.always(retrieveNodes);
                         }
                     },
 
@@ -484,8 +500,7 @@
 
                     deleteNode: function(node) {
                         if(confirm("真的要删除节点'" + node.nodeName + "'吗？")) {
-                            deleteNode(node);
-                            retrieveNodes();
+                            deleteNode(node).always(retrieveNodes);
                         }
                     },
 
@@ -526,18 +541,20 @@
                     commitSlideshows: function() {
                         app.state.edittingSlideshows = false;
                         for(i of app.SITE.new) {
-                            createSlideshow(i);
+                            var a = createSlideshow(i);
                         }
                         for(i of app.SITE.dirty) {
-                            updateSlideshow(i);
+                            var b = updateSlideshow(i);
                         }
                         for(i of app.SITE.deleted) {
-                            deleteSlideshow(i);
+                            var c = deleteSlideshow(i);
                         }
-                        app.SITE.dirty = [];
-                        app.SITE.new = [];
-                        app.SITE.deleted = [];
-                        retrieveSlideshows();
+                        $.when(a, b, c).always(function() {
+                            app.SITE.dirty = [];
+                            app.SITE.new = [];
+                            app.SITE.deleted = [];
+                            retrieveSlideshows();                            
+                        });
                     },
                     markDirty: function(i) {
                         if(app.SITE.dirty.indexOf(i) === -1) {
@@ -573,6 +590,7 @@
         restoreSession = function() { // 恢复登录状态，免去输入密码
             return requestJSON("/api/Login").done(function(data) {
                 app.session = data;
+                app.state.loggingIn = false;
             }).fail(function(status, xhr) {
                 app.state.loggingIn = true;
             });
@@ -580,8 +598,8 @@
 
         login = function() { // 登录
             return requestJSON("/api/Login", "post", app.LOGIN).done(function(data) {
-                app.session = data;
-                app.state.loggingIn = false;
+
+                restoreSession();
             }).fail(function(status, xhr) {
                 app.state.loggingInError = true;
             });
@@ -937,8 +955,7 @@
                 },
                 deletePost: function(post) { // 删除文章
                     if(confirm("删除题为'" + post.title + "'的文章吗？")) {
-                        deletePost(post);
-                        retrievePosts();
+                        deletePost(post).always(retrievePosts);
                     }
                 },
                 restoreSave: function() { // 从localstorage中读取草稿

@@ -46,8 +46,4 @@ window.onload=function()
 	}
 	SetHotnewsMargin();
 	loop  = setInterval(SetHotnewsMargin , 2);
-
-	document.getElementById("load").style.display="none";
-	document.getElementById("main").style.display="block";
-	InitHeader();
 }

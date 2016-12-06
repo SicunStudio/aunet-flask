@@ -457,3 +457,18 @@ function InitHeader()
 	var loop_2	= setInterval(ResetMenuLine , 10)
 }
 
+
+function GetCurrentPage()
+{
+	//alert(document.location.href)
+	var url=document.location.href.split("/")[3];
+	//alert(url)
+	var on=document.getElementById("top_menu_menu").getElementsByTagName("li");
+	switch(url)
+	{
+		case "":
+		case "index":on[0].setAttribute("id","on");break;
+		case "news":on[1].setAttribute("id","on");break;
+		default:on[0].setAttribute("id","on");break;
+	}
+}
