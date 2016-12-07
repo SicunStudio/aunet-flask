@@ -88,7 +88,7 @@ class Login(Resource):
 	def post(self):
 		request_arg=RequestMethod_parser.parse_args()
 		requestMethod=request_arg['requestMethod']
-		if requestMethod==None:
+		if requestMethod=="POST":
 			args=login_parser.parse_args()
 			userName=args['userName']
 			password=args['password']

@@ -40,6 +40,8 @@ User1_parser.add_argument('status',type=bool,location="json")
 
 NodeSpec_parser=reqparse.RequestParser()
 NodeSpec_parser.add_argument('status',type=int,help="status type is int")
+NodeSpec_parser.add_argument('level',type=int,help="permission level")
+
 
 Role_parser=reqparse.RequestParser()
 Role_parser.add_argument('roleName',type=str,location="json",required=True,help="roleName is needed")
@@ -108,7 +110,7 @@ class Users(Resource):
 	def post(self):
 		request_arg=RequestMethod_parser.parse_args()
 		requestMethod=request_arg['requestMethod']
-		if requestMethod==None:
+		if requestMethod=="POST":
 			permission=Permission(ActionNeed('添加用户'))
 			if permission.can()is not True:
 				abort_if_unauthorized("添加用户")
@@ -289,22 +291,23 @@ class NodeSpec(Resource):
 	def post(self,id):
 		request_arg=RequestMethod_parser.parse_args()
 		requestMethod=request_arg['requestMethod']
-		if requestMethod==None:
-			request_arg=RequestMethod_parser.parse_args()
-			requestMethod=request_arg['requestMethod']
-			if requestMethod=="PUT":
-				permission=Permission(ActionNeed("修改节点"))
-				if permission.can()is not True:
-					abort_if_unauthorized("修改节点")
+		if requestMethod=="PUT":
+			permission=Permission(ActionNeed("修改节点"))
+			if permission.can()is not True:
+				abort_if_unauthorized("修改节点")
 
-				node=Node.query.filter(Node.id==id).first()
-				abort_if_not_exist(node,"node")
-				args=NodeSpec_parser.parse_args()
-				status=args['status']
-				if status !=None:
-					node.status=status
-				db.session.add(node)
-				db.session.commit()
+			node=Node.query.filter(Node.id==id).first()
+			abort_if_not_exist(node,"node")
+			args=NodeSpec_parser.parse_args()
+			status=args['status']
+			level=args['level']
+			print (level)
+			if status !=None:
+				node.status=status
+			if level!=None:
+				node.level=level
+			db.session.add(node)
+			db.session.commit()
 		else:
 			abort(404,message="api not found")
 
@@ -334,7 +337,8 @@ class Roles(Resource):
 	def post(self):
 		request_arg=RequestMethod_parser.parse_args()
 		requestMethod=request_arg['requestMethod']
-		if requestMethod==None:
+		print(requestMethod)
+		if requestMethod=="POST":
 			permission=Permission(ActionNeed('添加角色'))
 			if permission.can()is not True:
 				abort_if_unauthorized("添加角色")
