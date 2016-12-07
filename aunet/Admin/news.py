@@ -123,7 +123,7 @@ class SilderShow1(Resource):
     def post(self):
         request_arg=RequestMethod_parser.parse_args()
         requestMethod=request_arg['requestMethod']
-        if requestMethod==None:
+        if requestMethod=="POST":
             permission=Permission(ActionNeed('添加新闻'))
             if permission.can() is not True:
                 abort_if_unauthorized("添加新闻")
@@ -200,7 +200,7 @@ class News1(Resource):
     def post(self):
         request_arg=RequestMethod_parser.parse_args()
         requestMethod=request_arg['requestMethod']
-        if requestMethod==None:
+        if requestMethod=="POST":
             permission=Permission(ActionNeed('添加新闻'))
             if permission.can()is not True:
                 abort_if_unauthorized("添加新闻")
@@ -374,7 +374,7 @@ class Categorys(Resource):
     def post(self):
         request_arg=RequestMethod_parser.parse_args()
         requestMethod=request_arg['requestMethod']
-        if requestMethod==None:
+        if requestMethod=="POST":
             permission=Permission(ActionNeed("添加新闻属性"))
             if permission.can()is not True:
                 abort_if_unauthorized("添加新闻属性")
@@ -447,7 +447,7 @@ class Tags(Resource):
     def post(self):
         request_arg=RequestMethod_parser.parse_args()
         requestMethod=request_arg['requestMethod']
-        if requestMethod==None:
+        if requestMethod=="POST":
             permission=Permission(ActionNeed('修改新闻标签'))
             if permission.can()is not True:
                 abort_if_unauthorized("修改新闻标签")
