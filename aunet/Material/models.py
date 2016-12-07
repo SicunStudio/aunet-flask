@@ -18,6 +18,7 @@ class Base(object):
     tel = db.Column(db.String(15))
     date = db.Column(db.DATE)
     site = db.Column(db.String(10))
+    submit_user_id=db.Column(db.Integer)
 
 
     
