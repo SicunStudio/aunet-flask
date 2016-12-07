@@ -40,6 +40,8 @@ User1_parser.add_argument('status',type=bool,location="json")
 
 NodeSpec_parser=reqparse.RequestParser()
 NodeSpec_parser.add_argument('status',type=int,help="status type is int")
+NodeSpec_parser.add_argument('level',type=int,help="permission level")
+
 
 Role_parser=reqparse.RequestParser()
 Role_parser.add_argument('roleName',type=str,location="json",required=True,help="roleName is needed")
@@ -49,6 +51,9 @@ RoleSpec_parser=reqparse.RequestParser()
 RoleSpec_parser.add_argument('roleName',type=str,location="json")
 RoleSpec_parser.add_argument('nodeName',action="append",type=str,location="json")
 RoleSpec_parser.add_argument('status',type=bool,location="json")
+
+RequestMethod_parser=reqparse.RequestParser()
+RequestMethod_parser.add_argument('requestMethod',type=str,location='json')
 
 
 def abort_if_not_exist(data,message):
@@ -103,28 +108,34 @@ class Users(Resource):
 			datas.append(data)
 		return datas
 	def post(self):
-		permission=Permission(ActionNeed('添加用户'))
-		if permission.can()is not True:
-			abort_if_unauthorized("添加用户")
-		args=User_parser.parse_args()
-		try:
-			args['roleName']=list(eval(args['roleName'][0]))
-		except:
-			pass
-		userName=args['userName']
-		passWord=args['passWord']
-		email=args['email']
-		roleName=args['roleName']
-		phone=args['phone']
-		user1=User.query.filter(User.userName==userName).first()
-		abort_if_exist(user1,"userName")
-		user=User(userName,passWord,email,phone)
-		for name in roleName:
-			role=Role.query.filter(Role.roleName==name).first()
-			abort_if_not_exist(role,"role")
-			user.roles.append(role)
-		db.session.add(user)
-		db.session.commit()
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		if requestMethod=="POST":
+			permission=Permission(ActionNeed('添加用户'))
+			if permission.can()is not True:
+				abort_if_unauthorized("添加用户")
+			args=User_parser.parse_args()
+			try:
+				args['roleName']=list(eval(args['roleName'][0]))
+			except:
+				pass
+			userName=args['userName']
+			passWord=args['passWord']
+			email=args['email']
+			roleName=args['roleName']
+			phone=args['phone']
+			user1=User.query.filter(User.userName==userName).first()
+			abort_if_exist(user1,"userName")
+			user=User(userName,passWord,email,phone)
+			for name in roleName:
+				role=Role.query.filter(Role.roleName==name).first()
+				abort_if_not_exist(role,"role")
+				user.roles.append(role)
+			db.session.add(user)
+			db.session.commit()
+		else:
+			abort(404,message="api not found")
+
 
 class CurrentUser(Resource):
 	def get(self):
@@ -196,64 +207,65 @@ class UserSpec(Resource):
 		return data
 
 
-	def put(self,id):
-		if current_user.is_anonymous==True:
-			abort_if_unauthorized("修改用户")
-		permission=Permission(ActionNeed("修改用户"))
-		permission1=EditUserPermission(EditUserNeed(current_user.id))
-		if (permission.can()is not True)and (permission1.can()is not True):
-			abort_if_unauthorized("修改用户")
+	def post(self,id):
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		if requestMethod=="PUT":
+			if current_user.is_anonymous==True:
+				abort_if_unauthorized("修改用户")
+			permission=Permission(ActionNeed("修改用户"))
+			permission1=EditUserPermission(EditUserNeed(current_user.id))
+			if (permission.can()is not True)and (permission1.can()is not True):
+				abort_if_unauthorized("修改用户")
 
-		user=User.query.filter(User.id==id).first()
-		abort_if_not_exist(user,"user")
-		args=User1_parser.parse_args()
-		# userId=args['userId']
-		status=args['status']
-		email=args['email']
-		phone=args['phone']
-		passWord=args['passWord']
-		roleName=args['roleName']
-		userName=args['userName']
-		if userName!=None and userName!=user.userName:
-			user1=User.query.filter(User.userName==userName).first()
-			abort_if_exist(user1,"userName")
-			user.userName=userName
-		
-		if status!=None and permission.can():
-			user.status=status
-		if email!=None:
-			user.email=email
-		if phone!=None:
-			user.phone=phone
-		if passWord!=None:
-			user.passWord=generate_password_hash(passWord)
-		if roleName!=None and permission.can():
-			try:
-				roleName=list(eval(roleName[0]))
-			except:
-				pass
-			r=list()
-			for name in roleName:
-				role=Role.query.filter(Role.roleName==name).first()
-				abort_if_not_exist(role,"role")
-				r.append(role)
-			user.roles=r
-		if userName!=None:
-			user.userName=userName
-		db.session.add(user)
-		db.session.commit()
-
-
-
-	def delete(self,id):
-		permission=Permission(ActionNeed("删除用户"))
-		if permission.can()is not True:
-			abort_if_unauthorized("删除用户")
-		user=User.query.filter(User.id==id).first()
-		abort_if_not_exist(user,"user")
-		db.session.delete(user)
-		db.session.commit()
-
+			user=User.query.filter(User.id==id).first()
+			abort_if_not_exist(user,"user")
+			args=User1_parser.parse_args()
+			# userId=args['userId']
+			status=args['status']
+			email=args['email']
+			phone=args['phone']
+			passWord=args['passWord']
+			roleName=args['roleName']
+			userName=args['userName']
+			if userName!=None and userName!=user.userName:
+				user1=User.query.filter(User.userName==userName).first()
+				abort_if_exist(user1,"userName")
+				user.userName=userName
+			
+			if status!=None and permission.can():
+				user.status=status
+			if email!=None:
+				user.email=email
+			if phone!=None:
+				user.phone=phone
+			if passWord!=None:
+				user.passWord=generate_password_hash(passWord)
+			if roleName!=None and permission.can():
+				try:
+					roleName=list(eval(roleName[0]))
+				except:
+					pass
+				r=list()
+				for name in roleName:
+					role=Role.query.filter(Role.roleName==name).first()
+					abort_if_not_exist(role,"role")
+					r.append(role)
+				user.roles=r
+			if userName!=None:
+				user.userName=userName
+			db.session.add(user)
+			db.session.commit()
+		elif requestMethod=="DELETE":
+			permission=Permission(ActionNeed("删除用户"))
+			if permission.can()is not True:
+				abort_if_unauthorized("删除用户")
+			user=User.query.filter(User.id==id).first()
+			abort_if_not_exist(user,"user")
+			db.session.delete(user)
+			db.session.commit()
+		else:
+			abort(404,message="api not found")
 
 
 class Nodes(Resource):	
@@ -276,19 +288,28 @@ class NodeSpec(Resource):
 		abort_if_not_exist(node,"node")
 		return node
 
-	def put(self,id):
-		permission=Permission(ActionNeed("修改节点"))
-		if permission.can()is not True:
-			abort_if_unauthorized("修改节点")
+	def post(self,id):
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		if requestMethod=="PUT":
+			permission=Permission(ActionNeed("修改节点"))
+			if permission.can()is not True:
+				abort_if_unauthorized("修改节点")
 
-		node=Node.query.filter(Node.id==id).first()
-		abort_if_not_exist(node,"node")
-		args=NodeSpec_parser.parse_args()
-		status=args['status']
-		if status !=None:
-			node.status=status
-		db.session.add(node)
-		db.session.commit()
+			node=Node.query.filter(Node.id==id).first()
+			abort_if_not_exist(node,"node")
+			args=NodeSpec_parser.parse_args()
+			status=args['status']
+			level=args['level']
+			print (level)
+			if status !=None:
+				node.status=status
+			if level!=None:
+				node.level=level
+			db.session.add(node)
+			db.session.commit()
+		else:
+			abort(404,message="api not found")
 
 class Roles(Resource):
 	def get(self):
@@ -314,27 +335,33 @@ class Roles(Resource):
 		return datas
 
 	def post(self):
-		permission=Permission(ActionNeed('添加角色'))
-		if permission.can()is not True:
-			abort_if_unauthorized("添加角色")
-		args=Role_parser.parse_args()
-		roleName=args['roleName']
-		try:
-			nodeName=list(eval(args['nodeName'][0]))
-		except:
-			nodeName=args['nodeName']
-		
-		role1=Role.query.filter(Role.roleName==roleName).first()
-		abort_if_exist(role1,"roleName")
-		role=Role(roleName)
-		db.session.add(role)
-		db.session.commit()
-		for name in nodeName:
-			node=Node.query.filter(Node.nodeName==name).first()
-			abort_if_not_exist(node,"node")
-			role.nodes.append(node)
-		db.session.add(role)
-		db.session.commit()
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		print(requestMethod)
+		if requestMethod=="POST":
+			permission=Permission(ActionNeed('添加角色'))
+			if permission.can()is not True:
+				abort_if_unauthorized("添加角色")
+			args=Role_parser.parse_args()
+			roleName=args['roleName']
+			try:
+				nodeName=list(eval(args['nodeName'][0]))
+			except:
+				nodeName=args['nodeName']
+			
+			role1=Role.query.filter(Role.roleName==roleName).first()
+			abort_if_exist(role1,"roleName")
+			role=Role(roleName)
+			db.session.add(role)
+			db.session.commit()
+			for name in nodeName:
+				node=Node.query.filter(Node.nodeName==name).first()
+				abort_if_not_exist(node,"node")
+				role.nodes.append(node)
+			db.session.add(role)
+			db.session.commit()
+		else:
+			abort(404,message="api not found")
 
 class RoleSpec(Resource):
 	def get(self,id):
@@ -357,45 +384,48 @@ class RoleSpec(Resource):
 			data['nodes'].append(n)
 		return data
 
-	def put(self,id):
-		permission=Permission(ActionNeed('修改角色'))
-		if permission.can()is not True:
-			abort_if_unauthorized("修改角色")
-		
-		role=Role.query.filter(Role.id==id).first()
-		abort_if_not_exist(role,"role")
-		args=RoleSpec_parser.parse_args()
-		roleName=args['roleName']
-		nodeName=args['nodeName']
-		status=args['status']
-		if roleName!=None and roleName!=role.roleName:
-			r=Role.query.filter_by(roleName=roleName).first()
-			abort_if_exist(r,"rolename")
-			role.roleName=roleName
-		if status!=None:
-			role.status=status
-		if nodeName!=None:
-			try:
-				nodeName=list(eval(nodeName[0]))
-			except:
-				pass
-			n=list()
-			for name in nodeName:
-				node=Node.query.filter(Node.nodeName==name).first()
-				abort_if_not_exist(node,"node")
-				n.append(node)
-			role.nodes=n
+	def post(self,id):
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		if requestMethod=="PUT":
+			permission=Permission(ActionNeed('修改角色'))
+			if permission.can()is not True:
+				abort_if_unauthorized("修改角色")
+			
+			role=Role.query.filter(Role.id==id).first()
+			abort_if_not_exist(role,"role")
+			args=RoleSpec_parser.parse_args()
+			roleName=args['roleName']
+			nodeName=args['nodeName']
+			status=args['status']
+			if roleName!=None and roleName!=role.roleName:
+				r=Role.query.filter_by(roleName=roleName).first()
+				abort_if_exist(r,"rolename")
+				role.roleName=roleName
+			if status!=None:
+				role.status=status
+			if nodeName!=None:
+				try:
+					nodeName=list(eval(nodeName[0]))
+				except:
+					pass
+				n=list()
+				for name in nodeName:
+					node=Node.query.filter(Node.nodeName==name).first()
+					abort_if_not_exist(node,"node")
+					n.append(node)
+				role.nodes=n
 
-		db.session.add(role)
-		db.session.commit()
+			db.session.add(role)
+			db.session.commit()
+		elif requestMethod=="DELETE":
+			permission=Permission(ActionNeed('删除角色'))
+			if permission.can()is not True:
+				abort_if_unauthorized("删除角色")
 
-	def delete(self,id):
-		permission=Permission(ActionNeed('删除角色'))
-		if permission.can()is not True:
-			abort_if_unauthorized("删除角色")
-
-		role=Role.query.filter(Role.id==id).first()
-		abort_if_not_exist(role,"role")
-		db.session.delete(role)
-		db.session.commit()
-
+			role=Role.query.filter(Role.id==id).first()
+			abort_if_not_exist(role,"role")
+			db.session.delete(role)
+			db.session.commit()
+		else:
+			abort(404,message="api not found")

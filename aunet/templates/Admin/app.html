@@ -127,17 +127,23 @@
 <script>
     requestJSON = function(url, method, obj) {
         if(method === undefined) {
-            var method = "get";
+            return $.ajax({
+                url: url,
+                type: "get",
+                contentType: "application/json",
+                dataType: "json",
+            });
+        } // 简单GET
+        if(obj === undefined) { // 因为学校运维问题，用requestMethod表示HTTP request method.
+            var obj = {};
         }
-        if(obj === undefined) {
-            var obj = null;
-        }
+        obj["requestMethod"] = method.toUpperCase();
         return $.ajax({
             url: url,
-            type: method,
+            type: "post",
             contentType: "application/json",
             dataType: "json",
-            data: obj !== null ? JSON.stringify(obj) : "",
+            data: JSON.stringify(obj),
         });
     };
 
