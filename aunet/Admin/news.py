@@ -48,6 +48,10 @@ parser.add_argument('name',type=str,location='json',help="name is needed",requir
 parser_spec=reqparse.RequestParser()
 parser_spec.add_argument('name',type=str,location='json')
 
+RequestMethod_parser=reqparse.RequestParser()
+RequestMethod_parser.add_argument('requestMethod',type=str,location='json')
+
+
 class CategoryItem(fields.Raw):
     def format(self,category):
         if len(category)==0:
@@ -117,17 +121,22 @@ class SilderShow1(Resource):
         return silder_shows
 
     def post(self):
-        permission=Permission(ActionNeed('添加新闻'))
-        if permission.can() is not True:
-            abort_if_unauthorized("添加新闻")
-        args=SilderShow_parser.parse_args()
-        title=args['title']
-        imgUrl=args['imgUrl']
-        outline=args['outline']
-        link=args['link']
-        silder_show=SilderShow(title,imgUrl,outline,link)
-        db.session.add(silder_show)
-        db.session.commit()
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="POST":
+            permission=Permission(ActionNeed('添加新闻'))
+            if permission.can() is not True:
+                abort_if_unauthorized("添加新闻")
+            args=SilderShow_parser.parse_args()
+            title=args['title']
+            imgUrl=args['imgUrl']
+            outline=args['outline']
+            link=args['link']
+            silder_show=SilderShow(title,imgUrl,outline,link)
+            db.session.add(silder_show)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
 class SliderShowSpec(Resource):
     @marshal_with(SilderShow_fields)
@@ -139,39 +148,45 @@ class SliderShowSpec(Resource):
         abort_if_not_exist(silder_show,"silder_show")
         return silder_show
 
-    def put(self,id):
-        permission=Permission(ActionNeed('修改新闻'))
-        if permission.can()is not True:
-            abort_if_unauthorized("修改新闻")
-        silder_show=SilderShow.query.filter(SilderShow.id==id).first()
-        abort_if_not_exist(silder_show,"silder_show")
-        args=SilderShowSpec_parser.parse_args()
-        title=args['title']
-        imgUrl=args['imgUrl']
-        outline=args['outline']
-        editable=args['editable'] 
-        link=args['link']
-        if title!=None:
-            silder_show.title=title
-        if imgUrl!=None:
-            silder_show.img_url=imgUrl
-        if outline!=None:
-            silder_show.outline=outline
-        if editable!=None:
-            silder_show.editable=editable
-        if link!=None:
-            silder_show.link=link
-        db.session.add(silder_show)
-        db.session.commit()
+    def post(self,id):
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="PUT":
+            permission=Permission(ActionNeed('修改新闻'))
+            if permission.can()is not True:
+                abort_if_unauthorized("修改新闻")
+            silder_show=SilderShow.query.filter(SilderShow.id==id).first()
+            abort_if_not_exist(silder_show,"silder_show")
+            args=SilderShowSpec_parser.parse_args()
+            title=args['title']
+            imgUrl=args['imgUrl']
+            outline=args['outline']
+            editable=args['editable'] 
+            link=args['link']
+            if title!=None:
+                silder_show.title=title
+            if imgUrl!=None:
+                silder_show.img_url=imgUrl
+            if outline!=None:
+                silder_show.outline=outline
+            if editable!=None:
+                silder_show.editable=editable
+            if link!=None:
+                silder_show.link=link
+            db.session.add(silder_show)
+            db.session.commit()
+        elif requestMethod=="DELETE":
+            permission=Permission(ActionNeed('删除新闻'))
+            if permission.can()is not True:
+                abort_if_unauthorized("删除新闻")
+            silder_show=SilderShow.query.filter(SilderShow.id==id).first()
+            abort_if_not_exist(silder_show,"silder_show")
+            db.session.delete(silder_show)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
-    def delete(self,id):
-        permission=Permission(ActionNeed('删除新闻'))
-        if permission.can()is not True:
-            abort_if_unauthorized("删除新闻")
-        silder_show=SilderShow.query.filter(SilderShow.id==id).first()
-        abort_if_not_exist(silder_show,"silder_show")
-        db.session.delete(silder_show)
-        db.session.commit()
+
 
 class News1(Resource):
     @marshal_with(News_fields)
@@ -183,94 +198,23 @@ class News1(Resource):
         return news
 
     def post(self):
-
-        permission=Permission(ActionNeed('添加新闻'))
-        if permission.can()is not True:
-            abort_if_unauthorized("添加新闻")
-        args=News_parser.parse_args()
-        category=args['category']
-        detail=args['detail']
-        title=args['title']
-        tags=args['tags']
-        try:
-            tags=list(eval(tags[0]))
-        except:
-            pass
-        soup=BeautifulSoup(detail,"html.parser")
-        k=0
-        for img  in soup.find_all('img'):
-            imgurl=img.get('src')
-            r=request.urlopen(imgurl)
-            data=r.read()
-            imgBuf=BytesIO(data)
-            i=Image.open(imgBuf)
-            filename=str(int(random.uniform(1,1000)+time.time()))+".png"
-            path=os.path.join(app.config['BASEDIR'],'aunet/static/Uploads/News',filename)
-            # return path;
-            i.save(path,quality="96")
-            f=open(path,"rb")
-            data=f.read()      
-            data=base64.b64encode(data)     
-            data=str(data)
-            data=data[2:-1]
-            data="data:image/jpg;base64,"+data
-            img['src']=data
-            # return img
-            k=k+1
-            if k>1:
-                os.remove(path)
-            else:
-                imgUrlFirst="static/Uploads/News/"+filename
-        if k==0:
-            imgUrlFirst="static/Uploads/News/1.jpg"
-        # return imgUrlFirst
-        outline=soup.get_text()[:100]
-        news=News(soup.prettify(),title,outline,imgUrlFirst)
-        db.session.add(news)
-        db.session.commit()
-        news.addCategory(category)
-        for tag in tags:
-            t=Tag.query.filter_by(name=tag).first()
-            abort_if_not_exist(t,"tag")
-            news.tags.append(t)
-        db.session.add(news)
-        db.session.commit()
-
-
-
-class NewsSpec(Resource):
-    @marshal_with(NewsSpec_fields)
-    def get(self,id):
-        permission=Permission(ActionNeed(('查看新闻')))
-        if permission.can() is not True:
-            abort_if_unauthorized("查看新闻")
-        news=News.query.filter(News.id==id).first()
-        abort_if_not_exist(news,"news")
-        return news
-
-    def put(self,id):
-        permission=Permission(ActionNeed('修改新闻'))
-        if permission.can()is not True:
-            abort_if_unauthorized("修改新闻")
-        news=News.query.filter(News.id==id).first()
-        abort_if_not_exist(news,"news")
-        args=NewsSpec_parser.parse_args()
-        category=args['category']
-        detail=args['detail']
-        title=args['title']
-        editable=args['editable']
-        tags=args['tags']
-        try:
-            tags=list(eval(tags[0]))
-        except:
-            pass
-        if category!=None:
-            news.category=[]
-            news.addCategory(category)
-        if detail!=None:
-            news.detail=detail
-            k=0
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="POST":
+            permission=Permission(ActionNeed('添加新闻'))
+            if permission.can()is not True:
+                abort_if_unauthorized("添加新闻")
+            args=News_parser.parse_args()
+            category=args['category']
+            detail=args['detail']
+            title=args['title']
+            tags=args['tags']
+            try:
+                tags=list(eval(tags[0]))
+            except:
+                pass
             soup=BeautifulSoup(detail,"html.parser")
+            k=0
             for img  in soup.find_all('img'):
                 imgurl=img.get('src')
                 r=request.urlopen(imgurl)
@@ -295,31 +239,111 @@ class NewsSpec(Resource):
                 else:
                     imgUrlFirst="static/Uploads/News/"+filename
             if k==0:
-                imgUrlFirst="static/uploads/News/1.jpg"
+                imgUrlFirst="static/Uploads/News/1.jpg"
+            # return imgUrlFirst
             outline=soup.get_text()[:100]
-            news.outline=outline
-            news.img_url=imgUrlFirst
-        if title!=None:
-            news.title=title
-
-        if editable!=None:
-            news.editable=editable
-        if tags!=None:
-            news.tags=[]
+            news=News(soup.prettify(),title,outline,imgUrlFirst)
+            db.session.add(news)
+            db.session.commit()
+            news.addCategory(category)
             for tag in tags:
-                news.addTag(tag)
-        db.session.add(news)
-        db.session.commit()
+                t=Tag.query.filter_by(name=tag).first()
+                abort_if_not_exist(t,"tag")
+                news.tags.append(t)
+            db.session.add(news)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
-    def delete(self,id):
-        permission=Permission(ActionNeed('删除新闻'))
-        if permission.can()is not True:
-            abort_if_unauthorized("删除新闻")
-     
+
+
+class NewsSpec(Resource):
+    @marshal_with(NewsSpec_fields)
+    def get(self,id):
+        permission=Permission(ActionNeed(('查看新闻')))
+        if permission.can() is not True:
+            abort_if_unauthorized("查看新闻")
         news=News.query.filter(News.id==id).first()
         abort_if_not_exist(news,"news")
-        db.session.delete(news)
-        db.session.commit()
+        return news
+
+    def post(self,id):
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="PUT":
+            permission=Permission(ActionNeed('修改新闻'))
+            if permission.can()is not True:
+                abort_if_unauthorized("修改新闻")
+            news=News.query.filter(News.id==id).first()
+            abort_if_not_exist(news,"news")
+            args=NewsSpec_parser.parse_args()
+            category=args['category']
+            detail=args['detail']
+            title=args['title']
+            editable=args['editable']
+            tags=args['tags']
+            try:
+                tags=list(eval(tags[0]))
+            except:
+                pass
+            if category!=None:
+                news.category=[]
+                news.addCategory(category)
+            if detail!=None:
+                news.detail=detail
+                k=0
+                soup=BeautifulSoup(detail,"html.parser")
+                for img  in soup.find_all('img'):
+                    imgurl=img.get('src')
+                    r=request.urlopen(imgurl)
+                    data=r.read()
+                    imgBuf=BytesIO(data)
+                    i=Image.open(imgBuf)
+                    filename=str(int(random.uniform(1,1000)+time.time()))+".png"
+                    path=os.path.join(app.config['BASEDIR'],'aunet/static/Uploads/News',filename)
+                    # return path;
+                    i.save(path,quality="96")
+                    f=open(path,"rb")
+                    data=f.read()      
+                    data=base64.b64encode(data)     
+                    data=str(data)
+                    data=data[2:-1]
+                    data="data:image/jpg;base64,"+data
+                    img['src']=data
+                    # return img
+                    k=k+1
+                    if k>1:
+                        os.remove(path)
+                    else:
+                        imgUrlFirst="static/Uploads/News/"+filename
+                if k==0:
+                    imgUrlFirst="static/uploads/News/1.jpg"
+                outline=soup.get_text()[:100]
+                news.outline=outline
+                news.img_url=imgUrlFirst
+            if title!=None:
+                news.title=title
+
+            if editable!=None:
+                news.editable=editable
+            if tags!=None:
+                news.tags=[]
+                for tag in tags:
+                    news.addTag(tag)
+            db.session.add(news)
+            db.session.commit()
+        elif requestMethod=="DELETE":
+            permission=Permission(ActionNeed('删除新闻'))
+            if permission.can()is not True:
+                abort_if_unauthorized("删除新闻")
+            
+            news=News.query.filter(News.id==id).first()
+            abort_if_not_exist(news,"news")
+            db.session.delete(news)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
+
 class NewsSpecDetail(Resource):
     def get(self,id):
         # id=int(id)
@@ -348,16 +372,21 @@ class Categorys(Resource):
        
 
     def post(self):
-        permission=Permission(ActionNeed("添加新闻属性"))
-        if permission.can()is not True:
-            abort_if_unauthorized("添加新闻属性")
-        args=parser.parse_args()
-        name=args['name']
-        c=Category.query.filter(Category.name==name).first()
-        abort_if_exist(c,"category")
-        category=Category(name)
-        db.session.add(category)
-        db.session.commit()
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="POST":
+            permission=Permission(ActionNeed("添加新闻属性"))
+            if permission.can()is not True:
+                abort_if_unauthorized("添加新闻属性")
+            args=parser.parse_args()
+            name=args['name']
+            c=Category.query.filter(Category.name==name).first()
+            abort_if_exist(c,"category")
+            category=Category(name)
+            db.session.add(category)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
 class Category1(Resource):
     def get(self,id):
@@ -371,31 +400,34 @@ class Category1(Resource):
         data['id']=category.id
         return data
 
-    def put(self,id):
-        permission=Permission(ActionNeed('修改新闻属性'))
-        if permission.can()is not True:
-            abort_if_unauthorized("修改新闻属性")
-        category=Category.query.filter(Category.id==id).first()
-        abort_if_not_exist(category,"category")
-        args=parser_spec.parse_args()
-        name=args['name']
-        if name!=None and name!=category.name:
-            c=Category.query.filter(Category.name==name).first()
-            abort_if_exist(c,"category")
-            category.name=name
-        db.session.add(category)
-        db.session.commit()
-
-
-    def delete(self,id):
-        permission=Permission(ActionNeed('删除新闻属性'))
-        if permission.can()is not True:
-            abort_if_unauthorized("删除新闻属性")
-        id=int(id)
-        category=Category.query.filter(Category.id==id).first()
-        abort_if_not_exist(category,"category")
-        db.session.delete(category)
-        db.session.commit()
+    def post(self,id):
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="PUT":
+            permission=Permission(ActionNeed('修改新闻属性'))
+            if permission.can()is not True:
+                abort_if_unauthorized("修改新闻属性")
+            category=Category.query.filter(Category.id==id).first()
+            abort_if_not_exist(category,"category")
+            args=parser_spec.parse_args()
+            name=args['name']
+            if name!=None and name!=category.name:
+                c=Category.query.filter(Category.name==name).first()
+                abort_if_exist(c,"category")
+                category.name=name
+            db.session.add(category)
+            db.session.commit()
+        elif requestMethod=="DELETE":
+            permission=Permission(ActionNeed('删除新闻属性'))
+            if permission.can()is not True:
+                abort_if_unauthorized("删除新闻属性")
+            id=int(id)
+            category=Category.query.filter(Category.id==id).first()
+            abort_if_not_exist(category,"category")
+            db.session.delete(category)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
 class Tags(Resource):
     def get(self):
@@ -413,16 +445,21 @@ class Tags(Resource):
        
 
     def post(self):
-        permission=Permission(ActionNeed('修改新闻标签'))
-        if permission.can()is not True:
-            abort_if_unauthorized("修改新闻标签")
-        args=parser.parse_args()
-        name=args['name']
-        t=Tag.query.filter(Tag.name==name).first()
-        abort_if_exist(t,"tag")
-        tag=Tag(name)
-        db.session.add(tag)
-        db.session.commit()
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="POST":
+            permission=Permission(ActionNeed('修改新闻标签'))
+            if permission.can()is not True:
+                abort_if_unauthorized("修改新闻标签")
+            args=parser.parse_args()
+            name=args['name']
+            t=Tag.query.filter(Tag.name==name).first()
+            abort_if_exist(t,"tag")
+            tag=Tag(name)
+            db.session.add(tag)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
 class Tag1(Resource):
     def get(self,id):
@@ -436,29 +473,32 @@ class Tag1(Resource):
         data['id']=tag.id
         return data
 
-    def put(self,id):
-        permission=Permission(ActionNeed('修改新闻标签'))
-        if permission.can()is not True:
-            abort_if_unauthorized("修改新闻标签")
-        tag=Tag.query.filter(Tag.id==id).first()
-        abort_if_not_exist(tag,"tag")
-        args=parser_spec.parse_args()
-        name=args['name']
-        if name!=None and name!=tag.name:
-            t=Tag.query.filter(Tag.name==name).first()
-            abort_if_exist(t,"tag")
-            tag.name=name
-        db.session.add(tag)
-        db.session.commit()
+    def post(self,id):
+        request_arg=RequestMethod_parser.parse_args()
+        requestMethod=request_arg['requestMethod']
+        if requestMethod=="PUT":
+            permission=Permission(ActionNeed('修改新闻标签'))
+            if permission.can()is not True:
+                abort_if_unauthorized("修改新闻标签")
+            tag=Tag.query.filter(Tag.id==id).first()
+            abort_if_not_exist(tag,"tag")
+            args=parser_spec.parse_args()
+            name=args['name']
+            if name!=None and name!=tag.name:
+                t=Tag.query.filter(Tag.name==name).first()
+                abort_if_exist(t,"tag")
+                tag.name=name
+            db.session.add(tag)
+            db.session.commit()
+        elif requestMethod=="DELETE":
+            permission=Permission(ActionNeed('删除新闻标签'))
+            if permission.can()is not True:
+                abort_if_unauthorized("删除新闻标签")
+            tag=Tag.query.filter(Tag.id==id).first()
+            abort_if_not_exist(tag,"tag")
+            db.session.delete(tag)
+            db.session.commit()
+        else:
+            abort(404,message="api not found")
 
-
-    def delete(self,id):
-        permission=Permission(ActionNeed('删除新闻标签'))
-        if permission.can()is not True:
-            abort_if_unauthorized("删除新闻标签")
-        tag=Tag.query.filter(Tag.id==id).first()
-        abort_if_not_exist(tag,"tag")
-        db.session.delete(tag)
-        db.session.commit()
-        
 
