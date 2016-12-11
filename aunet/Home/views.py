@@ -94,10 +94,6 @@ def newJson():
 		sort=get_dict['Sort']
 		goto_page=get_dict['gotoPage']
 		goto_page=int(goto_page)
-		# Category=request.values.get['Category']
-		# Time=request.values.get['Time']
-		# Sort=request.values.get['Sort']
-		# gotoPage=request.values.get['gotoPage']
 		if time=="all":
 			time=now-timedelta(days=365*10)
 		elif time=="week":
