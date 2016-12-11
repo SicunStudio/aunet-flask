@@ -16,7 +16,10 @@ from datetime import timedelta
 
 app=Flask(__name__)#创建应用
 app.config.from_object('config')#导入配置
-
+try:
+	app.config.from_object('secret_config')#导入secret配置
+except:
+	pass
 # 实例化各扩展
 db=SQLAlchemy(app)
 # api=Api(app,errors=errors)

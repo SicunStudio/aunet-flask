@@ -3,33 +3,36 @@
 		<title>华中科技大学社团网</title>
 	{% endblock %}
 	{% block link %}
+	<meta http-equiv="refresh" content="5;url=/">
 	<style>
-		#info p{
+		#info p,#info h2{
 			text-align: center;
 		}
 		#info a
 		{
-			color:initial
+			color:#4D4ADE;
+			text-decoration: underline;
 		}
 	</style>
 	{% endblock %}
 	{% block content %}
 		<div id="info">
-			<br><br><br>
-			<p>当前功能正在建设中...</p>
-			<p><span></span>秒后自动跳转至首页</p>
-			<p>跳转失败请点击<a href="../Home/index">这里</a></p>
+			<br><br><br><br><br>
+			<h2>当前功能正在建设中...</h2>
+			<h2><span></span>秒后自动跳转至首页</h2>
+			<h2>跳转失败请点击<a href="/">这里</a></h2>
 			<br><br><br><br><br>
 		</div>
 	{% endblock %}
 	{% block script %}
 	<script>
+		time = 4 ;
 		window.onload=function()
 		{
 			InitHeader();
+			footerBottom();
 		}
-		document.getElementById("info").getElementsByTagName("span")[0].innerHTML="3";
-		time = 2;
+		document.getElementById("info").getElementsByTagName("span")[0].innerHTML=time+1;
 		function delay()
 		{
 			document.getElementById("info").getElementsByTagName("span")[0].innerHTML=time+"";

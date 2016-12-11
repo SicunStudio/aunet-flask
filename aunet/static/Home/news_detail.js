@@ -82,13 +82,6 @@ window.onload=function()
 	js.lang.String.call(String.prototype);
     document.getElementsByClassName("container")[0].innerHTML=(document.getElementsByClassName("hide")[0].innerHTML.decodeHtml())
 		
+	footerBottom();
 
-    var footer_top = getTop(document.getElementById("footer"));
-    var footer_height = getHeight(document.getElementById("footer"));
-    if((footer_top + footer_height) < GetWinHeight())
-    {
-    	document.getElementById("footer").style.position = "absolute";
-    	document.getElementById("footer").style.width = "100%";
-    	document.getElementById("footer").style.bottom = "0px";
-    }
 	}
