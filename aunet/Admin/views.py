@@ -157,6 +157,7 @@ def getApp(path=None):
 def upload():
     pass
 
+#忘记密码功能还未实现
 @admin.route('/forget',methods=["GET","POST"])
 def forget():
     if request.method=="POST":

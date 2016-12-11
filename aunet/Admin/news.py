@@ -20,7 +20,6 @@ SilderShow_parser.add_argument('imgUrl',type=str,required=True,location="json",h
 SilderShow_parser.add_argument("outline",type=str,required=True,location="json",help="outline is needed")
 SilderShow_parser.add_argument("link",type=str,required=True,location="json",help="the link that jump")
 
-
 SilderShowSpec_parser=reqparse.RequestParser()
 SilderShowSpec_parser.add_argument('title',type=str,location="json",help="title")
 SilderShowSpec_parser.add_argument('imgUrl',type=str,location="json",help="imgUrl")
@@ -188,7 +187,7 @@ class SliderShowSpec(Resource):
 
 
 
-class News1(Resource):
+class News1(Resource):                  #使用News1作为类名，防止与表类News冲突
     @marshal_with(News_fields)
     def get(self):
         permission=Permission(ActionNeed(('查看新闻')))
@@ -239,7 +238,7 @@ class News1(Resource):
                 else:
                     imgUrlFirst="static/Uploads/News/"+filename
             if k==0:
-                imgUrlFirst="static/Uploads/News/1.jpg"
+                imgUrlFirst="static/Uploads/News/1.jpg"         #默认的新闻展示图片
             # return imgUrlFirst
             outline=soup.get_text()[:100]
             news=News(soup.prettify(),title,outline,imgUrlFirst)
