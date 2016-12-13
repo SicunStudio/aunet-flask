@@ -64,7 +64,7 @@ def on_identity_loaded(sender, identity):
                     identity.provides.add(ActionNeed(node.nodeName))
     	
     
-    		
+'''   		
 @admin.route('/index')
 @admin.route('/')
 def index():    
@@ -91,7 +91,8 @@ def login():
             session['confirmCode']=confirmCode
             error="验证码错误"
             return render_template("Admin/login.html",confirmCode=confirmCode,error=error)
-        else:          
+        else:
+            session.permanent=True          
             login_user(user)
             ip=request.remote_addr
             log=LoginLog(current_user.userName,ip)
@@ -110,8 +111,8 @@ def login():
 # @lm.unauthorized_handler
 # def unauthorized_handle():
 #     return "good"
-
-@app.route('/logout')
+'''
+@admin.route('/logout')
 # @login_required
 def logout():
     # Remove the user information from the session

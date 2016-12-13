@@ -15,6 +15,9 @@ from random import randint
 from .. import db
 from . import material
 
+from aunet.Admin.email import send_email
+from aunet.Admin.models import User
+
 Upload_path = path.join(app.config['BASEDIR'],'aunet','static','Uploads','Material')
 Docx_path = path.join(app.config['BASEDIR'],'aunet','static','Material','docx')
 types = {
@@ -162,7 +165,7 @@ def submit():
     data.applicant = current_user.id
     data.date=form['year1']+'-'+form['month1']+'-'+form['date1']
     data.apply_time = strftime('%Y-%m-%d %H:%M:%S',time)
-    
+    data.submit_user_id=current_user.id
  
     if type == 'material':
         if form['material_type'] == '2':
@@ -191,7 +194,12 @@ def submit():
         db.session.rollback()
         flash("表单数据有误，未能成功提交！")
         return redirect(url_for('material.status'))     
-    
+    #发送邮件
+    html=render_template(
+            'Material/mail/submit_success.html',
+            userName=current_user.userName,type=types[type][1])
+    send_email("场地物资申请提交成功",[current_user.email], html)
+
     flash("申请提交成功，等待审批！")
     return redirect(url_for('material.status'))
 
@@ -212,6 +220,7 @@ def main(option,type):
         if data.result=='1' or (data.result=='0' and data.pre_verify is not None):
             abort(403)
     apply_type = types[type][1]
+
     return render_template('/pages/'+type+'.html',data=data,\
         apply_type = apply_type)
 
@@ -262,7 +271,7 @@ def approve():
 
     type = request.form.get('type')
     if type not in types.keys() : abort(404)
-
+    print (request.form)
     id = request.form.get('id')
     data = types[type][0].query.filter_by(id = int(id)).first_or_404()
     data.advice = request.form.get('advice')
@@ -274,6 +283,16 @@ def approve():
     db.session.add(data)
     db.session.commit()
     flash('审批操作成功！')
+    # 发送邮件
+    if data.result=="1":
+        result="通过"
+    else :
+        result="未通过"
+    submit_user=User.query.filter(User.id==data.submit_user_id).first()
+    html=render_template(
+            'Material/mail/approve_status.html',
+            userName=submit_user.userName,submitTime=data.apply_time.strftime("%Y %b %d %H:%M"),type=types[type][1],result=result)
+    send_email("场地物资申请审批结果",[submit_user.email],html)
 
     return redirect(url_for('material.admin'))
 

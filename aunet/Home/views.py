@@ -27,15 +27,15 @@ def time_filter(s):
 @home.route('/index',methods=["POST","GET"])
 def index():
 	silder_show=SilderShow.query.order_by(SilderShow.post_time.desc()).limit(5).all()
-	CharmAssociation=getNews(1,"charm_association")
+	CharmAssociation=getNews(1,"魅力社团")#charm_association
 	# StarAssociation1=getStarAssociation("StarAssociationer")
 	# StarAssociation2=getStarAssociation("StarAUer")
 	# StarAssociation3=getStarAssociation("StarTeacher")
-	LatestNotice=getNews(1,"notice")
-	LatestAdvanceNotice=getNews(1,"advance_notice")
-	NewsPinPai=getNews(1,"pin_pai")
-	NewsCharmHust=getNews(1,"charm_hust")
-	NewsYuLan=getNews(2,"news")
+	LatestNotice=getNews(1,"通知")
+	LatestAdvanceNotice=getNews(1,"预告")
+	NewsPinPai=getNews(1,"品牌活动")
+	NewsCharmHust=getNews(1,"魅力华科")
+	NewsYuLan=getNews(2,"新闻")
 	return render_template("Home/index/index.html",SilderShow=silder_show,CharmAssociation=CharmAssociation   \
 					,LatestNotice=LatestNotice \
 					,LatestAdvanceNotice=LatestAdvanceNotice,NewsPinPai=NewsPinPai,\

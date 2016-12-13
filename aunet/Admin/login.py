@@ -4,7 +4,7 @@ from flask_login import login_user,current_user,logout_user
 from flask_principal import identity_loaded,RoleNeed,UserNeed,ActionNeed
 from flask_principal import Identity, AnonymousIdentity, \
      identity_changed,Permission
-from flask import request,current_app
+from flask import request,current_app,session
 from .models import User,LoginLog
 from .models import EditUserPermission,EditUserNeed
 from aunet import app,db
@@ -13,8 +13,14 @@ login_parser=reqparse.RequestParser()
 login_parser.add_argument('userName',type=str,location="json",required=True)
 login_parser.add_argument('password',type=str,location="json",required=True)
 
+RequestMethod_parser=reqparse.RequestParser()
+RequestMethod_parser.add_argument('requestMethod',type=str,location='json')
+
+
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
+
+
     # Set the identity user object
     identity.user = current_user
     #user has the permission of edit himself
@@ -45,6 +51,10 @@ class Login(Resource):
 		user=current_user
 		if user.is_anonymous==True:
 			abort(401,message="unlogined")
+		if user.is_authenticated is not True:
+			abort(401,message="unlogined")
+		if user.is_active is not True:
+			abort(401,message="unlogined")
 		log=LoginLog.query.filter(LoginLog.userName==user.userName).order_by(LoginLog.id.desc()).first()
 		data=dict()
 		if log !=None:
@@ -57,6 +67,7 @@ class Login(Resource):
 		data['userName']=user.userName
 		data['status']=user.status
 		data['email']=user.email
+		data['phone']=user.phone
 		data['roles']=list()
 		data['nodes']=list()
 		for role in user.roles:
@@ -75,25 +86,40 @@ class Login(Resource):
 		return data
 
 	def post(self):
-		args=login_parser.parse_args()
-		userName=args['userName']
-		password=args['password']
-		user=User.query.filter(User.userName==userName).first()
-		if user==None:
-			abort(401,message="userName error")
-		elif user.verify_password(password) is not True:
-			abort(401,message="password error")
+		request_arg=RequestMethod_parser.parse_args()
+		requestMethod=request_arg['requestMethod']
+		if requestMethod=="POST":
+			args=login_parser.parse_args()
+			userName=args['userName']
+			password=args['password']
+			user=User.query.filter(User.userName==userName).first()
+			if user==None:
+				abort(401,message="userName error")
+			elif user.verify_password(password) is not True:
+				abort(401,message="password error")
+			else:
+				session.permanent=True
+				login_user(user)
+				ip=str(request.remote_addr)
+				log=LoginLog(current_user.userName,ip)
+				db.session.add(log)
+				db.session.commit()
+				identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
+		elif requestMethod=="DELETE":
+			# Remove the user information from the session
+			logout_user()
+			for key in ('identity.name', 'identity.auth_type'):
+				session.pop(key, None)
 		else:
-			login_user(user)
-			ip=request.remote_addr
-			log=LoginLog(current_user.userName,ip)
-			db.session.add(log)
-			db.session.commit()
-			identity_changed.send(current_app._get_current_object(),identity=Identity(user.id))
+			abort(404,message="api not found")
 
-	def delete(self):
-		    # Remove the user information from the session
-    		logout_user()
-    		for key in ('identity.name', 'identity.auth_type'):
-		    	session.pop(key, None)
-		   
+    		
+    		
+
+
+		    
+		  
+
+		    
+
+

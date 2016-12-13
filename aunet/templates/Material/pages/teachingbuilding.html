@@ -98,8 +98,8 @@
 		    <div class="col-xs-2 col-lg-1 nopadding">
 				<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动日期</label>
 			</div>
-			<div class="col-xs-4" style="width:40%;">
-				<div class="col-xs-2 col-sm-3">
+			<div class="col-xs-4 col-sm-6" style="">
+				<div class="col-xs-4 col-sm-2">
 					<select class="form-control" id="year1" name="year1">
 						<option selected="selected">————</option>
 						<option value="2016">2016</option>
@@ -109,14 +109,14 @@
 				</div>
 				<div class="col-xs-1 col-txt-1"><p>年</p>
 				</div>
-				<div class="col-xs-2 col-sm-3">
+				<div class="col-xs-2 col-sm-2">
 					<select class="form-control" id="month1" name="month1" onchange="adddate1()">
 						<option selected="selected">————</option>
 					</select>
 				</div>
 				<div class="col-xs-1 col-txt-1"><p>月</p>
 				</div>
-				<div class="col-xs-2 col-sm-3">
+				<div class="col-xs-2 col-sm-2">
 					<select class="form-control" id="date1" name="date1">
 						<option selected="selected">————</option>
 					</select>
@@ -231,7 +231,7 @@
 			</div>
 
 			<div class="col-xs-2 col-lg-1">
-				<label for="title" class="col-xs-12 control-label" style="font-family:FangSong;font-color:#a5a5a5;">&nbsp;职务<br>(职称)</label>
+				<label for="title" class="col-xs-12 control-label" style="font-family:FangSong;font-color:#a5a5a5;">&nbsp;职务(职称)</label>
 			</div>
 			<div class="col-xs-2 col-lg-3" style="padding-left:0;">
 				<div class="col-xs-10 col-lg-11" style="padding-left:0;">
@@ -262,7 +262,7 @@
 			</div>
 			<label for="state_choose">
 				<div class="btn btn-success col-sm-12" style="position:absolute;left:0%;border-radius:0;border:0;">
-				<p style="margin:0;height:19px;line-height:80%;">选&nbsp;&nbsp;&nbsp;&nbsp;择</p>
+				<p style="margin:0;height:19px;line-height:80%;">选&nbsp;&nbsp;择</p>
 				</div>
 			</label>
 		</div>
@@ -285,4 +285,9 @@ if ("{{data.association}}" != ""){
 		$("#activity_type").val("{{data.activity_type}}");
 	}
 </script>
+<style>
+input,select,textarea{
+	margin: 0 15px;
+}
+</style>
 {% endblock %}

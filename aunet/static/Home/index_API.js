@@ -457,3 +457,39 @@ function InitHeader()
 	var loop_2	= setInterval(ResetMenuLine , 10)
 }
 
+
+function GetCurrentPage()
+{
+	//alert(document.location.href)
+	var url=document.location.href.split("/")[3];
+	//alert(url)
+	var on=document.getElementById("top_menu_menu").getElementsByTagName("li");
+	switch(url)
+	{
+		case "":
+		case "index":on[0].setAttribute("id","on");break;
+		case "news":on[1].setAttribute("id","on");break;
+		default:on[0].setAttribute("id","on");break;
+	}
+}
+
+
+function footerBottom()
+{
+	var footer_top = getTop(document.getElementById("footer_"));
+    var footer_height = getHeight(document.getElementById("footer_"));
+    if((footer_top + footer_height) < GetWinHeight())
+    {
+    	document.getElementById("footer_").style.position = "absolute";
+    	document.getElementById("footer_").style.width = "100%";
+    	document.getElementById("footer_").style.bottom = "0px";
+    }
+    var footer_top = getTop(document.getElementById("bottom_menu"));
+    var footer_height = getHeight(document.getElementById("bottom_menu"));
+    if((footer_top + footer_height) < GetWinHeight())
+    {
+    	document.getElementById("bottom_menu").style.position = "absolute";
+    	document.getElementById("bottom_menu").style.width = "100%";
+    	document.getElementById("bottom_menu").style.bottom = getHeight(document.getElementById("footer_"))+"px";
+    }
+}

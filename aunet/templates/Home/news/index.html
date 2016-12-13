@@ -1,47 +1,19 @@
-	<!DOCTYPE html>
-<html>	
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+{% extends "/Public/base.html" %}
+	{% block link %}
 		<link rel="stylesheet" type="text/css" href="../../../static/Home/index_mobile.css">
-		<link rel="stylesheet" type="text/css" href="../../../static/Home/header_footer.css">
 		<link rel="stylesheet" type="text/css" href="../../../static/Home/news.css">
-		<title>华中科技大学社团网__新闻</title>
-	</head>
-	<body>
-		<div id="top_menu">
-			<img src="../../../static/Home/au_logo.png" alt="" class="logo">
-			<span class="top_menu_title">
-				<div>社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网</div>
-				<div>华中科技大学学生社团联合会</div>
-			</span>
-			<ul id="top_menu_menu">
-				<a href="../index"><li>首&nbsp;页</li></a>
-				<a href=""><li id="on">新&nbsp;闻</li></a>
-				<a href=""><li>社&nbsp;团</li></a>
-				<a href=""><li>社&nbsp;联</li></a>
-				<a href=""><li>管&nbsp;理</li></a>
-				<a href=""><li>其&nbsp;他</li></a>
-			</ul>
-			<div id="menu_bottom_line"></div>
-			<div class="menu">
-				<div class="icon"></div>
-				<div class="icon"></div>
-				<div class="icon"></div>
-			</div>
-			<a href="../../dashboard"><button>登&nbsp;&nbsp;&nbsp;&nbsp;录</button></a>
-		</div>
+	{% endblock %}
+	{% block title %}<title>华中科技大学社团网__新闻</title>{% endblock %}
 
+	{% block content %}
 		<div id="search_">
-
 			<div class="search_option">
 				<ul name="Category">
 					<caption>类型：</caption>
 					<li class="on" name="all">全部</li>
-					<li name="news">新闻</li>
-					<li name="notice">通知</li>
-					<li name="preview">预告</li>
+					<li name="新闻">新闻</li>
+					<li name="通知">通知</li>
+					<li name="预告">预告</li>
 				</ul>
 				<ul name="Time">
 					<caption>时间：</caption>
@@ -58,10 +30,7 @@
 					<li name="oldest">最旧</li>
 				</ul>
 			</div>
-		</div>
-
-
-
+		</div> 
 		<div id="news_">
 			<div id="load">Loading...</div>
 			<div id="main">
@@ -74,30 +43,8 @@
 				</div>
 			</div>
 		</div>
-		
-
-
-
-		<div id="footer">
-			<div id="bottom_menu">
-			<span>友情链接</span>
-			<span>
-				<ul>
-					<li><a href="http://www.hust.edu.cn/">华中科技大学</a></li>
-					<li><a href="http://www.ehust.net/">学工在线</a></li>
-					<li><a href="http://youth.hust.edu.cn">校团委</a></li>
-					<li><a href="http://www.zuiwan.net/">醉晚亭</a></li>
-				</ul>
-			</span>
-			<span>
-				<img src="../../../static/Home/1479310722.png" alt="">
-			</span>
-		</div>
-
-		<div id="footer_">copyright:Copyright &copy; 2008-<year></year> AU Sicun Studio. All rights reserved.</div>
-		</div>
-	</body>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="../../../static/Home/index_API.js"></script>
-	<script src="../../../static/Home/news.js"></script>
-</html>
+	{% endblock %}
+	{% block script %}
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="../../../static/Home/news.js"></script>
+	{% endblock %}

@@ -28,6 +28,8 @@
                             </div>
                             <p><a href="mailto: {{i.email}}">{{ i.email }}</a></p>
                             <p v-show="'loginTime' in i">最近登录 {{ new Date(i.loginTime*1000) }} 在 {{ i.loginIp }}</p>
+                            <p v-show="'email' in i">邮箱 {{ i.email }}</p>
+                            <p v-show="'phone' in i">电话 {{ i.phone }}</p>
                         </div>
                         <div v-else>
                             <input type="text" class="uk-h2 uk-width-1-1" v-model="i.userName" placeholder="用户名" v-on:change="markDirtyUser(i)"/>
@@ -39,9 +41,11 @@
                                     <option v-for="role of roles">{{ role.roleName }}</option>
                                 </select>
                             </div>
-                            <p><input type="text" v-model="i.email" placeholder="绑定邮箱" v-on:change="markDirtyUser(i)" class="uk-width-1-1"/></p>
+                            <p>邮箱 <input type="text" v-model="i.email" placeholder="绑定邮箱" v-on:change="markDirtyUser(i)" class="uk-width-1-1"/></p>
+                            <p>密码 <input type="text" v-model="i.passWord" placeholder="密码" v-on:change="markDirtyUser(i)" class="uk-width-1-1"/></p>
+                            <p>电话 <input type="tel" v-model="i.phone" placeholder="电话号码" v-on:change="markDirtyUser(i)" class="uk-width-1-1"/></p>
                         </div>
-                        <div v-show="state.edittingUsers">
+                        <div v-show="state.edittingUsers" style="min-width: 6em;">
                             <a class="uk-margin-right" v-on:click="toggleBannedUser(i)" v-show="i.status === true">禁用</a>
                             <a class="uk-margin-right" v-on:click="toggleBannedUser(i)" v-else>解封</a>
                             <a class="uk-text-danger" v-on:click="markDeletedUser(i)">删除</a>
@@ -55,7 +59,7 @@
         <div class="menu-block uk-container uk-container-center">
                 <h1 class="menu-subtitle">所有角色</h1>
                 <ul class="menu-items">
-                    <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" v-for="i of roles">
+                    <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" v-for="i of roles" v-on:blur="debug('hi')">
                         <div>
                             <div>
                                 <div style="flex-grow: 1;">
@@ -70,7 +74,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div>
+                        <div style="min-width: 6em;">
                             <a class="uk-margin-right" v-on:click="toggleBannedRole(i)" v-show="i.status === true">禁用</a>
                             <a class="uk-margin-right" v-on:click="toggleBannedRole(i)" v-else>解封</a>
                             <a class="uk-text-danger" v-on:click="deleteRole(i)">删除</a>
@@ -91,7 +95,7 @@
             <h1 class="menu-subtitle">所有节点</h1>
             <ul class="menu-items">
                 <li class="menu-items-item uk-flex uk-flex-middle uk-flex-space-between" v-for="i of nodes">
-                    <span class="uk-text-danger uk-h3" v-if="!i.status">被禁用</span>
+                    <span class="uk-text-danger uk-h3" style="flex-shrink: 0;" v-if="!i.status">被禁用</span>
                     <input class="uk-h3 uk-width-1-1" type="text" v-model="i.nodeName" placeholder="节点名称" v-on:blur="changeNodeNameOfNode(i)"/>
                     <input class="badge" style="background-color: #4CAF50; width: 3em;" type="number" v-model="i.level" v-on:change="changeLevelOfNode(i)" placeholder="级别" denounce="500"/>
                     <div style="flex-shrink: 0;">

@@ -43,7 +43,7 @@
                         </div>
                         <div>最后更新 {{ new Date(i.lastModificationTime * 1000) }}</div>
                     </div>
-                    <div v-show="i.editable">
+                    <div v-show="i.editable" style="min-width: 6em;">
                         <a class="uk-text-danger uk-display-inline-block uk-margin-right" v-on:click="deletePost(i)">删除</a>
                         <a class="uk-display-inline-block" v-on:click="localEdit(i)">编辑</a>
                     </div>
