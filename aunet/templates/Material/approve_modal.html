@@ -1,7 +1,7 @@
 
 
 	<div style="display:inline-block;position:absolute;top:10%;right:28%;left:10%;" align="center">
-		<div class="modal-content" style="margin-bottom:100px">
+		<div class="modal-content" style="margin-bottom:100px;padding-left:10px;padding-right:10px">
 			<div class="modal-body" style="margin-bottom:30px">
 				<br>
 				<h4 style="font-family:SimHei;font-size:24pt">
@@ -24,7 +24,12 @@
 				 是否已打印</label>
 			 	<br/>
 				<label class="modal-label">初审</label>
-				<input type="text" name="pre_verify" id="pre_verify" placeholder="填写初审人姓名" value="{{data.pre_verify}}">
+				<input type="text" name="pre_verify" id="pre_verify" placeholder="填写初审人姓名" value="
+				{% if data.pre_verify == None %}
+				暂无
+				{% else %}
+				{{data.pre_verify}}
+				{% endif %}" >
 
 			<label class="modal-label">审 批 结 果</label>
 			<select name="result" value="{{data.result}}" id="result">
@@ -33,7 +38,11 @@
 			  <option value="2">未通过</option>
 			</select>
 			<label class="modal-label">审 批 意 见</label>
-			<textarea name="advice" id="advice" rows="5" style="resize:none;border-radius:4px;width:100%;" >{{data.advice}}</textarea>
+			<textarea name="advice" id="advice" rows="5" style="resize:none;border-radius:4px;width:100%;" >
+				{% if data.advice == None %}
+				{% else %}
+				{{data.advice}}
+				{% endif %}</textarea>
 			<input type="hidden" name="id" id="approve-id"/>
 			<input type="hidden" name="type" id="approve-type"/>
 			</div>

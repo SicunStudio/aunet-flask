@@ -14,11 +14,11 @@
 						&times;
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-						删除
+						撤销
 					</h4>
 				</div>
 				<div class="modal-body">
-					确定要删除吗？(删除后不可恢复)
+					确定要撤销申请吗？(撤销后不可恢复)
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal" style="background:green;border:none;color:white">关闭
@@ -32,8 +32,8 @@
 	</div>
 	<div id="content-top">
 	<ul>
-		<li><a status="012">所&ensp;&ensp;有</a></li>
-		<li><a status="0">审&ensp;批&ensp;中</a></li>
+		<li><a status="0123">所&ensp;&ensp;有</a></li>
+		<li><a status="03">审&ensp;批&ensp;中</a></li>
 		<li><a status="2">未&ensp;通&ensp;过</a></li>
 		<li><a status="1">已&ensp;通&ensp;过</a></li>
 		<li><a status="12">已&ensp;审&ensp;批</a></li>
@@ -67,7 +67,7 @@
 			<td class="material-type">{{types[data.__tablename__[9:]][1]}}</td>
 			<td class="result">{{results[data.result]}}</td>
 			<td class="status">
-			{% if data.result == '0' and data.pre_verify == None %}
+			{% if data.result == '0' and data.pre_verify == None or data.result=='3'%}
 			初审中
 			{% elif data.result == '0' and data.pre_verify != None%}
 			初审通过
@@ -90,11 +90,15 @@
 				{% endif %}
 			</td>
 			<td class="td-btn"><button class="btn-view" onclick="viewModal($(this))">查看</button></td>
-			<td class="td-btn"><button class="btn-modify" onclick="modify($(this))">修改</button></td>
-			{% if data.result == '0' %}
+			{% if data.result == '1' or (data.result == '0' and data.pre_verify != None) %}
+			<td class="td-btn"><button class="btn-modify" style="background-color:#c0c0c0" disabled="disabled">修改</button></td>			
+			<td class="td-btn"><button class="btn-cancel" style="background-color:#c0c0c0" disabled="disabled">撤销</button></td>
+			{% elif data == '2' or (data.result == '0' and data.pre_verify == None) %}
+			<td class="td-btn"><button class="btn-modify" onclick="modify($(this))">修改</button></td>			
 			<td class="td-btn"><button class="btn-cancel" onclick="confirmDelete($(this))">撤销</button></td>
 			{% else %}
-			<td class="td-btn"><button class="btn-delete" onclick="confirmDelete($(this))">删除</button></td>
+			<td class="td-btn"><button class="btn-modify" onclick="modify($(this))">修改</button></td>			
+			<td class="td-btn"><button class="btn-cancel" style="background-color:#c0c0c0" disabled="disabled">撤销</button></td>
 			{% endif %}
 		</tr>
 		{% endfor %}
