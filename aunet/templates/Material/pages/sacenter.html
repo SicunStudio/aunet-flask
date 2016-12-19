@@ -141,16 +141,28 @@
 
 	  <div class="form-group">
 		<div class="col-xs-2 col-lg-1 nopadding">
-			<label for="" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动时间</label>
+			<label class="col-xs-12 col-lg-11 col-lg-offset-1 control-label">使用时间</label>
 		</div>
-		<div class="col-xs-4 col-lg-5">
-				<select class="form-control" id="time" name="time">
-					<option value="上午" selected="selected">上午</option>
-					<option value="下午">下午</option>
-					<option value="晚上">晚上</option>
-				</select>
+		<input type="hidden" name="time">
+		<div class="col-xs-4 col-lg-5" id="time_choose">
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="上午" />上午
+				</label>
+			</div>
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="下午" />下午
+				</label>
+			</div>
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="晚上" />晚上
+				</label>
+			</div>
 		</div>
 	  </div>
+
 
 	  <div class="form-group">
 		<div class="col-xs-2 col-lg-1 nopadding">
@@ -190,7 +202,7 @@
 			<label for="opinion" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">社团意见</label>
 		</div>
 		<div class="col-xs-10 col-lg-11" style="padding-left:0;">
-			<textarea class="form-control" id="opinion" name="opinion" rows="4">{{data.opinion}}</textarea>
+			<textarea class="form-control" id="opinion" name="opinion" rows="4" placeholder="若无则填写同意">{{data.opinion}}</textarea>
 		</div>
 	  </div>
 
@@ -238,7 +250,6 @@ if ("{{data.association}}" != ""){
 	var room ="#" + "room" + "{{data.site_type}}";
 	$(room).val("{{data.site}}");
 	tosite({{data.site_type}});
-	$("#time").val("{{data.time}}");
 	$("#is_query").val("{{data.is_query}}");
 }
 

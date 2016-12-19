@@ -7,7 +7,8 @@ $(document).ready(function(){
 			var result = {
 				"1":"pass",
 				"2":"fail",
-				"0":"ongoing"
+				"0":"ongoing",
+				"3":"modified"
 			}
 			var index = $(this).attr("result");
 			$(this).find(".seal").css("background-image","url('/static/Material/icon-"+result[index]+".jpg");

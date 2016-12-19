@@ -71,15 +71,26 @@
 
 	  <div class="form-group">
 		<div class="col-xs-2 col-lg-1 nopadding">
-			<label for="" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">使用时间</label>
+			<label class="col-xs-12 col-lg-11 col-lg-offset-1 control-label">使用时间</label>
 		</div>
-		<div class="col-xs-4 col-lg-5">
-				<select class="form-control" id="time" name="time">
-					<option value="上午" selected="selected">上午</option>
-					<option value="下午">下午</option>
-					<option value="晚上">晚上</option>
-				</select>
+		<input type="hidden" name="time">
+		<div class="col-xs-4 col-lg-5" id="time_choose">
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="上午" />上午
+				</label>
 			</div>
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="下午" />下午
+				</label>
+			</div>
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="晚上" />晚上
+				</label>
+			</div>
+		</div>
 	  </div>
 
 	  <div class="form-group">
@@ -88,6 +99,11 @@
 		</div>
 		<div class="col-xs-10 col-lg-11" style="padding-left:0;">
 		  <textarea class="form-control" id="sponsor" name="sponsor" rows="4">{{data.sponsor}}</textarea>
+		</div>
+	  </div>
+	  <div class="form-group">
+		<div class="col-xs-11 col-xs-offset-1">
+			<label class="col-xs-12 control-label" style="font-family:FangSong;">注：若无则不填</label>
 		</div>
 	  </div>
 
@@ -117,7 +133,7 @@
 
 	  <div class="form-group">
 		<div class="col-xs-4 col-lg-5 col-xs-offset-2 col-lg-offset-1">
-			<textarea class="form-control" id="opinion" name="opinion" rows="4">{{data.opinion}}</textarea>
+			<textarea class="form-control" id="opinion" name="opinion" rows="4" placeholder="若无则填写同意" >{{data.opinion}}</textarea>
 		</div>
 	  </div>
 
@@ -147,9 +163,5 @@
 	  <input type="submit" value="提&nbsp;&nbsp;&nbsp;&nbsp;交" class="btn btn-success btn-md submit" style="width:20.7%;border-radius:25px;border-color:#0bc7b4;background-color:#0bc7b4;font-size:20px;box-shadow:0 15px 15px #a7ebe4;" onclick="warns()"></input>
 
 	</form>
-<script>
-if ("{{data.association}}" != ""){
-		$("#time").val("{{data.time}}");
-	}
-</script>
+
 {% endblock %}

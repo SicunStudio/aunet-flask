@@ -36,7 +36,7 @@
 		<div style="width:18%;float:left;height:1px;"></div>
 
 		<div class="header_filt">
-			<p status="012">所&ensp;&ensp;&ensp;有</p>
+			<p status="0123">所&ensp;&ensp;&ensp;有</p>
 		</div>
 
 		<div class="header_filt">
@@ -52,7 +52,7 @@
 		</div>
 
 		<div class="header_filt">
-			<p status="0">审 批 中</p>
+			<p status="03">审 批 中</p>
 		</div>
 
 		<div class="logout">
@@ -118,14 +118,29 @@
 				<div class="i3">
 					<div style="height:20%"></div>
 					<p><span>申请时间</span>&ensp;&ensp;<span name="applytime">{{data.apply_time}}</span></p>
-					<p><span>审批时间</span>&ensp;&ensp;<span name="checktime">{{data.approve_time}}</span></p>
+					<p><span>审批时间</span>&ensp;&ensp;<span name="checktime">	
+					{% if data.approve_time == None %}
+					暂无
+					{% else %}
+					{{data.approve_time}}
+					{% endif %}</span></p>
 				</div>
 				<div class="i4">
 					<div style="height:15%"></div>
 					
-					<p><span>初审：</span>&nbsp;&nbsp;<span name="outcome">{{data.pre_verify}}</span>&ensp;&ensp;&ensp;&ensp;
+					<p><span>初审：</span>&nbsp;&nbsp;<span name="outcome">
+					{% if data.pre_verify == None %}
+					暂无
+					{% else %}
+					{{data.pre_verify}}
+					{% endif %}</span>&ensp;&ensp;&ensp;&ensp;
 					<span class="is_print">{% if data.is_print=='是' %}已 打 印{% else %}未 打 印{% endif %}</span></p>
-					<p><span>审核意见：</span><span name="checker">{{data.advice}}</span></p>
+					<p><span>审核意见：</span><span name="checker">
+					{% if data.advice == None %}
+					暂无
+					{% else %}
+					{{data.advice}}
+					{% endif %}</span></p>
 				</div>
 
 				<div class="i5">
