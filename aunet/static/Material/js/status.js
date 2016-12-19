@@ -90,7 +90,7 @@ $("#content-top a").click(function(){
 	$("#time-filter").val("");
 	$("#time-clear").css("display","none");
 })
-$("#content-top a[status=012]").trigger("click");
+
 function filter(){
 	var materialType = $("#type-filter option:selected").val();
 	var date = $("#time-filter").val();
@@ -111,3 +111,4 @@ function timeClear(){
 	filter();
 	$("#time-clear").css("display","none")
 }
+$("#content-top a[status=0123]").trigger("click");
