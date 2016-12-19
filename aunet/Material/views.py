@@ -174,7 +174,7 @@ def submit():
         if form['material_type'] == '4':
             data.projector_date = form['year3']+'-'\
             +form['month3']+'-'+form['date3']
-    else if type == 'colorprint':
+    elif type == 'colorprint':
             data.finish_date = form['year2']+'-'\
             +form['month2']+'-'+form['date2']
     date_items = [a+b for a in ['year','month','date'] 
