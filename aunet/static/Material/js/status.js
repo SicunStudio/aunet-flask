@@ -42,7 +42,7 @@ function confirmDelete(bt){
 }
 function drop(type,id){
 	var form = $("<form></form>");
-	var action = "{{url_for('material.delete')}}";
+	var action = "/Material/delete/";
 	form.attr({
 		"method":"post",
 		"action":action,

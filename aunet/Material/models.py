@@ -30,7 +30,7 @@ class Base1(object):
     opinion = db.Column(db.String(10))
     content = db.Column(db.TEXT)
     resp_person = db.Column(db.String(10),nullable = False)
-    time = db.Column(db.String(5))
+    time = db.Column(db.String(6))
 
 class East4(db.Model,Base,Base1):
     '''model of east4'''
@@ -58,9 +58,10 @@ class Special(db.Model,Base,Base1):
 class Colorprint(db.Model,Base):
     '''model of colorprint'''
     __tablename__ = 'material_colorprint'
+    finish_date = db.Column(db.DATE)
     is_sponsor = db.Column(db.CHAR(1))
     remark = db.Column(db.TEXT)
-    time = db.Column(db.String(5))
+    time = db.Column(db.String(6))
     content = db.Column(db.TEXT)
     resp_person = db.Column(db.String(10),nullable = False)
 
@@ -69,7 +70,7 @@ class Sports(db.Model,Base):
     __tablename__ = 'material_sports'
     school_id = db.Column(db.String(10))
     remark = db.Column(db.TEXT)
-    time = db.Column(db.String(5))
+    time = db.Column(db.String(6))
     resp_person = db.Column(db.String(10),nullable = False)
     department = db.Column(db.String(15))
     content = db.Column(db.TEXT)

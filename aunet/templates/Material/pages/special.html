@@ -42,7 +42,7 @@
 
 	  <div class="form-group">
 		<div class="col-xs-11 col-xs-offset-1">
-			<label class="col-xs-12 control-label" style="font-family:FangSong;">注：必须包含主题、目的、流程、安全</label>
+			<label class="col-xs-12 control-label" style="font-family:FangSong;">注：必须包含主题、目的、流程、安全责任人</label>
 		</div>
 	  </div>
 
@@ -69,32 +69,28 @@
 
 	  <div class="form-group">
 		<div class="col-xs-2 col-lg-1 nopadding">
-			<label class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">活动日期</label>
+			<label class="col-xs-12 col-lg-11 col-lg-offset-1 control-label">使用时间</label>
 		</div>
-		<div class="col-xs-4 col-lg-5">
-			<div class="col-xs-2 col-sm-3">
-				<select class="form-control" id="year1" name="year1">
-					<option selected="selected">————</option>
-					<option value="2016">2016</option>
-					<option value="2017">2017</option>
-					<option value="2018">2018</option>
-				</select>
+		<input type="hidden" name="time">
+		<div class="col-xs-4 col-lg-5" id="time_choose">
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="上午" />上午
+				</label>
 			</div>
-			<div class="col-xs-1 col-txt-1"><p>年</p></div>
-			<div class="col-xs-2 col-sm-3">
-				<select class="form-control" id="month1" name="month1" onchange="adddate1()">
-					<option selected="selected">————</option>
-				</select>
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="下午" />下午
+				</label>
 			</div>
-			<div class="col-xs-1 col-txt-1"><p>月</p></div>
-			<div class="col-xs-2 col-sm-3">
-				<select class="form-control" id="date1" name="date1">
-					<option selected="selected">————</option>
-				</select>
+			<div style="float:left;margin-left:30px;">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="晚上" />晚上
+				</label>
 			</div>
-			<div class="col-xs-1 col-txt-1"><p>日</p></div>
 		</div>
 	  </div>
+
 
 	  <div class="form-group">
 		<div class="col-xs-2 col-lg-1 nopadding">
@@ -147,7 +143,7 @@
 			<label for="opinion" class="col-xs-12 cl-lg-11 col-lg-offset-1 control-label">社团意见</label>
 		</div>
 		<div class="col-xs-10 col-lg-11" style="padding-left:0;">
-			<textarea class="form-control" id="opinion" name="opinion" rows="4">{{data.opinion}}</textarea>
+			<textarea class="form-control" id="opinion" name="opinion" rows="4" placeholder="若无则填写同意">{{data.opinion}}</textarea>
 		</div>
 	  </div>
 
@@ -179,7 +175,6 @@
 	</form>
 <script>
 if ("{{data.association}}" != ""){
-		$("#time").val("{{data.time}}");
 		$("#is_query").val("{{data.is_query}}");
 	}
 </script>

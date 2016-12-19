@@ -37,7 +37,7 @@
 				<div class="icon"></div>
 				<div class="icon"></div>
 			</div>
-			<div style="position:absolute;right:6%;top:1.5%;">{{current_user.userName}}</div>
+			<div style="position:absolute;right:6%;top:16px;">{{current_user.userName}}</div>
 			<a href="/admin/logout"><button>注&ensp;&ensp;销</button></a>
 		</div>
 
@@ -139,5 +139,22 @@ if("{{data.association}}"!="procedure" && "{{data.association}}" !="status"){
 		adddate1();
 		$("#date1").val(date.slice(8,10));
 	}
+	if ("{{data.association}}" != ""){
+		$("#time_choose").find("input").each(function(){
+			if("{{data.time}}".indexOf($(this).val())>=0){
+				$(this).attr('checked','checked');
+			}
+		})
+	}
+	$("#time_choose").find("input").change(function(){
+	var time="";
+	$("#time_choose").find("input").each(function(){
+		if($(this).is(":checked")){
+			time=time+$(this).val();
+		}
+	})
+	$("input[name=time]").val(time)
+})
+$("#time_choose").find("input").trigger("change");
 }
 </script>
