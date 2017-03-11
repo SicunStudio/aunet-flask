@@ -5,6 +5,7 @@ Official website of AU hust, powered by AU SicunStudio
     - [aunet/static](/aunet/static/) - 资源文件夹
 
     模块：
+
     - `Admin` - 后台
     - `Design` - 设计委任系统
     - `Grage` - 评分系统
@@ -13,12 +14,17 @@ Official website of AU hust, powered by AU SicunStudio
     - `Material` - 物资系统
     - `Tpl` - 跳转页面及异常页面
     - `Public` - 公用文件
-2. html文件避免出现大写(大写在SAE可能会出现未知错误)
+        - `base.html` - 网站头部和尾部
+        -  `fixed.html` - 显示正在开发中
+
+2. Public 模板 可通过 jinja2 提供的模板继承嵌入到新页面
 
 # 后台注意：
-1. 各模块使用蓝图结合
-2. 上传文件路径aunet/templates/Uploads
-3. 公共view,model,form可以写在aunet/models,aunet/views,aunet/forms
+1. 各模块使用**blueprint**结合
+2. 上传文件路径aunet/static/Uploads
+3. 公共view,model,form可以写在aunet/models.py,aunet/views.py,aunet/forms.py  
+4. 模块view, model ,form 写在 aunet/模块/view.py ...
+5. restful 文档 [api.md](/api.md)
 
 # 配置指南
 1. 配置config.py文件中的数据库参数
