@@ -54,6 +54,11 @@ def indexNews():
     return render_template("Home/news/index.html")
 
 
+@home.route('/au_card', methods=['GET'])
+def au_card():
+    return render_template('Home/PartnerInfo/PartnerInfo.html')
+
+
 def getNews(number, category):
     news = News.query.join(news_category).join(Category).filter(
         Category.name == category).order_by(News.post_time).limit(number).all()
