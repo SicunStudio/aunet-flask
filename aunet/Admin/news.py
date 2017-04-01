@@ -235,9 +235,13 @@ class SilderShowClass(Resource):
             if permission.can() is not True:
                 abort_if_unauthorized("添加新闻")
             args = SilderShow_parser.parse_args()
+            print(args)
             title = args['title']
             imgUrl = args['imgUrl']
-            imgUrl = dataurl_to_img(imgUrl)
+            try:
+                imgUrl = dataurl_to_img(imgUrl)
+            except:
+                pass
             outline = args['outline']
             link = args['link']
             silder_show = SilderShow(title, imgUrl, outline, link)
