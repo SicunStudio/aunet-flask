@@ -578,7 +578,17 @@
                         }
                         app.SITE.new.splice(app.SITE.new.indexOf(i), 1);
                     },
-
+                    fileUploaded: function(i, ev) {
+                        if(ev.target.files.length === 0) { // no file has been chosen
+                            i.imgUrl = "";
+                        }
+                        var reader = new FileReader();
+                        reader.onload = function(ev) {
+                            console.log(ev);
+                            i.imgUrl = ev.target.result;
+                        };
+                        reader.readAsDataURL(ev.target.files[0]);
+                    }
                 }),
             });
         }).fail(function(xhr) {
