@@ -203,8 +203,9 @@ def handle_html(html):
 # change imgurl into img and save it ,and save the path to the mysql
 
 
-def dataurl_to_img(dataurl):
-    img_buf = BytesIO(dataurl)
+def dataurl_to_img(img_url):
+    data = request.urlopen(img_url).read()
+    img_buf = BytesIO(data)
     img = Image.open(img_buf)
     filename = str(int(random.uniform(1, 1000)+time.time()))+".png"
     path = os.path.join(
