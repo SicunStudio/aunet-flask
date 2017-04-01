@@ -109,14 +109,17 @@ class PostTimeItem(fields.Raw):
 class ImgToDataurl(fields.Raw):
 
     def format(self, imgUrl):
-        path = os.path.join(app.config['BASEDIR'], 'aunet', imgUrl)
-        with open(path, "rb") as f:
-            data = f.read()
-        data = base64.b64encode(data)  #
-        data = str(data)
-        data = data[2:-1]
-        data = "data:image/jpg;base64,"+data
-        return data
+        try:
+            path = os.path.join(app.config['BASEDIR'], 'aunet', imgUrl)
+            with open(path, "rb") as f:
+                data = f.read()
+            data = base64.b64encode(data)  #
+            data = str(data)
+            data = data[2:-1]
+            data = "data:image/jpg;base64,"+data
+            return data
+        except:
+            return imgUrl
 
 
 # work with marshal_with() to change a class into json
@@ -210,8 +213,8 @@ def dataurl_to_img(img_url):
     filename = str(int(random.uniform(1, 1000)+time.time()))+".png"
     path = os.path.join(
         app.config['BASEDIR'], 'aunet/static/Uploads/News', filename)
-    img.save(path, quality="96")
-    return os.path.join('static/Uploads/News', filename)
+    img.save(path, quality="192")
+    return 'static/Uploads/News/'+filename
 
 
 class SilderShowClass(Resource):
@@ -270,7 +273,7 @@ class SliderShowSpec(Resource):
             try:
                 imgUrl = dataurl_to_img(imgUrl)
             except:
-                pass
+                imgUrl = args['imgUrl']
             outline = args['outline']
             editable = args['editable']
             link = args['link']
