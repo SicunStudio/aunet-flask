@@ -213,7 +213,7 @@ def dataurl_to_img(img_url):
     filename = str(int(random.uniform(1, 1000)+time.time()))+".png"
     path = os.path.join(
         app.config['BASEDIR'], 'aunet/static/Uploads/News', filename)
-    img.save(path, quality="96")
+    img.save(path, quality="192")
     return 'static/Uploads/News/'+filename
 
 
@@ -273,7 +273,7 @@ class SliderShowSpec(Resource):
             try:
                 imgUrl = dataurl_to_img(imgUrl)
             except:
-                pass
+                imgUrl = args['imgUrl']
             outline = args['outline']
             editable = args['editable']
             link = args['link']
