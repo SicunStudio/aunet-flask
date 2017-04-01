@@ -24,7 +24,10 @@
                         <div class="uk-flex uk-flex-column">
                             <input type="text" placeholder="标题" class="uk-h2" v-model="i.title" v-on:change="markDirty(i)">
                             <textarea style="min-height: 100px;" placeholder="摘要" v-model="i.outline" v-on:change="markDirty(i)"></textarea>
-                            <input type="text" placeholder="图片地址" v-model="i.imgUrl" v-on:change="markDirty(i)">
+                            <div class="uk-flex uk-flex-start">
+                                <input style="flex-grow: 1;" type="text" placeholder="图片地址" v-model="i.imgUrl" v-on:change="markDirty(i)">
+                                <input type="file" v-on:change="fileUploaded(i, $event)">
+                            </div>
                             <input type="text" placeholder="链接" v-model="i.link" v-on:change="markDirty(i)">
                             <input type="text" placeholder="序号" v-model="i.id" v-on:change="markDirty(i)">
                         </div>
