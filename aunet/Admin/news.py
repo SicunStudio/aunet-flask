@@ -105,6 +105,20 @@ class PostTimeItem(fields.Raw):
         a = postTime.strftime('%Y-%m-%d %H:%M:%S')
         return time.mktime(time.strptime(a, '%Y-%m-%d %H:%M:%S'))
 
+
+class ImgToDataurl(fields.Raw):
+
+    def format(self, imgUrl):
+        path = os.path.join(app.config['BASEDIR'], 'aunet', imgUrl)
+        with open(path, "rb") as f:
+            data = f.read()
+        data = base64.b64encode(data)  #
+        data = str(data)
+        data = data[2:-1]
+        data = "data:image/jpg;base64,"+data
+        return data
+
+
 # work with marshal_with() to change a class into json
 News_fields = {
     "id": fields.Integer(attribute="id"),
@@ -130,7 +144,7 @@ NewsSpec_fields = {
 SilderShow_fields = {
     "id": fields.Integer,
     "postTime": PostTimeItem(attribute="post_time"),
-    "imgUrl": fields.String(attribute="img_url"),
+    "imgUrl": ImgToDataurl(attribute="img_url"),
     "outline": fields.String,
     "editable": fields.Integer,
     "link": fields.String,
@@ -186,6 +200,18 @@ def handle_html(html):
         imgUrlFirst = "static/Uploads/News/default.jpg"
     return soup, imgUrlFirst
 
+# change imgurl into img and save it ,and save the path to the mysql
+
+
+def dataurl_to_img(dataurl):
+    img_buf = BytesIO(dataurl)
+    img = Image.open(img_buf)
+    filename = str(int(random.uniform(1, 1000)+time.time()))+".png"
+    path = os.path.join(
+        app.config['BASEDIR'], 'aunet/static/Uploads/News', filename)
+    img.save(path, quality="96")
+    return os.path.join('static/Uploads/News', filename)
+
 
 class SilderShowClass(Resource):
 
@@ -207,6 +233,7 @@ class SilderShowClass(Resource):
             args = SilderShow_parser.parse_args()
             title = args['title']
             imgUrl = args['imgUrl']
+            imgUrl = dataurl_to_img(imgUrl)
             outline = args['outline']
             link = args['link']
             silder_show = SilderShow(title, imgUrl, outline, link)
@@ -239,6 +266,10 @@ class SliderShowSpec(Resource):
             args = SilderShowSpec_parser.parse_args()
             title = args['title']
             imgUrl = args['imgUrl']
+            try:
+                imgUrl = dataurl_to_img(imgUrl)
+            except:
+                pass
             outline = args['outline']
             editable = args['editable']
             link = args['link']
