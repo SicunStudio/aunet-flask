@@ -552,12 +552,12 @@
                         $.when(a, b, c).always(function() {
                             app.SITE.dirty = [];
                             app.SITE.new = [];
-                            app.SITE.deleted = [];
+                            app.SITE.deleted = []; // New, dirty and deleted are mutually exclusive. 
                             retrieveSlideshows();                            
                         });
                     },
-                    markDirty: function(i) {
-                        if(app.SITE.dirty.indexOf(i) === -1) {
+                    markDirty: function(i) { // Check if item is dirty and mark it dirty. An item shall not be both new and dirty. 
+                        if((app.SITE.dirty.indexOf(i) === -1) && (app.SITE.new.indexOf(i) === -1)) {
                             app.SITE.dirty.push(i);
                         }
                     },
@@ -579,6 +579,7 @@
                         app.SITE.new.splice(app.SITE.new.indexOf(i), 1);
                     },
                     fileUploaded: function(i, ev) {
+                        this.markDirty(i); // mark this slideshow dirty anyway(even if it is new since markDirty() will check out for it)
                         if(ev.target.files.length === 0) { // no file has been chosen
                             i.imgUrl = "";
                         }
