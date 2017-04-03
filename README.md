@@ -27,14 +27,16 @@ Official website of AU hust, powered by AU SicunStudio
 5. restful 文档 [api.md](/api.md)
 
 # 配置指南
-1. 配置config.py文件中的数据库参数
-2. 迁移数据库,运行
+1. optional:[用virtualenv建一个虚拟环境](http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000)
+2. 安装requirements.txt中python包：pip install -r requirements.txt(里面有一些包应该用不到)
+3. 配置config.py文件中的数据库参数
+4. 迁移数据库,运行:
     1. python manage.py db init
     2. python manage.py db migrate
     3. python manage.py db upgrade
-3. 建立“超管”角色，并且添加用户
-    1. python manage.py CreateSuperRole 建立“超管”角色
-    2. python manage.py CreateSuperUser -n name -p password -e email,其中-n -p -e参数可省略，建立一个名为name,密码为password，邮箱为email的超级管理员
+5. 建立“超管”角色，并且添加用户
+    1. python manage.py CreateSuperRole:建立“超管”角色
+    2. python manage.py CreateSuperUser -n name -p password -e email --phone phone:建立一个名为name,密码为password，邮箱为email,电话为phone的超级管理员。-n,-p,-e, --phone参数可省略，默认为admin,123456, None, None
     
     
 
