@@ -51,26 +51,28 @@ def load_user(id):
 # flask-principal load user's permission into session
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
-    # Set the identity user object
-    identity.user = current_user
-    # user has the permission of edit himself
+    try:
+        # Set the identity user object
+        identity.user = current_user
+        # user has the permission of edit himself
 
-    identity.provides.add(EditUserPermission(current_user.id))
+        identity.provides.add(EditUserPermission(current_user.id))
 
-    # Add the UserNeed to the identity
-    if hasattr(current_user, 'id'):
-        identity.provides.add(UserNeed(current_user.id))
-        for role in current_user.roles:
-            identity.provides.add(RoleNeed(role.roleName))
+        # Add the UserNeed to the identity
+        if hasattr(current_user, 'id'):
+            identity.provides.add(UserNeed(current_user.id))
+            for role in current_user.roles:
+                identity.provides.add(RoleNeed(role.roleName))
 
-    # Assuming the User model has a list of nodes, update the
-    # identity with the nodes that the user provides
-    if hasattr(current_user, "roles"):
-        for role in current_user.roles:
-            for node in role.nodes:
-                if (node.status == 1) and (current_user.status == 1) and (role.status == 1):
-                    identity.provides.add(ActionNeed(node.nodeName))
-
+        # Assuming the User model has a list of nodes, update the
+        # identity with the nodes that the user provides
+        if hasattr(current_user, "roles"):
+            for role in current_user.roles:
+                for node in role.nodes:
+                    if (node.status == 1) and (current_user.status == 1) and (role.status == 1):
+                        identity.provides.add(ActionNeed(node.nodeName))
+    except:
+        pass
 
 # login page. but now abandoned! maybe someday will use it
 '''         

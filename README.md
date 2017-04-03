@@ -37,7 +37,7 @@ Official website of AU hust, powered by AU SicunStudio
 5. 建立“超管”角色，并且添加用户
     1. python manage.py CreateSuperRole:建立“超管”角色
     2. python manage.py CreateSuperUser -n name -p password -e email --phone phone:建立一个名为name,密码为password，邮箱为email,电话为phone的超级管理员。-n,-p,-e, --phone参数可省略，默认为admin,123456, None, None
-    
+6. 添加必要的新闻 category 和　tag: python manage.py CreateNecessaryItems
     
 
 
