@@ -122,9 +122,7 @@ def delete():
     id = request.form.get('id')
     type = request.form.get('type')
     data = query_data(type,id)
-    #初审之前和未通过之后可以修改
-    if data.result=='1' or (data.result=='0' and data.pre_verify is not None):
-        abort(403)
+
     if data.filename != 'Nothing' and \
     path.exists(path.join(Upload_path,data.rand_filename)):
         remove(path.join(Upload_path,data.rand_filename))
@@ -145,14 +143,8 @@ def submit():
     id = form['uid']
     if type not in types: abort(404)
     time = localtime()
-    rand_filename=''
     if id != "":
         data = query_data(type,id)
-        data.result = '3'
-        data.approve_time = None
-        data.pre_verify = None
-        data.advice = None
-        data.is_print = None
     else:
         data = types[type][0]()
         upload_file = request.files['file']
@@ -176,9 +168,6 @@ def submit():
         if form['material_type'] == '4':
             data.projector_date = form['year3']+'-'\
             +form['month3']+'-'+form['date3']
-    elif type == 'colorprint':
-            data.finish_date = form['year2']+'-'\
-            +form['month2']+'-'+form['date2']
     date_items = [a+b for a in ['year','month','date'] 
     for b in ['1','2','3']]
     
@@ -191,7 +180,7 @@ def submit():
         db.session.add(data)
         db.session.commit()
     except:
-        if upload_file.filename != '':
+        if upload_file.name != '' and path.exists(path.join(Upload_path,rand_filename)):
             remove(path.join(Upload_path,rand_filename))
         db.session.rollback()
         flash("表单数据有误，未能成功提交！")
@@ -218,9 +207,6 @@ def main(option,type):
         id = request.form.get('id')
         data = types[type][0].query.filter_by(id=id,
             applicant=current_user.id).first_or_404()
-        #初审之前和未通过之后可以修改
-        if data.result=='1' or (data.result=='0' and data.pre_verify is not None):
-            abort(403)
     apply_type = types[type][1]
 
     return render_template('/pages/'+type+'.html',data=data,\
@@ -256,7 +242,7 @@ def admin():
 @login_required
 @action_permission.require(403)
 def status():
-    results ={ '0':'审批中','1':'已通过','2':'未通过','3':'审批中'}
+    results ={ '0':'审批中','1':'已通过','2':'未通过'}
     datas=[]
     for db_type in types.values():
         data = db_type[0].query.all()
@@ -286,17 +272,22 @@ def approve():
     db.session.add(data)
     db.session.commit()
     flash('审批操作成功！')
+    submit_user=User.query.filter(User.id==data.submit_user_id).first()
     # 发送邮件
     if data.result=="1":
         result="通过"
-    else :
-        result="未通过"
-    submit_user=User.query.filter(User.id==data.submit_user_id).first()
-    html=render_template(
+        html=render_template(
             'Material/mail/approve_status.html',
             userName=submit_user.userName,submitTime=data.apply_time.strftime("%Y %b %d %H:%M"),type=types[type][1],result=result)
-    send_email("场地物资申请审批结果",[submit_user.email],html)
-
+        send_email("场地物资申请审批结果",[submit_user.email],html)
+    elif data.result=="2" :
+        result="未通过"
+        html=render_template(
+            'Material/mail/approve_status.html',
+            userName=submit_user.userName,submitTime=data.apply_time.strftime("%Y %b %d %H:%M"),type=types[type][1],result=result)
+        send_email("场地物资申请审批结果",[submit_user.email],html)
+    else:
+        pass 
     return redirect(url_for('material.admin'))
 
 
