@@ -80,8 +80,26 @@ $(document).ready(function(){
 		$("#time-clear").css("display","none");
 		$("#print-filter").val("all");
 	})
-	$("div.header_filt p[status=0]").trigger("click");
 })
+
+
+
+
+
+
+	function eachformDownload(buttons,option){
+		var i=buttons.length;
+		var interval=setInterval(function(){
+			//alert("i="+i);
+			if (i==0) {
+				clearInterval(interval);
+			}else{
+			formDownload($(buttons[i-1]),option);
+			}
+			i--;
+		},1000);	
+	}
+
 	function formDownload(button,option){
 		var item;
 		if(option==1){
@@ -95,8 +113,27 @@ $(document).ready(function(){
 		$("#type").val(item.attr("mtype"));
 		$("#id").val(item.attr("uid"));
 		form.submit();
+	
+
+		$(form).attr("action",null);
+		$("#type").val(null);
+		$("#id").val(null);
+		//alert("开始下载"+item);
 		
-	};
+	}
+
+
+/*
+		function formDownloadTest(buttons,option){
+			buttons.each(function(){
+				var item=$(this);
+				item.text('helloworld');
+			})
+		}
+
+*/		
+
+
 	function schemeDownload(button,option){
 		var item;
 		if(option==1){
@@ -110,10 +147,34 @@ $(document).ready(function(){
 		$("#type").val(item.attr("mtype"));
 		$("#id").val(item.attr("uid"));
 		form.submit();
+
+		$(form).attr("action",null);
+		$("#type").val(null);
+		$("#id").val(null);
+		//alert("开始下载"+item);
+
 	}
+
+	function eachSchemeDownload(buttons,option){
+		var i=buttons.length;
+		var interval=setInterval(function(){
+		//	alert("i="+i);
+			if (i==0) {
+				clearInterval(interval);
+			}else{
+			schemeDownload($(buttons[i-1]),option);
+			}
+			i--;
+		},1000);	
+	}
+
+
+
+
+
 	function getModal(button){
 
-		var item = button.parents("div.item")
+		var item = button.parents("div.item");
 
 		var htmlobj=$.ajax({
 			url:"/Material/modal/",
@@ -159,3 +220,104 @@ $(document).ready(function(){
 		filter();
 		$("#time-clear").css("display","none")
 	}
+
+	//全选
+	function allChoose(){
+		$(".checkbox>input").prop("checked",true);
+	}
+	//全不选
+
+	function allCancel(){
+		$(".checkbox>input").prop("checked",false);
+	}
+	//全选和全不选不能用attr。jquery版本问题
+
+
+
+	function eachSave(){
+		//获取目标items集合
+		var items=$('.checkbox>input:checked').parent().parent().find('ul').find('button:odd').parents("div.item");
+		//alert(items.length);
+		var dataArray=new Array(items.length);
+	//	for (var i = items.length - 1; i >= 0; i--) {
+	//		alert(items[i]);
+	//	}
+
+		//初始化一个储存数据的json数组
+		for (var i = items.length - 1; i >= 0; i--) {
+		//var mtype=item.attr("mtype");
+			var item=$(items[i]);
+			dataArray[i]={
+				"type":item.attr("mtype"),
+				"id":item.attr("uid")
+
+			};
+			//alert(dataArray[i].type);
+		};
+	//获取panel面板上用户填写的值
+		var result=$("#panel").find('select').val();
+
+		var is_print;
+	//$("#panel").find('input:checkbox')[0].checked;获取checkbox的check值	
+		if ($("#panel").find('input:checkbox')[0].checked) {
+			is_print="是";
+		}else{
+			is_print="否";
+		}
+
+
+
+
+
+	/*
+	以上获取到了所需各项内容值
+	下面准备发送data
+	*/
+			
+
+
+		var data={
+			"is_print":is_print,//获取到panel上选择的值
+			"result":result,//获取到panel上选择的值
+		
+			"items":dataArray
+		}
+
+		//转字符串
+		var dataString=JSON.stringify(data);
+		//结果测试
+		//alert("data="+data);
+		//alert("dataString="+dataString);
+
+
+	//发送
+	args = "mark="+result
+	//	$.post("{{url_for('material.mult_approve')}}",dataString,location.reload());
+	//直接刷新没毛病
+	postResult = $.post("/Material/multiApprove/",dataString,function(result){
+		//alert(result)
+		location.href="/Material/admin/?"+args;
+	});
+
+	
+
+	//刷新
+	
+}
+
+	//跳转对应页面
+	/*	switch(result){//以下4个case编号待定
+			case "0" :$("div.header_filt p[status=0]").trigger("click");break;
+
+			case "1" :$("div.header_filt p[status=1]").trigger("click");break;
+
+			case "2" :$("div.header_filt p[status=12]").trigger("click");break;
+		
+			case "3" :$("div.header_filt p[status=03]").trigger("click");break;
+		}
+	}
+*/
+
+
+
+

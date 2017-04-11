@@ -11,6 +11,7 @@ from flask_principal import Permission,ActionNeed
 from .models import *
 from os import path,remove
 from random import randint
+import json
 
 from .. import db
 from . import material
@@ -109,6 +110,7 @@ def download(file_type):
     "attachment;filename*=UTF-8''" + filename
     response.headers['Content-Type'] = 'application/octet-stream'
     return response
+
 
 
 @material.route('/delete/',methods=['POST'])
@@ -217,13 +219,15 @@ def main(option,type):
 def procedure():
     data = {'association':'procedure'}
     return render_template('/pages/'+'procedure.html',\
-        data = data)
+        data = data,apply_type = "流程查询")
 
 
 @material.route('/admin/')
 @login_required
 @admin_permission.require(403)
 def admin():
+    mark = request.args.get('mark')
+    #print(mark)
     datas=[]
     for db_type in types.values():
         data = db_type[0].query.all()
@@ -231,7 +235,7 @@ def admin():
             continue
         datas.extend(data)
     datas.sort(key=lambda x:x.apply_time,reverse=True)
-    return render_template('admin.html',datas=datas,types=types)
+    return render_template('admin.html',datas=datas,types=types,mark = mark)
 
 
 @material.route('/status/')
@@ -246,7 +250,7 @@ def status():
         datas.extend(data)
     data={'association':'status'}
     return render_template('/pages/status.html',\
-        datas=datas,types=types,results=results,data=data)
+        datas=datas,types=types,results=results,data=data,apply_type='状态查询')
 
 
 
@@ -254,7 +258,7 @@ def status():
 @login_required
 @admin_permission.require(403)
 def approve():
-
+    '''审批操作接口'''
     type = request.form.get('type')
     if type not in types.keys() : abort(404)
     id = request.form.get('id')
@@ -287,6 +291,30 @@ def approve():
     return redirect(url_for('material.admin'))
 
 
+@material.route('/multiApprove/',methods=['POST'])
+@login_required
+@admin_permission.require(403)
+def mult_approve():
+    '''多项审批'''
+    items = json.loads(request.get_data().decode('utf-8'))
+
+    is_print = items['is_print']
+    result = items['result']
+    # data.advice = item['advice']
+    # data.pre_verify = item['pre_verify']   
+    for item in items['items']:
+        type = item['type']
+        if type not in types.keys() : abort(404)
+        id = item['id']
+        data = types[type][0].query.filter_by(id = int(id)).first_or_404()
+        data.is_print = is_print
+        data.result = result
+        data.approve_time = strftime('%Y-%m-%d %H:%M:%S',localtime())
+        db.session.add(data)
+        db.session.commit()
+    
+    return 'ok!!'
+    
 
 @material.route('/modal/',methods=['POST'])
 @login_required

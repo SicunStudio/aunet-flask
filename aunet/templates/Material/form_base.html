@@ -56,7 +56,7 @@
 			<a href="{{url_for('material.main',option='apply',type='east4')}}"><div class="choice">东四三楼</div></a>
 			<a href="{{url_for('material.main',option='apply',type='sports')}}"><div class="choice">体育场馆</div></a>
 			<a href="{{url_for('material.main',option='apply',type='special')}}"><div class="choice">特殊场地</div></a>
-			<a href="{{url_for('material.main',option='apply',type='teachingbuilding')}}"><div class="choice">教学楼教室</div></a>
+			<!-- <a href="{{url_for('material.main',option='apply',type='teachingbuilding')}}"><div class="choice">教学楼教室</div></a> -->
 			<a href="{{url_for('material.main',option='apply',type='outdoor')}}"><div class="choice">路演场地</div></a>
 			<a href="{{url_for('material.main',option='apply',type='sacenter')}}"><div class="choice">大活教室</div></a>
 		</div>
@@ -67,14 +67,18 @@
 
 		<div class="tag" style="width:90%;margin:0 5%;padding: 0 50px">
 			<div class="tagarea" style="padding:0 10px;margin:0 15px">当前处于: 
-				{% if apply_type=='物资借用' %}
-				物资借用 /
-				{% elif not apply_type %}
-				场地物资申请流程
+				{% if apply_type=='状态查询'%}
+					状态查询
+				{% elif apply_type=='流程查询'%}
+					申请流程
 				{% else %}
-				场地借用 /
-				{% endif %}
-				{{apply_type}}</div>
+					{% if apply_type == '物资借用'%}
+						物资借用 /
+						{% else %}
+						场地借用 /
+					{% endif %}
+					{{apply_type}}
+				{% endif %}</div>
 			<a href="{{url_for('material.procedure')}}">
 			<div class="tagarea" style="padding:0 10px;margin:0 15px">场地物资申请流程</div>
 			</a>
