@@ -227,7 +227,10 @@ def procedure():
 @admin_permission.require(403)
 def admin():
     mark = request.args.get('mark')
-    #print(mark)
+    if mark == '0':
+        mark = '03'
+    if mark is None:
+        mark = '0123'
     datas=[]
     for db_type in types.values():
         data = db_type[0].query.all()
