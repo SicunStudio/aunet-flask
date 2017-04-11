@@ -232,7 +232,11 @@
 <script type="text/javascript">
 window.onload=function(){
 	//alert($("div.header_filt p[status="+"{{mark}}]").text())
+	setTimeout(function(){
+
 	$("div.header_filt p[status="+"{{mark}}]").trigger("click");
+	},600);
+	//延迟触发是为了防止其加载太快而失效
 }
 </script>
 </html>
