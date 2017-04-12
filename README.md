@@ -8,7 +8,7 @@ Official website of AU hust, powered by AU SicunStudio
 
     - `Admin` - 后台
     - `Design` - 设计委任系统
-    - `Grage` - 评分系统
+    - `Grade` - 评分系统
     - `Home` - 主页
     - `HR` - HR系统
     - `Material` - 物资系统
