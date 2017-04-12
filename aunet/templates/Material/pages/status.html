@@ -64,8 +64,7 @@
 		<tr class="table-content" mtype="{{data.__tablename__[9:]}}" uid="{{data.id}}" result="{{data.result}}">
 			<td class="index">{{loop.index}}</td>
 			<td class="apply-time">{{data.apply_time.strftime('%Y-%m-%d %H:%M')}}</td>
-			<td class="material-type">{{typ
-				es[data.__tablename__[9:]][1]}}</td>
+			<td class="material-type">{{types[data.__tablename__[9:]][1]}}</td>
 			<td class="result">{{results[data.result]}}</td>
 			<td class="status">
 			{% if data.result == '0' and data.pre_verify == None or data.result=='3'%}
