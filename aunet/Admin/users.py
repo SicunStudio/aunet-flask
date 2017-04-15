@@ -8,7 +8,7 @@ from flask_principal import Identity, AnonymousIdentity, \
     identity_changed, Permission
 from werkzeug.security import generate_password_hash
 from flask_login import current_user
-from flask import request
+from flask import request, render_template
 
 from datetime import datetime
 import json
@@ -16,7 +16,7 @@ import json
 from aunet.Admin.models import User, Node, Role, LoginLog
 from aunet import db
 from .models import EditUserPermission, EditUserNeed, LoginLog
-
+from .email import send_email
 
 Node_fields = {
     "id": fields.Integer,
@@ -169,13 +169,19 @@ class Users(Resource):
             phone = args['phone']
             user1 = User.query.filter(User.userName == userName).first()
             abort_if_exist(user1, "userName")
-            user = User(userName, passWord, email, phone)
-            for name in roleName:
-                role = Role.query.filter(Role.roleName == name).first()
-                abort_if_not_exist(role, "role")
-                user.roles.append(role)
-            db.session.add(user)
-            db.session.commit()
+            try:
+                html = render_template(
+                    "Admin/user_info.html", user_name=userName, password=passWord, flag="创建账号")
+                send_email("社团网账号信息", [email], html)
+                user = User(userName, passWord, email, phone)
+                for name in roleName:
+                    role = Role.query.filter(Role.roleName == name).first()
+                    abort_if_not_exist(role, "role")
+                    user.roles.append(role)
+                db.session.add(user)
+                db.session.commit()
+            except:
+                pass
         else:
             abort(404, message="api not found")
 
@@ -230,7 +236,14 @@ class UserSpec(Resource):
             if phone != None:
                 user.phone = phone
             if passWord != None:
-                user.passWord = generate_password_hash(passWord)
+                try:
+                    html = render_template(
+                        "Admin/user_info.html", user_name=user.userName, password=passWord, flag="修改密码")
+                    send_email("社团网账号信息", [user.email], html)
+                    user.passWord = generate_password_hash(passWord)
+                except:
+                    pass
+
             if roleName != None and permission.can():
                 try:
                     roleName = list(eval(roleName[0]))
@@ -293,7 +306,6 @@ class NodeSpec(Resource):
             args = NodeSpec_parser.parse_args()
             status = args['status']
             level = args['level']
-            print(level)
             if status != None:
                 node.status = status
             if level != None:
