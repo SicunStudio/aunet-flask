@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>社团网账号信息</title>
+</head>
+<body>
+{% if flag =="创建账号" %}
+ 您好,
+<br>
+<br>
+ 为了方便您的工作，我们给您生成了社团网的账号，以下是您的账号信息（手动比心）
+
+<br>
+<br>
+用户名: {{user_name}}
+<br>
+ 密码：{{password}} 
+ <br>
+ <br>
+<a href="https://sau.hust.edu.cn/dashboard">点击登陆></a>
+ <br>
+ -----------------
+{% endif%}
+
+{% if flag =="修改密码" %}
+ 您好，
+ <br>
+ <br>
+您的账号密码被修改为：
+<br>
+<br>
+ 用户名: {{user_name}} 
+<br>
+ 密码：{{password}} 
+<br>
+<br>
+<a href="https://sau.hust.edu.cn/dashboard">点击登陆></a>
+<br>
+手动比心 
+<br>
+-------------------
+
+{% endif%}
+
+
+</body>
+</html>
