@@ -210,12 +210,10 @@ class UserSpec(Resource):
             if current_user.is_anonymous == True:
                 abort_if_unauthorized("修改用户")
             permission = Permission(ActionNeed("修改用户"))
-            permission1 = EditUserPermission(EditUserNeed(current_user.id))
-            if (permission.can()is not True)and (permission1.can()is not True):
-                abort_if_unauthorized("修改用户")
-
             user = User.query.filter(User.id == id).first()
             abort_if_not_exist(user, "user")
+            if user != current_user and permission.can() is not True:
+                abort_if_unauthorized("修改用户")  # 用户默认能修改自己的信息
             args = UserSpec_parser.parse_args()
             # userId=args['userId']
             status = args['status']
@@ -307,7 +305,8 @@ class NodeSpec(Resource):
             status = args['status']
             level = args['level']
             if status != None:
-                node.status = status
+                if node.nodeName != "修改节点":  # 不能禁用“修改节点”权限节点
+                    node.status = status
             if level != None:
                 node.level = level
             db.session.add(node)
@@ -389,7 +388,8 @@ class RoleSpec(Resource):
                 abort_if_exist(r, "rolename")
                 role.roleName = roleName
             if status != None:
-                role.status = status
+                if role.rolename != "超管":  # 不能禁用超管角色
+                    role.status = status
             if nodeName != None:
                 try:
                     nodeName = list(eval(nodeName[0]))
