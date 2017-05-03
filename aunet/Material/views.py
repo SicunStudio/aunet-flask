@@ -248,7 +248,7 @@ def status():
     results ={ '0':'审批中','1':'已通过','2':'未通过'}
     datas=[]
     for db_type in types.values():
-        data = db_type[0].query.all()
+        data = db_type[0].query.filter(db_type[0].submit_user_id==current_user.id).all()
         if data is None: continue
         datas.extend(data)
     data={'association':'status'}
